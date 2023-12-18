@@ -14,11 +14,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import android.annotation.SuppressLint;
 
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
@@ -32,6 +34,7 @@ import java.util.Objects;
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaAdapter;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
+import iestrassierra.jlcamunas.trasstarea.preferencias.SettingsActivity;
 
 public class ListadoTareasActivity extends AppCompatActivity {
 
@@ -98,6 +101,21 @@ public class ListadoTareasActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
+    ActivityResultContract<Intent, ActivityResult> contrato = new ActivityResultContracts.StartActivityForResult();
+    ActivityResultCallback<ActivityResult> respuesta = new ActivityResultCallback<ActivityResult>(){
+        @SuppressLint("SetTextI18n")
+        @Override
+        public void onActivityResult(ActivityResult o) {
+            if (o.getResultCode() == Activity.RESULT_OK) {
+                //No hay códigos de actividad
+                Intent intentDevuelto = o.getData();
+
+            }
+        }
+    };
+
+    ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
+
     @SuppressLint("NotifyDataSetChanged")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -122,6 +140,13 @@ public class ListadoTareasActivity extends AppCompatActivity {
             //Comprobamos que hay algún elemento que mostrar
             comprobarListadoVacio();
         }
+
+        else if(id == R.id.item_preferencias){
+            Intent intent = new Intent(this, SettingsActivity.class);
+            lanzador.launch(intent);
+        }
+
+
 
         //OPCIÓN ACERCA DE...
         else if (id == R.id.item_about) {
@@ -367,14 +392,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
         tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, ""));
         tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, ""));
         tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, ""));
-        tareas.add(new Tarea("Hacer la tarea UT03", "24/11/2023", "08/01/2024", 50, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT03", "24/11/2023", "07/01/2024", 25, false, ""));
-        tareas.add(new Tarea("Hacer la tarea UT04", "08/01/2024", "12/02/2024", 0, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT04", "08/01/2024", "12/02/2024", 0, false, ""));
-        tareas.add(new Tarea("Hacer la tarea UT05", "13/02/2024", "07/04/2024", 0, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT05", "13/02/2024", "07/04/2024", 0, false, ""));
-        tareas.add(new Tarea("Hacer la tarea UT06", "08/04/2024", "20/05/2024", 0, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT06", "08/04/2024", "20/05/2024", 0, false, ""));
 
         //En cada tarea de ejemplo incluímos una descripción larga generada con Lorem Ipsum
         tareas.forEach(tarea -> tarea.setDescripcion(
