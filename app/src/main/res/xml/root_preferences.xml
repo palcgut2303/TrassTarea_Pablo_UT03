@@ -2,34 +2,100 @@
 
     <PreferenceCategory app:title="@string/messages_header">
 
-        <EditTextPreference
-            app:key="signature"
-            app:title="@string/signature_title"
-            app:useSimpleSummaryProvider="true" />
-
-        <ListPreference
-            app:defaultValue="reply"
-            app:entries="@array/reply_entries"
-            app:entryValues="@array/reply_values"
-            app:key="reply"
-            app:title="@string/reply_title"
-            app:useSimpleSummaryProvider="true" />
-
-    </PreferenceCategory>
-
-    <PreferenceCategory app:title="@string/sync_header">
-
         <SwitchPreferenceCompat
-            app:key="sync"
-            app:title="@string/sync_title" />
-
-        <SwitchPreferenceCompat
-            app:dependency="sync"
-            app:key="attachment"
+            app:defaultValue="true"
+            app:key="temaSistema"
             app:summaryOff="@string/attachment_summary_off"
             app:summaryOn="@string/attachment_summary_on"
             app:title="@string/attachment_title" />
 
+        <ListPreference
+            app:defaultValue="2"
+            app:entries="@array/letra_entries"
+            app:entryValues="@array/letra_values"
+            app:key="tamañoLetra"
+            app:title="@string/letra_title"
+            app:useSimpleSummaryProvider="true" />
+
     </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/ordenacion_header">
+
+        <ListPreference
+            app:defaultValue="2"
+            app:entries="@array/orden_entries"
+            app:entryValues="@array/orden_values"
+            app:key="criterio"
+            app:title="@string/criterio_title"
+            app:useSimpleSummaryProvider="true" />
+
+        <SwitchPreferenceCompat
+            app:key="orden"
+            app:defaultValue="true"
+            app:summaryOff="@string/attachment_orden_off"
+            app:summaryOn="@string/attachment_orden_on"
+            app:title="@string/orden_title" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/almacenamiento_header">
+
+        <CheckBoxPreference
+            app:key="sd"
+            app:defaultValue="0"
+            app:title="@string/almacenamiento_title"
+            />
+
+        <EditTextPreference
+            app:key="limpieza"
+            app:title="Periodicidad de limpieza (días)"
+            app:summary="Valor entero. Valor por defecto 0."
+            app:defaultValue="0"/>
+
+        <SwitchPreferenceCompat
+            app:key="bd"
+            app:defaultValue="false"
+            app:summaryOn="@string/basedatosExt_orden_on"
+            app:summaryOff="@string/basedatosInte_orden_off"
+            app:title="@string/basedatos_title" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        app:title="Base de Datos Externa"
+        app:key="external_db"
+        app:dependency="bd">
+
+        <EditTextPreference
+            app:key="nombrebd"
+            app:title="Nombre de la Base de Datos"
+            app:defaultValue="bd"/>
+
+        <EditTextPreference
+            app:key="ip"
+            app:title="IP del Servidor"
+            app:defaultValue="10.0.2.2"
+            />
+
+        <EditTextPreference
+            app:key="puerto"
+            app:title="Puerto"
+            app:defaultValue="1001"/>
+
+        <EditTextPreference
+            app:key="usuario"
+            app:title="Usuario"
+            app:defaultValue="usuario"/>
+
+        <EditTextPreference
+            app:key="password"
+            app:title="Contraseña"
+            app:defaultValue=""/>
+
+
+    </PreferenceCategory>
+
+    <Preference
+        app:key="reset_button"
+        app:widgetLayout="@layout/reset_buttom_layout"/>
 
 </PreferenceScreen>

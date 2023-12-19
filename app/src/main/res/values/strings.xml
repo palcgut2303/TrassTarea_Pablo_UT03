@@ -52,21 +52,31 @@
     <string name="bt_aceptar">Aceptar</string>
     <string name="ad_fechas">Fechas inconsistentes</string>
     <string name="ad_fechas_contenido">La fecha objetivo no puede ser anterior a la fecha de creación</string>
-    <string name="preferencias">Preferencias</string>
+    <string name="preferencias" translatable="false">Preferencias</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="messages_header">VISUALIZACIÓN</string>
+    <string name="ordenacion_header">ORDENACIÓN</string>
+    <string name="almacenamiento_header">ALMACENAMIENTO</string>
 
     <!-- Messages Preferences -->
     <string name="signature_title">Your signature</string>
-    <string name="reply_title">Default reply action</string>
+    <string name="letra_title">Tamaño de la letra</string>
+    <string name="orden_title">Orden</string>
 
+    <string name="basedatos_title">Base de Datos</string>
+    <string name="criterio_title">Criterio</string>
+    <string name="almacenamiento_title">Almacenamiento en tarjeta SD</string>
+
+    <string name="limpieza_title">Dias de periodicidad</string>
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="attachment_title">Tema de la App</string>
+    <string name="attachment_summary_on">Claro</string>
+    <string name="attachment_summary_off">Oscuro</string>
+    <string name="attachment_orden_on">Ascendente</string>
+    <string name="attachment_orden_off">Descendente</string>
+
+    <string name="basedatosInte_orden_off">Interna</string>
+    <string name="basedatosExt_orden_on">Externa</string>
 </resources>
