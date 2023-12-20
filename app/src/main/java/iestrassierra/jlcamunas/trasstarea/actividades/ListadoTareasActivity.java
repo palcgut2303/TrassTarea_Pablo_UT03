@@ -109,7 +109,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
             if (o.getResultCode() == Activity.RESULT_OK) {
                 //No hay códigos de actividad
                 Intent intentDevuelto = o.getData();
-
+                String tamañoLetra = (String) intentDevuelto.getExtras().get("tamañoLetra");
+               // Toast.makeText(ListadoTareasActivity.this, tamañoLetra, Toast.LENGTH_SHORT).show();
             }
         }
     };

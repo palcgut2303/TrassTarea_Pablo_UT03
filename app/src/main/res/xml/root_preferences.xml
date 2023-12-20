@@ -5,6 +5,7 @@
         <SwitchPreferenceCompat
             app:defaultValue="true"
             app:key="temaSistema"
+            app:icon="@drawable/baseline_brightness_high_24"
             app:summaryOff="@string/attachment_summary_off"
             app:summaryOn="@string/attachment_summary_on"
             app:title="@string/attachment_title" />
@@ -14,6 +15,7 @@
             app:entries="@array/letra_entries"
             app:entryValues="@array/letra_values"
             app:key="tamañoLetra"
+            app:icon="@drawable/baseline_format_size_24"
             app:title="@string/letra_title"
             app:useSimpleSummaryProvider="true" />
 
@@ -27,6 +29,7 @@
             app:entryValues="@array/orden_values"
             app:key="criterio"
             app:title="@string/criterio_title"
+            app:icon="@drawable/baseline_reorder_24"
             app:useSimpleSummaryProvider="true" />
 
         <SwitchPreferenceCompat
@@ -43,6 +46,7 @@
         <CheckBoxPreference
             app:key="sd"
             app:defaultValue="0"
+            app:icon="@drawable/baseline_save_24"
             app:title="@string/almacenamiento_title"
             />
 
@@ -55,6 +59,7 @@
         <SwitchPreferenceCompat
             app:key="bd"
             app:defaultValue="false"
+            app:icon="@drawable/baseline_storage_24"
             app:summaryOn="@string/basedatosExt_orden_on"
             app:summaryOff="@string/basedatosInte_orden_off"
             app:title="@string/basedatos_title" />
@@ -96,6 +101,6 @@
 
     <Preference
         app:key="reset_button"
-        app:widgetLayout="@layout/reset_buttom_layout"/>
+        app:widgetLayout="@layout/reset_buttom_layout" />
 
 </PreferenceScreen>
