@@ -18,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
 
         Button btEmpezar = findViewById(R.id.main_bt_empezar);
         btEmpezar.setOnClickListener(this::empezar);
+
     }
 
     private void empezar(View v){

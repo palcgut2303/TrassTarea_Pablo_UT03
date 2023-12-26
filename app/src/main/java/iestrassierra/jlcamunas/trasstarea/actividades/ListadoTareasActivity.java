@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -25,6 +26,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -45,11 +48,52 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private TareaAdapter adaptador;
     private boolean boolPrior = false;
     private Tarea tareaSeleccionada;
-
+    private boolean esCreate = false;
+    private boolean theme = true;
+    private int tamanoLetraApp = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_tareas);
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+
+        // Obtengo los valores de las preferencias
+        String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
+        theme = sharedPreferences.getBoolean("temaSistema",true);
+        if(fontSize.equalsIgnoreCase("1")){
+            tamanoLetraApp = 10;
+            //setTheme(R.style.Theme_TrassTarea_Font_Small);
+            if(!theme){
+               setTheme(R.style.Theme_TrassTarea_Font_Small);
+                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+               setTheme(R.style.Theme_TrassTarea_dark_small);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+
+        }else if (fontSize.equalsIgnoreCase("2") && theme){
+            tamanoLetraApp = 18;
+            //setTheme(R.style.Theme_TrassTarea_Font_Small);
+            if(!theme){
+                  setTheme(R.style.Theme_TrassTarea_Font_Small);
+                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+               setTheme(R.style.Theme_TrassTarea_dark_small);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }else if (fontSize.equalsIgnoreCase("3") && theme){
+            tamanoLetraApp = 24;
+            //setTheme(R.style.Theme_TrassTarea_Font_Small);
+            if(!theme){
+                 setTheme(R.style.Theme_TrassTarea_Font_Small);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+                  setTheme(R.style.Theme_TrassTarea_dark_small);
+                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }
+
+
 
         //Binding del TextView
         listadoVacio = findViewById(R.id.listado_vacio);
@@ -101,7 +145,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-    ActivityResultContract<Intent, ActivityResult> contrato = new ActivityResultContracts.StartActivityForResult();
+  /*  ActivityResultContract<Intent, ActivityResult> contrato = new ActivityResultContracts.StartActivityForResult();
     ActivityResultCallback<ActivityResult> respuesta = new ActivityResultCallback<ActivityResult>(){
         @SuppressLint("SetTextI18n")
         @Override
@@ -110,12 +154,65 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 //No hay códigos de actividad
                 Intent intentDevuelto = o.getData();
                 String tamañoLetra = (String) intentDevuelto.getExtras().get("tamañoLetra");
-               // Toast.makeText(ListadoTareasActivity.this, tamañoLetra, Toast.LENGTH_SHORT).show();
+               //Toast.makeText(ListadoTareasActivity.this, tamañoLetra, Toast.LENGTH_SHORT).show();
+                if(tamañoLetra.equalsIgnoreCase("Pequeña")){
+                    tamanoLetraApp = 10;
+                }else if (tamañoLetra.equalsIgnoreCase("Mediana")){
+                    tamanoLetraApp = 18;
+                }else{
+                    tamanoLetraApp = 24;
+                }
+
+
             }
         }
-    };
+    };*/
 
-    ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
+    @Override
+    protected void onResume() {
+        super.onResume();
+       // setTheme(R.style.Theme_TrassTarea);
+        if(tamanoLetraApp == 10){
+           // getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
+            if(!theme){
+                  setTheme(R.style.Theme_TrassTarea_Font_Small);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+                  setTheme(R.style.Theme_TrassTarea_dark_small);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        } else if (tamanoLetraApp == 18){
+            //getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
+            if(!theme){
+                 setTheme(R.style.Theme_TrassTarea_Font_medium);
+               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+                  setTheme(R.style.Theme_TrassTarea_dark_medium);
+                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+
+        } else if (tamanoLetraApp == 24) {
+            //getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
+            if(!theme){
+                  setTheme(R.style.Theme_TrassTarea_Font_big);
+                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            }else{
+                setTheme(R.style.Theme_TrassTarea_dark_big);
+               //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }
+        }
+
+       if(esCreate){
+            recreate();
+        }
+
+        esCreate = true;
+
+    }
+
+
+
+    //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
@@ -144,7 +241,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
         else if(id == R.id.item_preferencias){
             Intent intent = new Intent(this, SettingsActivity.class);
-            lanzador.launch(intent);
+            //lanzador.launch(intent);
+            startActivity(intent);
         }
 
 

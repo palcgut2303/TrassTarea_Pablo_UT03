@@ -3,12 +3,11 @@
     <PreferenceCategory app:title="@string/messages_header">
 
         <SwitchPreferenceCompat
-            app:defaultValue="true"
-            app:key="temaSistema"
-            app:icon="@drawable/baseline_brightness_high_24"
+            app:key="tema"
             app:summaryOff="@string/attachment_summary_off"
             app:summaryOn="@string/attachment_summary_on"
-            app:title="@string/attachment_title" />
+            app:title="@string/attachment_title"
+            app:defaultValue="true"/>
 
         <ListPreference
             app:defaultValue="2"
