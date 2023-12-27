@@ -7,6 +7,7 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 
 import java.text.SimpleDateFormat;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Objects;
@@ -198,6 +199,36 @@ public class Tarea implements Parcelable {
             return new Tarea[size];
         }
     };
+
+    public static Comparator<Tarea> comparadorFechaCreacionAscendente() {
+        return Comparator.comparing(Tarea::getFechaCreacion);
+    }
+    public static Comparator<Tarea> comparadorFechaCreacionDescendente() {
+        return Comparator.comparing(Tarea::getFechaCreacion).reversed();
+    }
+    public static Comparator<Tarea> comparadorAlfabeticoAscendente() {
+        return Comparator.comparing(Tarea::getTitulo);
+    }
+
+    public static Comparator<Tarea> comparadorAlfabeticoDescendente() {
+        return Comparator.comparing(Tarea::getTitulo).reversed();
+    }
+
+    public static Comparator<Tarea> comparadorDiasRestantesAscendente() {
+        return Comparator.comparing(Tarea::quedanDias);
+    }
+
+    public static Comparator<Tarea> comparadorDiasRestantesDescendente() {
+        return Comparator.comparing(Tarea::quedanDias).reversed();
+    }
+
+    public static Comparator<Tarea> comparadorProgresoAscendente() {
+        return Comparator.comparing(Tarea::getProgreso);
+    }
+
+    public static Comparator<Tarea> comparadorProgresoDescendente() {
+        return Comparator.comparing(Tarea::getProgreso).reversed();
+    }
 }
 
 

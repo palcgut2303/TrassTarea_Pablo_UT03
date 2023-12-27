@@ -1,5 +1,14 @@
 package iestrassierra.jlcamunas.trasstarea.actividades;
 
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorAlfabeticoAscendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorAlfabeticoDescendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorDiasRestantesAscendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorDiasRestantesDescendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorFechaCreacionAscendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorFechaCreacionDescendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorProgresoAscendente;
+import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorProgresoDescendente;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -32,6 +41,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
 
 import iestrassierra.jlcamunas.trasstarea.R;
@@ -51,6 +61,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private boolean esCreate = false;
     private boolean theme = true;
     private int tamanoLetraApp = 0;
+    private String CriterioOrden = "";
+    private boolean orden;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,37 +72,42 @@ public class ListadoTareasActivity extends AppCompatActivity {
         // Obtengo los valores de las preferencias
         String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
         theme = sharedPreferences.getBoolean("temaSistema",true);
+        CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
+        orden = sharedPreferences.getBoolean("orden",true);
+
+
+
         if(fontSize.equalsIgnoreCase("1")){
             tamanoLetraApp = 10;
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-            if(!theme){
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+            /*if(!theme){
                setTheme(R.style.Theme_TrassTarea_Font_Small);
                 //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                setTheme(R.style.Theme_TrassTarea_dark_small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            }*/
 
         }else if (fontSize.equalsIgnoreCase("2") && theme){
             tamanoLetraApp = 18;
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-            if(!theme){
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+           /* if(!theme){
                   setTheme(R.style.Theme_TrassTarea_Font_Small);
                 //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                setTheme(R.style.Theme_TrassTarea_dark_small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            }*/
         }else if (fontSize.equalsIgnoreCase("3") && theme){
             tamanoLetraApp = 24;
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-            if(!theme){
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+            /*if(!theme){
                  setTheme(R.style.Theme_TrassTarea_Font_Small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                   setTheme(R.style.Theme_TrassTarea_dark_small);
                 //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            }*/
         }
 
 
@@ -105,12 +122,40 @@ public class ListadoTareasActivity extends AppCompatActivity {
         if (savedInstanceState != null) {
             //Recuperamos la lista de Tareas y el booleano prioritarias
             tareas = savedInstanceState.getParcelableArrayList("listaTareas");
+
             boolPrior = savedInstanceState.getBoolean("boolPrior");
         } else {
             //Inicializamos la lista de tareas y el booleano prioritarias
             inicializarListaTareas();
             boolPrior = false;
         }
+
+        if(CriterioOrden.equalsIgnoreCase("1")){
+            if(orden){
+                Collections.sort(tareas,comparadorAlfabeticoAscendente());
+            }else{
+                Collections.sort(tareas,comparadorAlfabeticoDescendente());
+            }
+        } else if (CriterioOrden.equalsIgnoreCase("2")) {
+            if(orden){
+                Collections.sort(tareas,comparadorFechaCreacionAscendente());
+            }else{
+                Collections.sort(tareas,comparadorFechaCreacionDescendente());
+            }
+        } else if (CriterioOrden.equalsIgnoreCase("4")) {
+            if(orden){
+                Collections.sort(tareas,comparadorProgresoAscendente());
+            }else{
+                Collections.sort(tareas,comparadorProgresoDescendente());
+            }
+        } else {
+            if(orden){
+                Collections.sort(tareas,comparadorDiasRestantesAscendente());
+            }else{
+                Collections.sort(tareas,comparadorDiasRestantesDescendente());
+            }
+        }
+
 
         //Creamos el adaptador y lo vinculamos con el RecycleView
         adaptador = new TareaAdapter(this,  tareas, boolPrior);
@@ -173,34 +218,61 @@ public class ListadoTareasActivity extends AppCompatActivity {
         super.onResume();
        // setTheme(R.style.Theme_TrassTarea);
         if(tamanoLetraApp == 10){
-           // getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
-            if(!theme){
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
+            /*if(!theme){
                   setTheme(R.style.Theme_TrassTarea_Font_Small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                   setTheme(R.style.Theme_TrassTarea_dark_small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            }*/
         } else if (tamanoLetraApp == 18){
-            //getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
-            if(!theme){
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
+           /* if(!theme){
                  setTheme(R.style.Theme_TrassTarea_Font_medium);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                   setTheme(R.style.Theme_TrassTarea_dark_medium);
                 //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }
+            }*/
 
         } else if (tamanoLetraApp == 24) {
-            //getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
-            if(!theme){
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
+            /*if(!theme){
                   setTheme(R.style.Theme_TrassTarea_Font_big);
                 //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             }else{
                 setTheme(R.style.Theme_TrassTarea_dark_big);
                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+            }*/
+        }
+
+        if(CriterioOrden.equalsIgnoreCase("1")){
+            if(orden){
+                Collections.sort(tareas,comparadorAlfabeticoAscendente());
+            }else{
+                Collections.sort(tareas,comparadorAlfabeticoDescendente());
+            }
+        } else if (CriterioOrden.equalsIgnoreCase("2")) {
+            if(orden){
+                Collections.sort(tareas,comparadorFechaCreacionAscendente());
+            }else{
+                Collections.sort(tareas,comparadorFechaCreacionDescendente());
+            }
+        } else if (CriterioOrden.equalsIgnoreCase("4")) {
+            if(orden){
+                Collections.sort(tareas,comparadorProgresoAscendente());
+            }else{
+                Collections.sort(tareas,comparadorProgresoDescendente());
+            }
+        } else {
+            if(orden){
+                Collections.sort(tareas,comparadorDiasRestantesAscendente());
+            }else{
+                Collections.sort(tareas,comparadorDiasRestantesDescendente());
             }
         }
+
 
        if(esCreate){
             recreate();
