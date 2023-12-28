@@ -71,11 +71,15 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
         // Obtengo los valores de las preferencias
         String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
-        theme = sharedPreferences.getBoolean("temaSistema",true);
+        theme = sharedPreferences.getBoolean("tema",true);
         CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
         orden = sharedPreferences.getBoolean("orden",true);
 
-
+        if(theme){
+            setDayNight(1);
+        }else{
+            setDayNight(0);
+        }
 
         if(fontSize.equalsIgnoreCase("1")){
             tamanoLetraApp = 10;
@@ -88,7 +92,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }*/
 
-        }else if (fontSize.equalsIgnoreCase("2") && theme){
+        }else if (fontSize.equalsIgnoreCase("2") ){
             tamanoLetraApp = 18;
             setTheme(R.style.Theme_TrassTarea_Font_Small);
            /* if(!theme){
@@ -98,7 +102,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
                setTheme(R.style.Theme_TrassTarea_dark_small);
                // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
             }*/
-        }else if (fontSize.equalsIgnoreCase("3") && theme){
+        }else if (fontSize.equalsIgnoreCase("3") ){
             tamanoLetraApp = 24;
             setTheme(R.style.Theme_TrassTarea_Font_Small);
             /*if(!theme){
@@ -247,6 +251,12 @@ public class ListadoTareasActivity extends AppCompatActivity {
             }*/
         }
 
+        if(theme){
+            setDayNight(1);
+        }else{
+            setDayNight(0);
+        }
+
         if(CriterioOrden.equalsIgnoreCase("1")){
             if(orden){
                 Collections.sort(tareas,comparadorAlfabeticoAscendente());
@@ -282,7 +292,13 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     }
 
-
+    public void setDayNight(int mode){
+        if(mode==0){
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+    }
 
     //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
 
@@ -323,7 +339,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         else if (id == R.id.item_about) {
 
             ImageView imageView = new ImageView(this);
-            imageView.setImageResource(R.drawable.trasstarea);
+            imageView.setImageResource(R.drawable.icon_pablo);
             imageView.requestLayout();
 
             //Creamos un AlertDialog como cuadro de diálogo

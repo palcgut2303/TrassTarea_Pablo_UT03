@@ -34,7 +34,7 @@
     <string name="tarea_add">Tarea añadida</string>
     <string name="et_fecha">dd/mm/aaaa</string>
     <string name="about_title">Acerca de…</string>
-    <string name="about_msg">José Luis Camuñas\n IES Trassierra\n\u00A9 2023</string>
+    <string name="about_msg">Pablo Alcudia Gutiérrez\n IES Trassierra\n\u00A9 2023</string>
     <string name="about_ok">Aceptar</string>
     <string name="dialog_confirmacion_titulo">Confirmar borrado</string>
     <string name="dialog_yes">Sí</string>

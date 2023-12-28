@@ -8,13 +8,14 @@ import android.view.MenuItem;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.preference.PreferenceFragmentCompat;
 import androidx.preference.PreferenceManager;
 
 import iestrassierra.jlcamunas.trasstarea.R;
 
 public class SettingsActivity extends AppCompatActivity {
-
+    private boolean theme = true;
     String tamañoLetraIndex = "";
     String tamañoLetra = "";
     @Override
@@ -31,12 +32,29 @@ public class SettingsActivity extends AppCompatActivity {
         if (actionBar != null) {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        theme = sharedPreferences.getBoolean("tema",true);
+
+        if(theme){
+            setDayNight(1);
+        }else{
+            setDayNight(0);
+        }
+
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
         @Override
         public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
             setPreferencesFromResource(R.xml.root_preferences, rootKey);
+        }
+    }
+
+    public void setDayNight(int mode){
+        if(mode==0){
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        }else{
+            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
     }
 

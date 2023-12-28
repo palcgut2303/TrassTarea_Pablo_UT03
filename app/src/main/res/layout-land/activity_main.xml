@@ -18,7 +18,7 @@
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/main_tv_eslogan"
-        app:srcCompat="@drawable/trasstarea" />
+        app:srcCompat="@drawable/icon_pablo" />
 
     <TextView
         android:id="@+id/main_tv_eslogan"
