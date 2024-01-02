@@ -81,38 +81,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
             setDayNight(0);
         }
 
-        if(fontSize.equalsIgnoreCase("1")){
-            tamanoLetraApp = 10;
-            setTheme(R.style.Theme_TrassTarea_Font_Small);
-            /*if(!theme){
-               setTheme(R.style.Theme_TrassTarea_Font_Small);
-                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-               setTheme(R.style.Theme_TrassTarea_dark_small);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
-
-        }else if (fontSize.equalsIgnoreCase("2") ){
-            tamanoLetraApp = 18;
-            setTheme(R.style.Theme_TrassTarea_Font_Small);
-           /* if(!theme){
-                  setTheme(R.style.Theme_TrassTarea_Font_Small);
-                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-               setTheme(R.style.Theme_TrassTarea_dark_small);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
-        }else if (fontSize.equalsIgnoreCase("3") ){
-            tamanoLetraApp = 24;
-            setTheme(R.style.Theme_TrassTarea_Font_Small);
-            /*if(!theme){
-                 setTheme(R.style.Theme_TrassTarea_Font_Small);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-                  setTheme(R.style.Theme_TrassTarea_dark_small);
-                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
-        }
+        //Cambiar tamaño letra, en funcion de la opcion de las preferencias
+        tamanoLetraCreate(fontSize);
 
 
 
@@ -134,31 +104,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
             boolPrior = false;
         }
 
-        if(CriterioOrden.equalsIgnoreCase("1")){
-            if(orden){
-                Collections.sort(tareas,comparadorAlfabeticoAscendente());
-            }else{
-                Collections.sort(tareas,comparadorAlfabeticoDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("2")) {
-            if(orden){
-                Collections.sort(tareas,comparadorFechaCreacionAscendente());
-            }else{
-                Collections.sort(tareas,comparadorFechaCreacionDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("4")) {
-            if(orden){
-                Collections.sort(tareas,comparadorProgresoAscendente());
-            }else{
-                Collections.sort(tareas,comparadorProgresoDescendente());
-            }
-        } else {
-            if(orden){
-                Collections.sort(tareas,comparadorDiasRestantesAscendente());
-            }else{
-                Collections.sort(tareas,comparadorDiasRestantesDescendente());
-            }
-        }
+        //Ejecutamos el método, en funcion de lo que cogamos en las preferencias se ordenará.
+        ordenTareas();
 
 
         //Creamos el adaptador y lo vinculamos con el RecycleView
@@ -183,6 +130,23 @@ public class ListadoTareasActivity extends AppCompatActivity {
         outState.putBoolean("prioritarias", boolPrior);
     }
 
+    //MÉTODO, se ejecuta en el onCreate
+    public void tamanoLetraCreate(String fontSize){
+        if(fontSize.equalsIgnoreCase("1")){
+            tamanoLetraApp = 10;
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+
+
+        }else if (fontSize.equalsIgnoreCase("2") ){
+            tamanoLetraApp = 18;
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+
+        }else if (fontSize.equalsIgnoreCase("3") ){
+            tamanoLetraApp = 24;
+            setTheme(R.style.Theme_TrassTarea_Font_Small);
+
+        }
+    }
 
     ////////////////////////////////////// OPCIONES DEL MENÚ ///////////////////////////////////////
     @Override
@@ -220,42 +184,30 @@ public class ListadoTareasActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-       // setTheme(R.style.Theme_TrassTarea);
-        if(tamanoLetraApp == 10){
-            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
-            /*if(!theme){
-                  setTheme(R.style.Theme_TrassTarea_Font_Small);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-                  setTheme(R.style.Theme_TrassTarea_dark_small);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
-        } else if (tamanoLetraApp == 18){
-            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
-           /* if(!theme){
-                 setTheme(R.style.Theme_TrassTarea_Font_medium);
-               // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-                  setTheme(R.style.Theme_TrassTarea_dark_medium);
-                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
 
-        } else if (tamanoLetraApp == 24) {
-            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
-            /*if(!theme){
-                  setTheme(R.style.Theme_TrassTarea_Font_big);
-                //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_big);
-               //getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-            }*/
-        }
+        cambiarTamanoLetra();
 
         if(theme){
             setDayNight(1);
         }else{
             setDayNight(0);
         }
+
+        ordenTareas();
+
+
+       if(esCreate){
+            recreate();
+        }
+
+        esCreate = true;
+
+    }
+
+    //MÉTODO, se ejecuta en el onResume.
+    public void ordenTareas(){
+
+
 
         if(CriterioOrden.equalsIgnoreCase("1")){
             if(orden){
@@ -282,16 +234,25 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 Collections.sort(tareas,comparadorDiasRestantesDescendente());
             }
         }
-
-
-       if(esCreate){
-            recreate();
-        }
-
-        esCreate = true;
-
     }
 
+    //Este metodo se utiliza en el onResume, la diferencia con el otro metodo del onCreate, es los condicionales,
+    //depenede del valor de la variable que se inicia en el otro metodo que se ejecuta desde el onCreate
+    public void cambiarTamanoLetra(){
+        if(tamanoLetraApp == 10){
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
+
+        } else if (tamanoLetraApp == 18){
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
+
+
+        } else if (tamanoLetraApp == 24) {
+            getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
+
+        }
+    }
+
+    //Metodo para cambiar el tema de la aplicacion.
     public void setDayNight(int mode){
         if(mode==0){
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
