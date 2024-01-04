@@ -15,4 +15,14 @@
         <!-- Customize your theme here. -->
         <item name="android:textSize">@dimen/new_font_size_medium</item>
     </style>
+
+   <!-- <style name="AppTheme.Dark" parent="Theme.AppCompat">
+         Primary brand color.
+        <item name="android:windowBackground">@color/colorBackgroundDark</item>
+        <item name="colorPrimary">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccentDark</item>
+        <item name="android:textColorPrimary">@color/colorTextPrimaryDark</item>
+        <item name="android:textColorSecondary">@color/colorTextSecondaryDark</item>
+    </style> -->
 </resources>

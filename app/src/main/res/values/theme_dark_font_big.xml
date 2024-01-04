@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <style name="Theme.TrassTarea.dark.big" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="Theme.TrassTarea.dark.big" parent="Theme.AppCompat">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/secundario</item>
+        <item name="colorPrimary">@color/rojo</item>
         <item name="colorPrimaryVariant">@color/primario_oscuro</item>
         <item name="colorOnPrimary">@color/oscuro</item>
         <!-- Secondary brand color. -->

@@ -1,18 +1,18 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Theme.TrassTarea" parent="Theme.AppCompat.DayNight.DarkActionBar">
-        <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/primario_oscuro</item>
-        <item name="colorPrimaryVariant">@color/primario_oscuro</item>
-        <item name="colorOnPrimary">@color/oscuro</item>
-        <!-- Secondary brand color. -->
-        <item name="colorSecondary">#089CD8</item>
-        <item name="colorSecondaryVariant">@color/resaltado</item>
-        <item name="colorOnSecondary">@color/oscuro</item>
-        <!-- Status bar color. -->
-        <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
+    <!--   Base application theme.
+      <style name="Theme.TrassTarea" parent="Theme.AppCompat.DayNight.DarkActionBar">
+           Primary brand color.
+          <item name="colorPrimary">@color/primario_oscuro</item>
+          <item name="colorPrimaryVariant">@color/primario_oscuro</item>
+          <item name="colorOnPrimary">@color/oscuro</item>
+           Secondary brand color.
+          <item name="colorSecondary">#089CD8</item>
+          <item name="colorSecondaryVariant">@color/resaltado</item>
+          <item name="colorOnSecondary">@color/oscuro</item>
+           Status bar color.
+          <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
 
-        <!-- Customize your theme here. -->
-        <!--<item name="android:colorBackground">#0E730F</item>-->
-    </style>
-</resources>
+           Customize your theme here.
+          <item name="android:colorBackground">#0E730F</item>
+      </style>-->
+  </resources>
