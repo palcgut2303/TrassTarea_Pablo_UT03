@@ -82,7 +82,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         }*/
 
         //Cambiar tamaño letra, en funcion de la opcion de las preferencias
-        tamanoLetraCreate(fontSize);
+        //tamanoLetraCreate(fontSize);
 
 
 
@@ -131,7 +131,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
     }
 
     //MÉTODO, se ejecuta en el onCreate
-    public void tamanoLetraCreate(String fontSize){
+   /* public void tamanoLetraCreate(String fontSize){
         if(fontSize.equalsIgnoreCase("1")){
             tamanoLetraApp = 10;
             if(theme){
@@ -161,7 +161,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
             //setTheme(R.style.Theme_TrassTarea_Font_Small);
 
         }
-    }
+    }*/
 
     ////////////////////////////////////// OPCIONES DEL MENÚ ///////////////////////////////////////
     @Override
@@ -200,7 +200,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        cambiarTamanoLetra();
+       // cambiarTamanoLetra();
 
         /*if(theme){
             setDayNight(1);
@@ -250,7 +250,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     //Este metodo se utiliza en el onResume, la diferencia con el otro metodo del onCreate, es los condicionales,
     //depenede del valor de la variable que se inicia en el otro metodo que se ejecuta desde el onCreate
-    public void cambiarTamanoLetra(){
+   /* public void cambiarTamanoLetra(){
         if(tamanoLetraApp == 10){
             if(theme){
                 setTheme(R.style.Theme_TrassTarea_Font_Small);
@@ -277,10 +277,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
            // getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
 
         }
-    }
+    }*/
 
     //Metodo para cambiar el tema de la aplicacion.
-    public void setDayNight(int mode){
+  /*  public void setDayNight(int mode){
         if(mode==0){
           // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
            // setTheme(R.style.AppTheme_Dark);
@@ -288,7 +288,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         }
-    }
+    }*/
 
     //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
 

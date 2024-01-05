@@ -15,7 +15,7 @@ import iestrassierra.jlcamunas.trasstarea.R;
 public class MainActivity extends AppCompatActivity {
 
     private boolean theme = true;
-
+    private boolean esCreate = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -25,11 +25,11 @@ public class MainActivity extends AppCompatActivity {
         Button btEmpezar = findViewById(R.id.main_bt_empezar);
         btEmpezar.setOnClickListener(this::empezar);
 
-        if(theme){
+       /* if(theme){
             setDayNight(1);
         }else{
             setDayNight(0);
-        }
+        }*/
 
     }
 
@@ -38,11 +38,18 @@ public class MainActivity extends AppCompatActivity {
         super.onResume();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         theme = sharedPreferences.getBoolean("tema",true);
-        if(theme){
+       /* if(theme){
             setDayNight(1);
         }else{
             setDayNight(0);
+        }*/
+
+        if(esCreate){
+            recreate();
         }
+
+        esCreate = true;
+
     }
 
     private void empezar(View v){
@@ -50,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(aEmpezar);
     }
 
-    public void setDayNight(int mode){
+   /* public void setDayNight(int mode){
         if(mode==0){
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
             //setTheme(R.style.AppTheme_Dark);
@@ -58,5 +65,5 @@ public class MainActivity extends AppCompatActivity {
         }else{
             getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
-    }
+    }*/
 }

@@ -79,4 +79,10 @@
 
     <string name="basedatosInte_orden_off">Interna</string>
     <string name="basedatosExt_orden_on">Externa</string>
+    <string name="title_activity_settings2">SettingsActivity2</string>
+    <string name="sync_header">Sync</string>
+    <string name="reply_title">Default reply action</string>
+
+    <!-- Sync Preferences -->
+    <string name="sync_title">Sync email periodically</string>
 </resources>
