@@ -12,10 +12,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.TrassTarea"
         tools:targetApi="34">
-        <activity
-            android:name=".preferencias.SettingsActivity2"
-            android:exported="false"
-            android:label="@string/title_activity_settings2" />
+
         <activity
             android:name=".preferencias.SettingsActivity"
             android:exported="false"

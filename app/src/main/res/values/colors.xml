@@ -8,5 +8,4 @@
     <color name="claro">#FFf4f4f4</color>
     <color name="rojo">#FFf01010</color>
     <color name="secundario">#DCE3E9</color>
-    <color name="colorBackgroundDark">#3E2723</color> <!-- Marrón oscuro -->     <color name="colorPrimaryDark">#4E342E</color> <!-- Marrón más claro -->     <color name="colorAccentDark">#FFA000</color> <!-- Naranja -->     <color name="colorTextPrimaryDark">#FFCC80</color> <!-- Texto primario (naranja claro) -->     <color name="colorTextSecondaryDark">#FF8F00</color> <!-- Texto secundario (naranja oscuro) -->
 </resources>

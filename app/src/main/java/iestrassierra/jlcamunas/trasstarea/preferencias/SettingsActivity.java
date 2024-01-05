@@ -6,7 +6,10 @@ import static java.security.AccessController.getContext;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.view.MenuItem;
 
 import androidx.annotation.NonNull;
@@ -70,21 +73,38 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
            }
        }
 
-        if(key.equalsIgnoreCase("tamañoLetra")){
+       if(key.equalsIgnoreCase("tamañoLetra")){
             String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
-
+            float size = getResources().getConfiguration().fontScale;
             if(fontSize.equalsIgnoreCase("1")){
-
+                ajustarTamanoLetraEnTodaLaApp(getResources(),0.6f);
             }else if (fontSize.equalsIgnoreCase("2") ){
-
+                ajustarTamanoLetraEnTodaLaApp(getResources(),1.2f);
             }else if (fontSize.equalsIgnoreCase("3") ){
-
+                ajustarTamanoLetraEnTodaLaApp(getResources(),1.5f);
             }
 
 
 
         }
 
+    }
+
+    public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {
+        Configuration configuration = resources.getConfiguration();
+
+        // Crear una nueva configuración basada en la configuración actual
+        Configuration newConfig = new Configuration(configuration);
+
+        // Modificar la escala de fuente en la nueva configuración
+        newConfig.fontScale = nuevoTamano;
+
+        // Aplicar la nueva configuración al recurso
+        resources.updateConfiguration(newConfig, null);
+
+        // Actualizar la densidad de píxeles en función de la nueva configuración
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        resources.updateConfiguration(newConfig, metrics);
     }
 
     public static class SettingsFragment extends PreferenceFragmentCompat {
