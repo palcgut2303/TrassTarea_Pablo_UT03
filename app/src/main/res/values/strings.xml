@@ -79,4 +79,8 @@
 
     <string name="basedatosInte_orden_off">Interna</string>
     <string name="basedatosExt_orden_on">Externa</string>
+    <string name="documento">Documento</string>
+    <string name="imagen">Imagen</string>
+    <string name="audio">Audio</string>
+    <string name="video">Video</string>
 </resources>

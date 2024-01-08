@@ -19,13 +19,15 @@
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:layout_width="466dp"
+        android:layout_height="305dp"
         android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
+        app:layout_constraintHorizontal_bias="0.192"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_descripcion">
+        app:layout_constraintTop_toBottomOf="@+id/tv_descripcion"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.appcompat.widget.AppCompatEditText
             android:id="@+id/et_descripcion"
@@ -55,7 +57,7 @@
         android:id="@+id/bt_guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="144dp"
         android:text="@string/bt_guardar"
         app:layout_constraintBottom_toTopOf="@+id/bt_volver"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
@@ -66,6 +68,48 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        app:layout_constraintGuide_percent="0.75" />
+        app:layout_constraintGuide_percent="0.66" />
+
+    <Button
+        android:id="@+id/btDocumento"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/documento"
+        app:layout_constraintBottom_toTopOf="@+id/btImagen"
+        app:layout_constraintStart_toStartOf="@+id/guideline3"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/btImagen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/imagen"
+        app:layout_constraintBottom_toTopOf="@+id/btAudio"
+        app:layout_constraintEnd_toEndOf="@+id/btDocumento"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btDocumento"
+        app:layout_constraintTop_toBottomOf="@+id/btDocumento" />
+
+    <Button
+        android:id="@+id/btAudio"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/audio"
+        app:layout_constraintBottom_toTopOf="@+id/btVideo"
+        app:layout_constraintEnd_toEndOf="@+id/btImagen"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btImagen"
+        app:layout_constraintTop_toBottomOf="@+id/btImagen" />
+
+    <Button
+        android:id="@+id/btVideo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/video"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/btAudio"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="@+id/btAudio"
+        app:layout_constraintTop_toBottomOf="@+id/btAudio" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

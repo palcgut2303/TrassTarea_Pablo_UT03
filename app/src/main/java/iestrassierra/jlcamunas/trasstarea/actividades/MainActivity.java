@@ -62,10 +62,10 @@ public class MainActivity extends AppCompatActivity {
         DisplayMetrics display =resources.getDisplayMetrics();
 
         switch (tamanoLetra){
-            case "1":
+            case "Pequeña":
                 conf.fontScale = 0.8f;
                 break;
-            case "2":
+            case "Mediana":
                 conf.fontScale = 1.2f;
                 break;
             default:
@@ -79,12 +79,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public Resources.Theme getTheme() {
         Resources.Theme theme = super.getTheme();
-
         if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("tema",false)){
             theme.applyStyle(R.style.Theme_TrassTarea,true);
         }
-
-
         return theme;
     }
 

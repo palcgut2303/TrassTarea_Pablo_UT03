@@ -1,12 +1,16 @@
 package iestrassierra.jlcamunas.trasstarea.fragmentos;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,6 +24,8 @@ public class FragmentoDos extends Fragment {
 
     private TareaViewModel tareaViewModel;
     private EditText etDescripcion;
+
+    private String nombreArchivo;
 
     //Interfaces de comunicación con la actividad para el botón Guardar y Volver
     public interface ComunicacionSegundoFragmento {
@@ -87,6 +93,92 @@ public class FragmentoDos extends Fragment {
             if(comunicadorSegundoFragmento != null)
                 comunicadorSegundoFragmento.onBotonGuardarClicked();
         });
+
+        Button btDocumento = view.findViewById(R.id.btDocumento);
+        btDocumento.setOnClickListener(v -> {
+
+            seleccionarArchivoDocumentos();
+
+
+        });
+
+        Button btImagen = view.findViewById(R.id.btImagen);
+        btImagen.setOnClickListener(v -> {
+
+            seleccionarArchivoImagen();
+
+
+        });
+
+        Button btAudio = view.findViewById(R.id.btAudio);
+        btAudio.setOnClickListener(v -> {
+
+            seleccionarArchivoAudio();
+
+
+        });
+
+        Button btVideo = view.findViewById(R.id.btVideo);
+        btVideo.setOnClickListener(v -> {
+
+            seleccionarArchivoVideo();
+
+
+        });
+    }
+
+    private void seleccionarArchivoDocumentos() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("text/plain");  // Puedes ajustar el tipo de archivo aquí
+
+        // Empieza la actividad para seleccionar un archivo
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+    }
+
+    private void seleccionarArchivoVideo() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("video/*");  // Puedes ajustar el tipo de archivo aquí
+
+        // Empieza la actividad para seleccionar un archivo
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+    }
+
+    private void seleccionarArchivoAudio() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("audio/*");  // Puedes ajustar el tipo de archivo aquí
+
+        // Empieza la actividad para seleccionar un archivo
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+    }
+
+    private void seleccionarArchivoImagen() {
+        Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+        intent.addCategory(Intent.CATEGORY_OPENABLE);
+        intent.setType("image/*");  // Puedes ajustar el tipo de archivo aquí
+
+        // Empieza la actividad para seleccionar un archivo
+        startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
+    }
+
+    private static final int PICK_FILE_REQUEST_CODE = 1;
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_FILE_REQUEST_CODE && resultCode == Activity.RESULT_OK) {
+            if (data != null) {
+                // Obtiene la Uri del archivo seleccionado
+                Uri uri = data.getData();
+
+                // Aquí puedes realizar acciones con la Uri del archivo seleccionado
+                // Por ejemplo, mostrar el nombre del archivo
+                 nombreArchivo = uri.getLastPathSegment();
+                // Realiza otras acciones según tus necesidades...
+                Toast.makeText(getContext(), nombreArchivo, Toast.LENGTH_SHORT).show();
+            }
+        }
     }
 
     //Método para guardar el estado del formulario en un Bundle

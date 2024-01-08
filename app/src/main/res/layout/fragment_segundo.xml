@@ -11,17 +11,23 @@
         android:id="@+id/tv_descripcion"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:text="@string/tv_descripcion"
+        android:textSize="20sp"
         app:layout_constraintBottom_toTopOf="@+id/scrollView2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.487" />
 
     <ScrollView
         android:id="@+id/scrollView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/bt_volver"
+        android:layout_width="392dp"
+        android:layout_height="354dp"
+        android:layout_marginTop="50dp"
+        app:layout_constraintBottom_toTopOf="@+id/btDocumento"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_descripcion">
 
         <androidx.appcompat.widget.AppCompatEditText
@@ -41,22 +47,66 @@
         android:id="@+id/bt_volver"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
         android:text="@string/bt_volver"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/bt_guardar"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/btDocumento" />
 
     <Button
         android:id="@+id/bt_guardar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="65dp"
         android:text="@string/bt_guardar"
-        app:layout_constraintBottom_toBottomOf="@+id/bt_volver"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toEndOf="@+id/bt_volver"
-        app:layout_constraintTop_toTopOf="@+id/bt_volver" />
+        app:layout_constraintTop_toBottomOf="@+id/btAudio" />
+
+    <Button
+        android:id="@+id/btDocumento"
+        android:layout_width="130dp"
+        android:layout_height="39dp"
+        android:layout_marginTop="15dp"
+        android:text="@string/documento"
+        app:layout_constraintEnd_toStartOf="@+id/btImagen"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+
+    <Button
+        android:id="@+id/btImagen"
+        android:layout_width="90dp"
+        android:layout_height="40dp"
+        android:text="@string/imagen"
+        app:layout_constraintBottom_toBottomOf="@+id/btDocumento"
+        app:layout_constraintEnd_toStartOf="@+id/btAudio"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btDocumento"
+        app:layout_constraintTop_toTopOf="@+id/btDocumento" />
+
+    <Button
+        android:id="@+id/btVideo"
+        android:layout_width="75dp"
+        android:layout_height="41dp"
+        android:text="@string/video"
+        app:layout_constraintBottom_toBottomOf="@+id/btAudio"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btAudio"
+        app:layout_constraintTop_toTopOf="@+id/btAudio" />
+
+    <Button
+        android:id="@+id/btAudio"
+        android:layout_width="75dp"
+        android:layout_height="41dp"
+        android:text="@string/audio"
+        app:layout_constraintBottom_toBottomOf="@+id/btImagen"
+        app:layout_constraintEnd_toStartOf="@+id/btVideo"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/btImagen"
+        app:layout_constraintTop_toTopOf="@+id/btImagen" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

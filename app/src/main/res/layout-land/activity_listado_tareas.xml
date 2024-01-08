@@ -5,7 +5,7 @@
     android:id="@+id/listado_relative"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/listado_background"
+    android:background="?android:attr/textColorLink"
     tools:context=".actividades.ListadoTareasActivity">
 
     <TextView
