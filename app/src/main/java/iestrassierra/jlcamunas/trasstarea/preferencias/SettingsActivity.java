@@ -75,9 +75,9 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
        if(key.equalsIgnoreCase("tamañoLetra")){
             String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
-            float size = getResources().getConfiguration().fontScale;
+           // float size = getResources().getConfiguration().fontScale;
             if(fontSize.equalsIgnoreCase("1")){
-                ajustarTamanoLetraEnTodaLaApp(getResources(),0.6f);
+                ajustarTamanoLetraEnTodaLaApp(getResources(),0.8f);
             }else if (fontSize.equalsIgnoreCase("2") ){
                 ajustarTamanoLetraEnTodaLaApp(getResources(),1.2f);
             }else if (fontSize.equalsIgnoreCase("3") ){
