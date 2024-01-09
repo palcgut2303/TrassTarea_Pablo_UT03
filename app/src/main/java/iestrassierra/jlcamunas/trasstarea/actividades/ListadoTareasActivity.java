@@ -564,11 +564,11 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     // Método de inicialización de la colección. Tareas de ejemplo.
     private void inicializarListaTareas(){
-        tareas.add(new Tarea("Hacer el cuestionario inicial", "10/09/2023", "17/09/2023", 100, true, ""));
-        tareas.add(new Tarea("Hacer la tarea UT01", "18/09/2023", "03/10/2023", 100, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, ""));
-        tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, ""));
-        tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, ""));
+        tareas.add(new Tarea("Hacer el cuestionario inicial", "10/09/2023", "17/09/2023", 100, true, "",""));
+        tareas.add(new Tarea("Hacer la tarea UT01", "18/09/2023", "03/10/2023", 100, true, "",""));
+        tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, "",""));
+        tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, "",""));
+        tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, "",""));
 
         //En cada tarea de ejemplo incluímos una descripción larga generada con Lorem Ipsum
         tareas.forEach(tarea -> tarea.setDescripcion(

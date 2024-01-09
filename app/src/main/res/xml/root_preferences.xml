@@ -44,7 +44,7 @@
     <PreferenceCategory app:title="@string/almacenamiento_header">
 
         <CheckBoxPreference
-            app:defaultValue="0"
+            app:defaultValue="false"
             app:icon="@drawable/baseline_save_24"
             app:key="sd"
             app:title="@string/almacenamiento_title" />

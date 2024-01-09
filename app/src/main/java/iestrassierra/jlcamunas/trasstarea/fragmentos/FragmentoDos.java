@@ -17,6 +17,13 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import org.apache.commons.io.FileUtils;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStreamWriter;
+
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaViewModel;
 
@@ -88,7 +95,7 @@ public class FragmentoDos extends Fragment {
         btGuardar.setOnClickListener(v -> {
             //Escribimos en el ViewModel
             tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-
+            tareaViewModel.setRutaArchivo(nombreArchivo);
             //Llamamos al método onBotonGuardarClicked que está implementado en la actividad.
             if(comunicadorSegundoFragmento != null)
                 comunicadorSegundoFragmento.onBotonGuardarClicked();
@@ -175,8 +182,7 @@ public class FragmentoDos extends Fragment {
                 // Aquí puedes realizar acciones con la Uri del archivo seleccionado
                 // Por ejemplo, mostrar el nombre del archivo
                  nombreArchivo = uri.getLastPathSegment();
-                // Realiza otras acciones según tus necesidades...
-                Toast.makeText(getContext(), nombreArchivo, Toast.LENGTH_SHORT).show();
+
             }
         }
     }
@@ -201,6 +207,7 @@ public class FragmentoDos extends Fragment {
 
     private void escribirViewModel(){
         tareaViewModel.setDescripcion(etDescripcion.getText().toString());
+        tareaViewModel.setRutaArchivo(nombreArchivo);
     }
 
 }

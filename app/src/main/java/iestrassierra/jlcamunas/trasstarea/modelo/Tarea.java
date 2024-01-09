@@ -26,10 +26,11 @@ public class Tarea implements Parcelable {
     private Boolean prioritaria;
     private String descripcion;
 
+    private String rutaArchivo;
 
     // Constructor
 
-    public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso, boolean prioritaria, String descripcion) {
+    public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso, boolean prioritaria, String descripcion,String rutaArchivo) {
         this.id = ++contador_id;
         this.titulo = titulo;
         this.fechaCreacion = validarFecha(fechaCreacion);
@@ -37,9 +38,16 @@ public class Tarea implements Parcelable {
         this.progreso = progreso;
         this.prioritaria = prioritaria;
         this.descripcion = descripcion;
+        this.rutaArchivo = rutaArchivo;
     }
 
     // Getters y setters para acceder y modificar los atributos
+
+    public String getRutaArchivo() {return rutaArchivo;}
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo = rutaArchivo;
+    }
 
     public long getId() {
         return id;

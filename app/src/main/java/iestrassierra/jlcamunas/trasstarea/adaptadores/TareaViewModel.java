@@ -12,6 +12,7 @@ public class TareaViewModel extends ViewModel {
     private final MutableLiveData<Integer> progreso = new MutableLiveData<>();
     private final MutableLiveData<Boolean> prioritaria = new MutableLiveData<>();
     private final MutableLiveData<String> descripcion = new MutableLiveData<>();
+    private final MutableLiveData<String> rutaArchivo = new MutableLiveData<>();
 
     public MutableLiveData<String> getTitulo() {
         return titulo;
@@ -19,6 +20,14 @@ public class TareaViewModel extends ViewModel {
 
     public void setTitulo(String titulo) {
         this.titulo.setValue(titulo);
+    }
+
+    public MutableLiveData<String> getRutaArchivo() {
+        return rutaArchivo;
+    }
+
+    public void setRutaArchivo(String rutaArchivo) {
+        this.rutaArchivo.setValue(rutaArchivo);
     }
 
     public MutableLiveData<String> getFechaCreacion() {
