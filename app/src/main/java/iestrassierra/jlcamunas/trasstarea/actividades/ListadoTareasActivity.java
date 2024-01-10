@@ -143,43 +143,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        ArrayList<Tarea> tareasArrayList = new ArrayList<>(Objects.requireNonNull(tareasLista.getTareas().getValue()));
+        ArrayList<Tarea> tareasArrayList = new ArrayList<>(Objects.requireNonNull(tareasLista.getListaCopia()));
         outState.putParcelableArrayList("listaTareas",  tareasArrayList);
         outState.putBoolean("prioritarias", boolPrior);
     }
-
-    //MÉTODO, se ejecuta en el onCreate
-   /* public void tamanoLetraCreate(String fontSize){
-        if(fontSize.equalsIgnoreCase("1")){
-            tamanoLetraApp = 10;
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_Small);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_small);
-            }
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-
-
-        }else if (fontSize.equalsIgnoreCase("2") ){
-            tamanoLetraApp = 18;
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_medium);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_medium);
-            }
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-
-        }else if (fontSize.equalsIgnoreCase("3") ){
-            tamanoLetraApp = 24;
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_big);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_big);
-            }
-            //setTheme(R.style.Theme_TrassTarea_Font_Small);
-
-        }
-    }*/
 
     ////////////////////////////////////// OPCIONES DEL MENÚ ///////////////////////////////////////
     @Override
@@ -220,7 +187,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
        // cambiarTamanoLetra();
 
-        ordenTareas();
+        //ordenTareas();
 
 
        if(esCreate){
@@ -232,7 +199,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
     }
 
     //MÉTODO, se ejecuta en el onResume.
-    public void ordenTareas(){
+   /* public void ordenTareas(){
         if(CriterioOrden.equalsIgnoreCase("1")){
             if(orden){
                 tareasLista.getTareas().getValue().sort(comparadorAlfabeticoAscendente());
@@ -258,7 +225,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 tareas.sort(comparadorDiasRestantesDescendente());
             }
         }
-    }
+    }*/
 
     //Este metodo se utiliza en el onResume, la diferencia con el otro metodo del onCreate, es los condicionales,
     //depenede del valor de la variable que se inicia en el otro metodo que se ejecuta desde el onCreate

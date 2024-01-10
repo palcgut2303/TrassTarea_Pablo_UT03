@@ -16,10 +16,12 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.Transformations;
 import androidx.lifecycle.ViewModel;
 import androidx.preference.PreferenceManager;
 
 import java.io.Closeable;
+import java.util.ArrayList;
 import java.util.List;
 
 import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
@@ -123,7 +125,7 @@ public class TareaViewModel extends AndroidViewModel {
     public TareaViewModel(@NonNull Application application) {
         super(application);
         //Inicializamos el contenido de la lista, al de la tabla de la base de datos
-        tareas = ControladorBaseDatos
+        tareas =  ControladorBaseDatos
                 .getInstance(application)
                 .tareaDAO().getAll();
 
@@ -134,6 +136,12 @@ public class TareaViewModel extends AndroidViewModel {
     private String CriterioOrden = "";
     private boolean orden;
 
+    // Método para establecer la lista de tareas
+    public void setListaTareas(List<Tarea> listaTareas) {
+        //tareas.setValue(listaTareas);
+    }
+    List<Tarea> listaCopia;
+
     //TODO: REALIZAR ORDENACION DE LA LISTA
     public LiveData<List<Tarea>> getTareas() {
         Application application = getApplication();
@@ -141,37 +149,46 @@ public class TareaViewModel extends AndroidViewModel {
         CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
         orden = sharedPreferences.getBoolean("orden",true);
 
-        if(CriterioOrden.equalsIgnoreCase("1")){
-            if(orden){
-                tareas.getValue().sort(comparadorAlfabeticoAscendente());
-            }else{
-                tareas.getValue().sort(comparadorAlfabeticoDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("2")) {
-            if(orden){
-                tareas.getValue().sort(comparadorFechaCreacionAscendente());
-            }else{
-                tareas.getValue().sort(comparadorFechaCreacionDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("4")) {
-            if(orden){
-                tareas.getValue().sort(comparadorProgresoAscendente());
-            }else{
-                tareas.getValue().sort(comparadorProgresoDescendente());
-            }
-        } else {
-            if(orden){
-                tareas.getValue().sort(comparadorDiasRestantesAscendente());
-            }else{
-                  tareas.getValue().sort(comparadorDiasRestantesDescendente());
-            }
-        }
+        return Transformations.switchMap(tareas, input -> {
+            //CriterioOrdenacion criterio = criterioOrdenacionLiveData.getValue();
 
-        return tareas;
+            // Copiar la lista original para evitar modificaciones directas
+             listaCopia = new ArrayList<>(input);
+
+            // Aplicar el criterio de ordenación
+            if(CriterioOrden.equalsIgnoreCase("1")){
+                if(orden){
+                    listaCopia.sort(comparadorAlfabeticoAscendente());
+                }else{
+                    listaCopia.sort(comparadorAlfabeticoDescendente());
+                }
+            } else if (CriterioOrden.equalsIgnoreCase("2")) {
+                if(orden){
+                    listaCopia.sort(comparadorFechaCreacionAscendente());
+                }else{
+                    listaCopia.sort(comparadorFechaCreacionDescendente());
+                }
+            } else if (CriterioOrden.equalsIgnoreCase("4")) {
+                if(orden){
+                    listaCopia.sort(comparadorProgresoAscendente());
+                }else{
+                    listaCopia.sort(comparadorProgresoDescendente());
+                }
+            } else {
+                if(orden){
+                    listaCopia.sort(comparadorDiasRestantesAscendente());
+                }else{
+                    listaCopia.sort(comparadorDiasRestantesDescendente());
+                }
+            }
+
+            return new MutableLiveData<>(listaCopia);
+        });
+
+
     }
 
-    public void ordenTareas(){
-
+    public List<Tarea> getListaCopia() {
+        return listaCopia;
     }
-
 }
