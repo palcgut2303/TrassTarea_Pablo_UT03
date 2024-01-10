@@ -123,6 +123,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
         tareasLista.getTareas().observe(this, tareas -> {
             // Actualizar el conjunto de datos del adaptador cuando cambie la lista de tareas
             adaptador.setDatos(tareas);
+            //Comprobamos si el listado está vacío
+            comprobarListadoVacio();
         });
         //Ejecutamos el método, en funcion de lo que cogamos en las preferencias se ordenará.
        // ordenTareas();
@@ -132,8 +134,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         //Registramos el rv para el menú contextual
         registerForContextMenu(rv);
 
-        //Comprobamos si el listado está vacío
-        comprobarListadoVacio();
+
     }
 
 
