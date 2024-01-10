@@ -8,12 +8,15 @@ import androidx.room.DatabaseConfiguration;
 import androidx.room.InvalidationTracker;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
+import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteOpenHelper;
 
 import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
+import iestrassierra.jlcamunas.trasstarea.adaptadores.Convertidores;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
 @Database(entities = {Tarea.class}, version = 1, exportSchema = false)
+@TypeConverters(Convertidores.class)
 public abstract class ControladorBaseDatos  extends RoomDatabase {
     @Override
     public void clearAllTables() {

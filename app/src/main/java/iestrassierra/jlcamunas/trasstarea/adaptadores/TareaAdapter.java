@@ -17,6 +17,7 @@ import androidx.appcompat.content.res.AppCompatResources;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
@@ -24,8 +25,8 @@ import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
 public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TaskViewHolder>{
 
-    private final Context contexto;
-    private final ArrayList<Tarea> tasks;
+    private Context contexto;
+    private List<Tarea> tasks;
     private Tarea tareaSeleccionada;
     private boolean boolPrior;
     public void setBoolPrior(boolean boolPrior){
@@ -33,10 +34,17 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TaskViewHold
     }
 
     //Constructor
-    public TareaAdapter(Context contexto, ArrayList<Tarea> tasks, boolean boolPrior) {
+    public TareaAdapter(Context contexto, List<Tarea> tasks, boolean boolPrior) {
         this.contexto = contexto;
         this.tasks = tasks;
         this.boolPrior = boolPrior;
+    }
+
+
+
+    public void setDatos(List<Tarea> tareas) {
+        this.tasks = tareas;
+        notifyDataSetChanged();
     }
 
     @NonNull
@@ -94,7 +102,7 @@ public class TareaAdapter extends RecyclerView.Adapter<TareaAdapter.TaskViewHold
         private void bind(Tarea t) {
             tvTitulo.setText(t.getTitulo());
             pgProgreso.setProgress(t.getProgreso());
-            tvFechaCreacion.setText(t.getFechaCreacion());
+            tvFechaCreacion.setText(t.getCreacionFecha());
 
             int dias = 0;
             t.quedanDias();

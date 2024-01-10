@@ -50,7 +50,6 @@ public class Tarea implements Parcelable {
     // Constructor
 
     public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso, boolean prioritaria, String descripcion,String URL_doc,String URL_aud,String URL_img,String URL_vid) {
-        this.id = ++contador_id;
         this.titulo = titulo;
         this.fechaCreacion = validarFecha(fechaCreacion);
         this.fechaObjetivo = validarFecha(fechaObjetivo);
@@ -60,7 +59,7 @@ public class Tarea implements Parcelable {
         this.URL_doc = URL_doc;
         this.URL_aud = URL_aud;
         this.URL_img = URL_img;
-        this.URL_vid = URL_img;
+        this.URL_vid = URL_vid;
     }
 
     public Tarea(){
@@ -117,7 +116,19 @@ public class Tarea implements Parcelable {
         this.titulo = titulo;
     }
 
-    public String getFechaCreacion() {
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
+    }
+
+    public void setFechaObjetivo(Date fechaObjetivo) {
+        this.fechaObjetivo = fechaObjetivo;
+    }
+
+    public String getCreacionFecha(){
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.format(fechaCreacion);
     }
@@ -137,11 +148,14 @@ public class Tarea implements Parcelable {
         return fecha;
     }
 
-    public String getFechaObjetivo() {
+    public Date getFechaObjetivo() {
+        return fechaObjetivo;
+    }
+
+    public String getObjetivoFecha() {
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
         return sdf.format(fechaObjetivo);
     }
-
     public Integer getProgreso() {
         return progreso;
     }
@@ -262,10 +276,10 @@ public class Tarea implements Parcelable {
     };
 
     public static Comparator<Tarea> comparadorFechaCreacionAscendente() {
-        return Comparator.comparing(Tarea::getFechaCreacion);
+        return Comparator.comparing(Tarea::getCreacionFecha);
     }
     public static Comparator<Tarea> comparadorFechaCreacionDescendente() {
-        return Comparator.comparing(Tarea::getFechaCreacion).reversed();
+        return Comparator.comparing(Tarea::getCreacionFecha).reversed();
     }
     public static Comparator<Tarea> comparadorAlfabeticoAscendente() {
         return Comparator.comparing(Tarea::getTitulo);

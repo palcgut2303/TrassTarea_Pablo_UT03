@@ -36,16 +36,24 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
 
+import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaAdapter;
+import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaViewModel;
 import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 import iestrassierra.jlcamunas.trasstarea.preferencias.SettingsActivity;
@@ -55,7 +63,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private RecyclerView rv;
     private TextView listadoVacio;
     private MenuItem menuItemPrior;
-    private ArrayList<Tarea> tareas = new ArrayList<>();
+    private List<Tarea> tareas = new ArrayList<>();
     private TareaAdapter adaptador;
     private boolean boolPrior = false;
     private Tarea tareaSeleccionada;
@@ -65,6 +73,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private String CriterioOrden = "";
     private boolean orden;
 
+    private TareaViewModel tareasLista;
+
     private ControladorBaseDatos controladorBaseDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +83,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 
         // Obtengo los valores de las preferencias
-        String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
+        //String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
         theme = sharedPreferences.getBoolean("tema",true);
         CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
         orden = sharedPreferences.getBoolean("orden",true);
@@ -84,6 +94,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
         //Binding del RecyclerView
         rv = findViewById(R.id.listado_recycler);
+
 
         //RESTAURACIÓN DEL ESTADO GLOBAL DE LA ACTIVIDAD
         if (savedInstanceState != null) {
@@ -97,14 +108,26 @@ public class ListadoTareasActivity extends AppCompatActivity {
             boolPrior = false;
         }
 
-        //Ejecutamos el método, en funcion de lo que cogamos en las preferencias se ordenará.
-        ordenTareas();
+
+
 
 
         //Creamos el adaptador y lo vinculamos con el RecycleView
-        adaptador = new TareaAdapter(this,  tareas, boolPrior);
+        adaptador = new TareaAdapter(this,new ArrayList<>(),boolPrior);
         rv.setAdapter(adaptador);
+
+        // Obtener una instancia del TareaViewModel
+        tareasLista = new ViewModelProvider(this).get(TareaViewModel.class);
+
+        // Observar cambios en la lista de tareas
+        tareasLista.getTareas().observe(this, tareas -> {
+            // Actualizar el conjunto de datos del adaptador cuando cambie la lista de tareas
+            adaptador.setDatos(tareas);
+        });
+        //Ejecutamos el método, en funcion de lo que cogamos en las preferencias se ordenará.
+       // ordenTareas();
         rv.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL,false));
+
 
         //Registramos el rv para el menú contextual
         registerForContextMenu(rv);
@@ -113,13 +136,15 @@ public class ListadoTareasActivity extends AppCompatActivity {
         comprobarListadoVacio();
     }
 
+
     //SALVADO DEL ESTADO GLOBAL DE LA ACTIVIDAD
     //Salva la lista de tareas y el valor booleano de prioritarias para el caso en que la actividad
     // sea destruida por ejemplo al cambiar la orientación del dispositivo
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putParcelableArrayList("listaTareas", tareas);
+        ArrayList<Tarea> tareasArrayList = new ArrayList<>(Objects.requireNonNull(tareasLista.getTareas().getValue()));
+        outState.putParcelableArrayList("listaTareas",  tareasArrayList);
         outState.putBoolean("prioritarias", boolPrior);
     }
 
@@ -210,21 +235,21 @@ public class ListadoTareasActivity extends AppCompatActivity {
     public void ordenTareas(){
         if(CriterioOrden.equalsIgnoreCase("1")){
             if(orden){
-                tareas.sort(comparadorAlfabeticoAscendente());
+                tareasLista.getTareas().getValue().sort(comparadorAlfabeticoAscendente());
             }else{
-                tareas.sort(comparadorAlfabeticoDescendente());
+                tareasLista.getTareas().getValue().sort(comparadorAlfabeticoDescendente());
             }
         } else if (CriterioOrden.equalsIgnoreCase("2")) {
             if(orden){
-                tareas.sort(comparadorFechaCreacionAscendente());
+                tareasLista.getTareas().getValue().sort(comparadorFechaCreacionAscendente());
             }else{
-                tareas.sort(comparadorFechaCreacionDescendente());
+                tareasLista.getTareas().getValue().sort(comparadorFechaCreacionDescendente());
             }
         } else if (CriterioOrden.equalsIgnoreCase("4")) {
             if(orden){
-                tareas.sort(comparadorProgresoAscendente());
+                tareasLista.getTareas().getValue().sort(comparadorProgresoAscendente());
             }else{
-                tareas.sort(comparadorProgresoDescendente());
+                tareasLista.getTareas().getValue().sort(comparadorProgresoDescendente());
             }
         } else {
             if(orden){
@@ -390,6 +415,9 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
                         //Borramos la tarea seleccionada de la colección tareas
                         position = tareas.indexOf(tareaSeleccionada);
+                        Executor executor = Executors.newSingleThreadExecutor();
+                        //Creamos un objeto de la clase BorrarProducto que realiza el borrado en un hilo aparte
+                        executor.execute(new BorrarTarea(tareaSeleccionada));
                         tareas.remove(tareaSeleccionada);
                         adaptador.notifyItemRemoved(position);
 
@@ -443,7 +471,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
         @Override
         public void onActivityResult(Tarea nuevaTarea) {
             if (nuevaTarea != null) {
-                controladorBaseDatos.tareaDAO().insertAll(nuevaTarea);
+                Executor executor = Executors.newSingleThreadExecutor();
+                executor.execute(new InsertarTarea(nuevaTarea));
                 tareas.add(nuevaTarea);
                 adaptador.notifyItemInserted(tareas.size() - 1); // Agregar el elemento nuevo al adaptador.
                 Toast.makeText(ListadoTareasActivity.this.getApplicationContext(), R.string.tarea_add, Toast.LENGTH_SHORT).show();
@@ -451,6 +480,34 @@ public class ListadoTareasActivity extends AppCompatActivity {
             }
         }
     });
+
+    class InsertarTarea implements Runnable {
+
+        private Tarea tarea;
+
+        public InsertarTarea(Tarea tarea) {
+            this.tarea = tarea;
+        }
+
+        @Override
+        public void run() {
+            controladorBaseDatos.tareaDAO().insertAll(tarea);
+        }
+    }
+
+    class BorrarTarea implements Runnable {
+
+        private Tarea tarea;
+
+        public BorrarTarea(Tarea tarea) {
+            this.tarea = tarea;
+        }
+
+        @Override
+        public void run() {
+            controladorBaseDatos.tareaDAO().delete(tarea);
+        }
+    }
 
     //Contrato para el lanzador hacia la actividad EditarTareaActivity
     ActivityResultContract<Tarea, Tarea> contratoEditar = new ActivityResultContract<Tarea, Tarea>() {

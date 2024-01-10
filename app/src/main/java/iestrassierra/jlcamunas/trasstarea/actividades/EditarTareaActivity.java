@@ -83,8 +83,8 @@ public class EditarTareaActivity extends AppCompatActivity implements
             cambiarFragmento(fragmento1);
             //Escribimos valores en el ViewModel
             tareaViewModel.setTitulo(tareaEditable.getTitulo());
-            tareaViewModel.setFechaCreacion(tareaEditable.getFechaCreacion());
-            tareaViewModel.setFechaObjetivo(tareaEditable.getFechaObjetivo());
+            tareaViewModel.setFechaCreacion(tareaEditable.getCreacionFecha());
+            tareaViewModel.setFechaObjetivo(tareaEditable.getObjetivoFecha());
             tareaViewModel.setProgreso(tareaEditable.getProgreso());
             tareaViewModel.setPrioritaria(tareaEditable.isPrioritaria());
             tareaViewModel.setDescripcion(tareaEditable.getDescripcion());
