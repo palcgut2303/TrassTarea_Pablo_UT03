@@ -158,28 +158,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         return super.onCreateOptionsMenu(menu);
     }
 
-  /*  ActivityResultContract<Intent, ActivityResult> contrato = new ActivityResultContracts.StartActivityForResult();
-    ActivityResultCallback<ActivityResult> respuesta = new ActivityResultCallback<ActivityResult>(){
-        @SuppressLint("SetTextI18n")
-        @Override
-        public void onActivityResult(ActivityResult o) {
-            if (o.getResultCode() == Activity.RESULT_OK) {
-                //No hay códigos de actividad
-                Intent intentDevuelto = o.getData();
-                String tamañoLetra = (String) intentDevuelto.getExtras().get("tamañoLetra");
-               //Toast.makeText(ListadoTareasActivity.this, tamañoLetra, Toast.LENGTH_SHORT).show();
-                if(tamañoLetra.equalsIgnoreCase("Pequeña")){
-                    tamanoLetraApp = 10;
-                }else if (tamañoLetra.equalsIgnoreCase("Mediana")){
-                    tamanoLetraApp = 18;
-                }else{
-                    tamanoLetraApp = 24;
-                }
 
-
-            }
-        }
-    };*/
 
     @Override
     protected void onResume() {
@@ -198,78 +177,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     }
 
-    //MÉTODO, se ejecuta en el onResume.
-   /* public void ordenTareas(){
-        if(CriterioOrden.equalsIgnoreCase("1")){
-            if(orden){
-                tareasLista.getTareas().getValue().sort(comparadorAlfabeticoAscendente());
-            }else{
-                tareasLista.getTareas().getValue().sort(comparadorAlfabeticoDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("2")) {
-            if(orden){
-                tareasLista.getTareas().getValue().sort(comparadorFechaCreacionAscendente());
-            }else{
-                tareasLista.getTareas().getValue().sort(comparadorFechaCreacionDescendente());
-            }
-        } else if (CriterioOrden.equalsIgnoreCase("4")) {
-            if(orden){
-                tareasLista.getTareas().getValue().sort(comparadorProgresoAscendente());
-            }else{
-                tareasLista.getTareas().getValue().sort(comparadorProgresoDescendente());
-            }
-        } else {
-            if(orden){
-                tareas.sort(comparadorDiasRestantesAscendente());
-            }else{
-                tareas.sort(comparadorDiasRestantesDescendente());
-            }
-        }
-    }*/
 
-    //Este metodo se utiliza en el onResume, la diferencia con el otro metodo del onCreate, es los condicionales,
-    //depenede del valor de la variable que se inicia en el otro metodo que se ejecuta desde el onCreate
-   /* public void cambiarTamanoLetra(){
-        if(tamanoLetraApp == 10){
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_Small);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_small);
-            }
-            //getTheme().applyStyle(R.style.Theme_TrassTarea_Font_Small, true);
-
-        } else if (tamanoLetraApp == 18){
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_medium);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_medium);
-            }
-           // getTheme().applyStyle(R.style.Theme_TrassTarea_Font_medium, true);
-
-
-        } else if (tamanoLetraApp == 24) {
-            if(theme){
-                setTheme(R.style.Theme_TrassTarea_Font_big);
-            }else{
-                setTheme(R.style.Theme_TrassTarea_dark_big);
-            }
-           // getTheme().applyStyle(R.style.Theme_TrassTarea_Font_big, true);
-
-        }
-    }*/
-
-    //Metodo para cambiar el tema de la aplicacion.
-  /*  public void setDayNight(int mode){
-        if(mode==0){
-          // getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-           // setTheme(R.style.AppTheme_Dark);
-        }else{
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        }
-    }*/
-
-    //ActivityResultLauncher<Intent> lanzador = registerForActivityResult(contrato,respuesta);
 
     @SuppressLint("NotifyDataSetChanged")
     @Override
