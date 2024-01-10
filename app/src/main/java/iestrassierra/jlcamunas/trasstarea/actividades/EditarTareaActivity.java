@@ -36,7 +36,10 @@ public class EditarTareaActivity extends AppCompatActivity implements
     private String titulo, descripcion;
     private String fechaCreacion, fechaObjetivo;
     private Integer progreso;
-    private String rutaArchivo;
+    private String URL_doc;
+    private String URL_img;
+    private String URL_aud;
+    private String URL_vid;
     private Boolean prioritaria;
     private FragmentManager fragmentManager;
     private final Fragment fragmento1 = new FragmentoUno();
@@ -129,7 +132,7 @@ public class EditarTareaActivity extends AppCompatActivity implements
         descripcion = tareaViewModel.getDescripcion().getValue();
         rutaArchivo = tareaViewModel.getRutaArchivo().getValue();
         //Creamos un nuevo objeto tarea con los campos editados
-        Tarea tareaEditada = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso,prioritaria, descripcion,rutaArchivo);
+        Tarea tareaEditada = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso,prioritaria, descripcion,);
 
         //Creamos un intent de vuelta para la actividad Listado
         Intent aListado = new Intent();
@@ -147,29 +150,21 @@ public class EditarTareaActivity extends AppCompatActivity implements
         if(valorSD){
             escribirSD(rutaArchivo, tareaEditada.getTitulo());
         }else{
-            escribirInterno(rutaArchivo,tareaEditada.getTitulo());
+            escribirInterno(rutaArchivo);
         }
         //Volvemos a la actividad Listado
         finish();
     }
 
 
-    private void escribirInterno(String nombreArchivo,String tituloTarea) {
+    private void escribirInterno(String nombreArchivo) {
         OutputStreamWriter escritor;
         if(nombreArchivo.length() <= 0){
             Toast.makeText(this, "No se ha encontrado el archivo", Toast.LENGTH_SHORT).show();
         }else{
             try {
-                // Obtén el directorio de almacenamiento interno específico para tu aplicación
-                File directorioCarpeta = new File(getFilesDir(), tituloTarea);
-
-                // Asegúrate de que la carpeta exista o créala si no existe
-                if (!directorioCarpeta.exists()) {
-                    directorioCarpeta.mkdirs();
-                }
-                File archivo = new File(directorioCarpeta, nombreArchivo);
-                //String nombreRuta = "archivos_adjuntos" + File.separator + nombreArchivo;
-                escritor = new OutputStreamWriter(new FileOutputStream(archivo));
+                escritor = new OutputStreamWriter(openFileOutput(nombreArchivo,
+                        Context.MODE_PRIVATE));
                 escritor.close();
                 Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
             } catch (IOException e) {

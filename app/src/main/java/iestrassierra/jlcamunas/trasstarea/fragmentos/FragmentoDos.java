@@ -17,7 +17,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +32,10 @@ public class FragmentoDos extends Fragment {
     private EditText etDescripcion;
 
     private String nombreArchivo;
+    private String URL_doc;
+    private String URL_img;
+    private String URL_aud;
+    private String URL_vid;
 
     //Interfaces de comunicación con la actividad para el botón Guardar y Volver
     public interface ComunicacionSegundoFragmento {
@@ -95,7 +98,13 @@ public class FragmentoDos extends Fragment {
         btGuardar.setOnClickListener(v -> {
             //Escribimos en el ViewModel
             tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-            tareaViewModel.setRutaArchivo(nombreArchivo);
+                tareaViewModel.setURL_img(URL_img);
+                tareaViewModel.setURL_doc(URL_doc);
+                tareaViewModel.setURL_vid(URL_vid);
+                tareaViewModel.setURL_aud(URL_aud);
+
+
+
             //Llamamos al método onBotonGuardarClicked que está implementado en la actividad.
             if(comunicadorSegundoFragmento != null)
                 comunicadorSegundoFragmento.onBotonGuardarClicked();
@@ -137,7 +146,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoDocumentos() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/plain");  // Puedes ajustar el tipo de archivo aquí
+        intent.setType("text/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
@@ -146,7 +155,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoVideo() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("video/*");  // Puedes ajustar el tipo de archivo aquí
+        intent.setType("video/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
@@ -155,7 +164,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoAudio() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("audio/*");  // Puedes ajustar el tipo de archivo aquí
+        intent.setType("audio/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
@@ -164,7 +173,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoImagen() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("image/*");  // Puedes ajustar el tipo de archivo aquí
+        intent.setType("image/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
@@ -179,9 +188,18 @@ public class FragmentoDos extends Fragment {
                 // Obtiene la Uri del archivo seleccionado
                 Uri uri = data.getData();
 
-                // Aquí puedes realizar acciones con la Uri del archivo seleccionado
-                // Por ejemplo, mostrar el nombre del archivo
+
+                //  mostrar el nombre del archivo
                  nombreArchivo = uri.getLastPathSegment();
+                 if(nombreArchivo.startsWith("document:")){
+                     URL_doc = uri.getPath();
+                 }else if(nombreArchivo.startsWith("video:")){
+                     URL_vid = uri.getPath();
+                 } else if (nombreArchivo.startsWith("audio:")) {
+                     URL_aud = uri.getPath();
+                 }else{
+                     URL_img = uri.getPath();
+                 }
 
             }
         }
@@ -207,7 +225,10 @@ public class FragmentoDos extends Fragment {
 
     private void escribirViewModel(){
         tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-        tareaViewModel.setRutaArchivo(nombreArchivo);
+        tareaViewModel.setURL_img(URL_img);
+        tareaViewModel.setURL_doc(URL_doc);
+        tareaViewModel.setURL_vid(URL_vid);
+        tareaViewModel.setURL_aud(URL_aud);
     }
 
 }

@@ -39,7 +39,10 @@ public class CrearTareaActivity extends AppCompatActivity implements
     private String fechaCreacion, fechaObjetivo;
     private Integer progreso;
     private Boolean prioritaria = false;
-    private String rutaArchivo;
+    private String URL_doc;
+    private String URL_img;
+    private String URL_aud;
+    private String URL_vid;
     private FragmentManager fragmentManager;
 
     private final Fragment fragmento1 = new FragmentoUno();
@@ -110,7 +113,10 @@ public class CrearTareaActivity extends AppCompatActivity implements
     public void onBotonGuardarClicked() {
         //Leemos los valores del formulario del fragmento 2
         descripcion = tareaViewModel.getDescripcion().getValue();
-        rutaArchivo = tareaViewModel.getRutaArchivo().getValue();
+        URL_doc = tareaViewModel.getURL_doc().getValue();
+        URL_aud = tareaViewModel.getURL_aud().getValue();
+        URL_img = tareaViewModel.getURL_img().getValue();
+        URL_vid = tareaViewModel.getURL_vid().getValue();
         //Creamos la nueva tarea
         Tarea nuevaTarea = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso, prioritaria, descripcion,rutaArchivo);
         //Creamos un intent de vuelta para la actividad Listado
@@ -130,29 +136,21 @@ public class CrearTareaActivity extends AppCompatActivity implements
         if(valorSD){
             escribirSD(rutaArchivo, nuevaTarea.getTitulo());
         }else{
-            escribirInterno(rutaArchivo,nuevaTarea.getTitulo());
+            escribirInterno(rutaArchivo);
         }
 
         //Volvemos a la actividad Listado
         finish();
     }
 
-    private void escribirInterno(String nombreArchivo,String tituloTarea) {
+    private void escribirInterno(String nombreArchivo) {
         OutputStreamWriter escritor;
         if(nombreArchivo.length() <= 0){
             Toast.makeText(this, "No se ha encontrado el archivo", Toast.LENGTH_SHORT).show();
         }else{
             try {
-                // Obtén el directorio de almacenamiento interno específico para tu aplicación
-                File directorioCarpeta = new File(getFilesDir(), tituloTarea);
-
-                // Asegúrate de que la carpeta exista o créala si no existe
-                if (!directorioCarpeta.exists()) {
-                    directorioCarpeta.mkdirs();
-                }
-                File archivo = new File(directorioCarpeta, nombreArchivo);
-                //String nombreRuta = "archivos_adjuntos" + File.separator + nombreArchivo;
-                escritor = new OutputStreamWriter(new FileOutputStream(archivo));
+                escritor = new OutputStreamWriter(openFileOutput(nombreArchivo,
+                        Context.MODE_PRIVATE));
                 escritor.close();
                 Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
@@ -161,6 +159,8 @@ public class CrearTareaActivity extends AppCompatActivity implements
         }
 
     }
+
+
 
    /*private String leerInterno(String tituloTarea, String nombreArchivo) {
         InputStreamReader lector;

@@ -12,7 +12,10 @@ public class TareaViewModel extends ViewModel {
     private final MutableLiveData<Integer> progreso = new MutableLiveData<>();
     private final MutableLiveData<Boolean> prioritaria = new MutableLiveData<>();
     private final MutableLiveData<String> descripcion = new MutableLiveData<>();
-    private final MutableLiveData<String> rutaArchivo = new MutableLiveData<>();
+    private final MutableLiveData<String> URL_doc = new MutableLiveData<>();
+    private final MutableLiveData<String> URL_img = new MutableLiveData<>();
+    private final MutableLiveData<String> URL_vid = new MutableLiveData<>();
+    private final MutableLiveData<String> URL_aud = new MutableLiveData<>();
 
     public MutableLiveData<String> getTitulo() {
         return titulo;
@@ -22,12 +25,36 @@ public class TareaViewModel extends ViewModel {
         this.titulo.setValue(titulo);
     }
 
-    public MutableLiveData<String> getRutaArchivo() {
-        return rutaArchivo;
+    public MutableLiveData<String> getURL_doc() {
+        return URL_doc;
     }
 
-    public void setRutaArchivo(String rutaArchivo) {
-        this.rutaArchivo.setValue(rutaArchivo);
+    public void setURL_doc(String urlDoc) {
+        this.URL_doc.setValue(urlDoc);
+    }
+
+    public MutableLiveData<String> getURL_img() {
+        return URL_img;
+    }
+
+    public void setURL_img(String urlImg) {
+        this.URL_doc.setValue(urlImg);
+    }
+
+    public MutableLiveData<String> getURL_vid() {
+        return URL_vid;
+    }
+
+    public void setURL_vid(String urlVid) {
+        this.URL_vid.setValue(urlVid);
+    }
+
+    public MutableLiveData<String> getURL_aud() {
+        return URL_aud;
+    }
+
+    public void setURL_aud(String urlAud) {
+        this.URL_aud.setValue(urlAud);
     }
 
     public MutableLiveData<String> getFechaCreacion() {

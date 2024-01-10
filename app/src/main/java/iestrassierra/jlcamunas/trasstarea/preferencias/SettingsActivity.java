@@ -115,14 +115,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         }
     }
 
-    /*public void setDayNight(int mode){
-        if(mode==0){
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            //setTheme(R.style.AppTheme_Dark);
-        }else{
-            getDelegate().setLocalNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        }
-    }*/
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){

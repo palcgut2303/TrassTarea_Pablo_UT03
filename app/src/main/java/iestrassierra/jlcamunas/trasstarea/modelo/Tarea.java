@@ -25,28 +25,62 @@ public class Tarea implements Parcelable {
     private Integer progreso;
     private Boolean prioritaria;
     private String descripcion;
+    private String URL_doc;
+    private String URL_img;
 
-    private String rutaArchivo;
+    private String URL_aud;
+    private String URL_vid;
 
     // Constructor
 
-    public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso, boolean prioritaria, String descripcion,String rutaArchivo) {
-        this.id = ++contador_id;
+    public Tarea(long id, String titulo, Date fechaCreacion, Date fechaObjetivo, Integer progreso, Boolean prioritaria, String descripcion, String URL_doc, String URL_img, String URL_aud, String URL_vid) {
+        this.id = id;
         this.titulo = titulo;
-        this.fechaCreacion = validarFecha(fechaCreacion);
-        this.fechaObjetivo = validarFecha(fechaObjetivo);
+        this.fechaCreacion = fechaCreacion;
+        this.fechaObjetivo = fechaObjetivo;
         this.progreso = progreso;
         this.prioritaria = prioritaria;
         this.descripcion = descripcion;
-        this.rutaArchivo = rutaArchivo;
+        this.URL_doc = URL_doc;
+        this.URL_img = URL_img;
+        this.URL_aud = URL_aud;
+        this.URL_vid = URL_vid;
     }
+
 
     // Getters y setters para acceder y modificar los atributos
 
-    public String getRutaArchivo() {return rutaArchivo;}
 
-    public void setRutaArchivo(String rutaArchivo) {
-        this.rutaArchivo = rutaArchivo;
+    public String getURL_doc() {
+        return URL_doc;
+    }
+
+    public void setURL_doc(String URL_doc) {
+        this.URL_doc = URL_doc;
+    }
+
+    public String getURL_img() {
+        return URL_img;
+    }
+
+    public void setURL_img(String URL_img) {
+        this.URL_img = URL_img;
+    }
+
+    public String getURL_aud() {
+        return URL_aud;
+    }
+
+    public void setURL_aud(String URL_aud) {
+        this.URL_aud = URL_aud;
+    }
+
+    public String getURL_vid() {
+        return URL_vid;
+    }
+
+    public void setURL_vid(String URL_vid) {
+        this.URL_vid = URL_vid;
     }
 
     public long getId() {
