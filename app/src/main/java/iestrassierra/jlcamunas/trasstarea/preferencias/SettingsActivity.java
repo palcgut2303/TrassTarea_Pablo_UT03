@@ -88,7 +88,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
         }
-
+        recreate();
     }
 
     public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {

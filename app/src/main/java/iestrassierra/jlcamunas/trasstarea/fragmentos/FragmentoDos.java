@@ -32,10 +32,10 @@ public class FragmentoDos extends Fragment {
     private EditText etDescripcion;
 
     private String nombreArchivo;
-    private String URL_doc;
-    private String URL_img;
-    private String URL_aud;
-    private String URL_vid;
+    private String URL_doc = "";
+    private String URL_img = "";
+    private String URL_aud = "";
+    private String URL_vid = "";
 
     //Interfaces de comunicación con la actividad para el botón Guardar y Volver
     public interface ComunicacionSegundoFragmento {
@@ -146,7 +146,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoDocumentos() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("text/*");  //  ajustar el tipo de archivo
+        intent.setType("document/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);

@@ -89,7 +89,10 @@ public class EditarTareaActivity extends AppCompatActivity implements
             tareaViewModel.setPrioritaria(tareaEditable.isPrioritaria());
             tareaViewModel.setDescripcion(tareaEditable.getDescripcion());
 
-            tareaViewModel.setRutaArchivo(tareaEditable.getRutaArchivo());
+            tareaViewModel.setURL_doc(tareaEditable.getURL_doc());
+            tareaViewModel.setURL_aud(tareaEditable.getURL_aud());
+            tareaViewModel.setURL_vid(tareaEditable.getURL_vid());
+            tareaViewModel.setURL_img(tareaEditable.getURL_img());
         }
     }
 
@@ -130,9 +133,12 @@ public class EditarTareaActivity extends AppCompatActivity implements
     public void onBotonGuardarClicked() {
         //Leemos los valores del formulario del fragmento 2
         descripcion = tareaViewModel.getDescripcion().getValue();
-        rutaArchivo = tareaViewModel.getRutaArchivo().getValue();
+        URL_doc = tareaViewModel.getURL_doc().getValue();
+        URL_aud = tareaViewModel.getURL_aud().getValue();
+        URL_img = tareaViewModel.getURL_img().getValue();
+        URL_vid = tareaViewModel.getURL_vid().getValue();
         //Creamos un nuevo objeto tarea con los campos editados
-        Tarea tareaEditada = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso,prioritaria, descripcion,);
+        Tarea tareaEditada = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso, prioritaria, descripcion,URL_doc,URL_aud,URL_img,URL_vid);
 
         //Creamos un intent de vuelta para la actividad Listado
         Intent aListado = new Intent();
@@ -147,11 +153,11 @@ public class EditarTareaActivity extends AppCompatActivity implements
 
         boolean valorSD = sharedPreferences.getBoolean("sd", false);
 
-        if(valorSD){
+        /*if(valorSD){
             escribirSD(rutaArchivo, tareaEditada.getTitulo());
         }else{
             escribirInterno(rutaArchivo);
-        }
+        }*/
         //Volvemos a la actividad Listado
         finish();
     }

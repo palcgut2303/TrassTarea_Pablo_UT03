@@ -118,7 +118,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
         URL_img = tareaViewModel.getURL_img().getValue();
         URL_vid = tareaViewModel.getURL_vid().getValue();
         //Creamos la nueva tarea
-        Tarea nuevaTarea = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso, prioritaria, descripcion,rutaArchivo);
+        Tarea nuevaTarea = new Tarea(titulo, fechaCreacion,fechaObjetivo, progreso, prioritaria, descripcion,URL_doc,URL_aud,URL_img,URL_vid);
         //Creamos un intent de vuelta para la actividad Listado
         Intent aListado = new Intent();
         //Creamos un Bundle para introducir la nueva tarea
@@ -133,11 +133,11 @@ public class CrearTareaActivity extends AppCompatActivity implements
 
         boolean valorSD = sharedPreferences.getBoolean("sd", false);
 
-        if(valorSD){
+       /* if(valorSD){
             escribirSD(rutaArchivo, nuevaTarea.getTitulo());
         }else{
             escribirInterno(rutaArchivo);
-        }
+        }*/
 
         //Volvemos a la actividad Listado
         finish();

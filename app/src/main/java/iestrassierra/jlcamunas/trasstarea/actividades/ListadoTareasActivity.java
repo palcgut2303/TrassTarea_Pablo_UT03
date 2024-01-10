@@ -46,6 +46,7 @@ import java.util.Objects;
 
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaAdapter;
+import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 import iestrassierra.jlcamunas.trasstarea.preferencias.SettingsActivity;
 
@@ -63,6 +64,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private int tamanoLetraApp = 0;
     private String CriterioOrden = "";
     private boolean orden;
+
+    private ControladorBaseDatos controladorBaseDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -74,17 +77,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         theme = sharedPreferences.getBoolean("tema",true);
         CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
         orden = sharedPreferences.getBoolean("orden",true);
-
-       /* if(theme){
-            setDayNight(1);
-        }else{
-            setDayNight(0);
-        }*/
-
-        //Cambiar tamaño letra, en funcion de la opcion de las preferencias
-        //tamanoLetraCreate(fontSize);
-
-
+        controladorBaseDatos = ControladorBaseDatos.getInstance(getApplicationContext());
 
         //Binding del TextView
         listadoVacio = findViewById(R.id.listado_vacio);
@@ -100,7 +93,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
             boolPrior = savedInstanceState.getBoolean("boolPrior");
         } else {
             //Inicializamos la lista de tareas y el booleano prioritarias
-            inicializarListaTareas();
+           // inicializarListaTareas();
             boolPrior = false;
         }
 
@@ -201,12 +194,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
         super.onResume();
 
        // cambiarTamanoLetra();
-
-        /*if(theme){
-            setDayNight(1);
-        }else{
-            setDayNight(0);
-        }*/
 
         ordenTareas();
 
@@ -439,6 +426,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         public Tarea parseResult(int resultCode, @Nullable Intent intent) {
             if (resultCode == Activity.RESULT_OK && intent != null) {
                 try {
+
                     return (Tarea) Objects.requireNonNull(intent.getExtras()).get("NuevaTarea");
                 } catch (NullPointerException e) {
                     Log.e("Error en intent devuelto", Objects.requireNonNull(e.getLocalizedMessage()));
@@ -455,6 +443,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         @Override
         public void onActivityResult(Tarea nuevaTarea) {
             if (nuevaTarea != null) {
+                controladorBaseDatos.tareaDAO().insertAll(nuevaTarea);
                 tareas.add(nuevaTarea);
                 adaptador.notifyItemInserted(tareas.size() - 1); // Agregar el elemento nuevo al adaptador.
                 Toast.makeText(ListadoTareasActivity.this.getApplicationContext(), R.string.tarea_add, Toast.LENGTH_SHORT).show();
@@ -563,12 +552,12 @@ public class ListadoTareasActivity extends AppCompatActivity {
     }
 
     // Método de inicialización de la colección. Tareas de ejemplo.
-    private void inicializarListaTareas(){
-        tareas.add(new Tarea("Hacer el cuestionario inicial", "10/09/2023", "17/09/2023", 100, true, "",""));
-        tareas.add(new Tarea("Hacer la tarea UT01", "18/09/2023", "03/10/2023", 100, true, "",""));
-        tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, "",""));
-        tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, "",""));
-        tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, "",""));
+   /* private void inicializarListaTareas(){
+        tareas.add(new Tarea("Hacer el cuestionario inicial", "10/09/2023", "17/09/2023", 100, true, "","","","",""));
+        tareas.add(new Tarea("Hacer la tarea UT01", "18/09/2023", "03/10/2023", 100, true, "","","","",""));
+        tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, "","","","",""));
+        tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, "","","","",""));
+        tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, "","","","",""));
 
         //En cada tarea de ejemplo incluímos una descripción larga generada con Lorem Ipsum
         tareas.forEach(tarea -> tarea.setDescripcion(
@@ -586,6 +575,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
                     "Vestibulum tincidunt maximus turpis, eget fermentum lectus iaculis non. Proin vulputate metus sed metus laoreet ultricies. Maecenas pulvinar lectus quis pretium rhoncus. Suspendisse eget dolor vel nisi aliquet condimentum id a erat. Donec rutrum sem."
             )
         );
-    }
+    }*/
 
 }

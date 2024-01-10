@@ -5,6 +5,9 @@ import android.os.Parcelable;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import java.text.SimpleDateFormat;
 import java.util.Comparator;
@@ -15,41 +18,56 @@ import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+@Entity
 public class Tarea implements Parcelable {
 
     private static long contador_id = 0;
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "_id")
     private long id;
+    @ColumnInfo(name = "titulo")
     private String titulo;
+    @ColumnInfo(name = "fecha_creacion")
     private Date fechaCreacion;
+    @ColumnInfo(name = "fecha_objetivo")
     private Date fechaObjetivo;
+    @ColumnInfo(name = "progreso")
     private Integer progreso;
+    @ColumnInfo(name = "prioritaria")
     private Boolean prioritaria;
+    @ColumnInfo(name = "descripcion")
     private String descripcion;
+    @ColumnInfo(name = "URL_doc")
     private String URL_doc;
+    @ColumnInfo(name = "URL_img")
     private String URL_img;
 
+    @ColumnInfo(name = "URL_aud")
     private String URL_aud;
+    @ColumnInfo(name = "URL_vid")
     private String URL_vid;
 
     // Constructor
 
-    public Tarea(long id, String titulo, Date fechaCreacion, Date fechaObjetivo, Integer progreso, Boolean prioritaria, String descripcion, String URL_doc, String URL_img, String URL_aud, String URL_vid) {
-        this.id = id;
+    public Tarea(String titulo, String fechaCreacion, String fechaObjetivo, int progreso, boolean prioritaria, String descripcion,String URL_doc,String URL_aud,String URL_img,String URL_vid) {
+        this.id = ++contador_id;
         this.titulo = titulo;
-        this.fechaCreacion = fechaCreacion;
-        this.fechaObjetivo = fechaObjetivo;
+        this.fechaCreacion = validarFecha(fechaCreacion);
+        this.fechaObjetivo = validarFecha(fechaObjetivo);
         this.progreso = progreso;
         this.prioritaria = prioritaria;
         this.descripcion = descripcion;
         this.URL_doc = URL_doc;
-        this.URL_img = URL_img;
         this.URL_aud = URL_aud;
-        this.URL_vid = URL_vid;
+        this.URL_img = URL_img;
+        this.URL_vid = URL_img;
     }
 
+    public Tarea(){
+
+    }
 
     // Getters y setters para acceder y modificar los atributos
-
 
     public String getURL_doc() {
         return URL_doc;
@@ -82,6 +100,7 @@ public class Tarea implements Parcelable {
     public void setURL_vid(String URL_vid) {
         this.URL_vid = URL_vid;
     }
+
 
     public long getId() {
         return id;
