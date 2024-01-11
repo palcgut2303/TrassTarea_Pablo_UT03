@@ -247,6 +247,10 @@ public class CrearTareaActivity extends AppCompatActivity implements
     public void onBotonVolverClicked() {
         //Leemos los valores del formulario del fragmento 2
         descripcion = tareaViewModel.getDescripcion().getValue();
+        URL_aud = tareaViewModel.getURL_aud().getValue();
+        URL_vid = tareaViewModel.getURL_vid().getValue();
+        URL_img = tareaViewModel.getURL_img().getValue();
+        URL_doc = tareaViewModel.getURL_doc().getValue();
         //Cambiamos el fragmento2 por el 1
         cambiarFragmento(fragmento1);
     }

@@ -290,11 +290,11 @@ public class ListadoTareasActivity extends AppCompatActivity {
                         int position;
 
                         //Borramos la tarea seleccionada de la colección tareas
-                        position = tareas.indexOf(tareaSeleccionada);
+                        position = tareasLista.getListaCopia().indexOf(tareaSeleccionada);
                         Executor executor = Executors.newSingleThreadExecutor();
                         //Creamos un objeto de la clase BorrarProducto que realiza el borrado en un hilo aparte
                         executor.execute(new BorrarTarea(tareaSeleccionada));
-                        tareas.remove(tareaSeleccionada);
+                        tareasLista.getListaCopia().remove(tareaSeleccionada);
                         adaptador.notifyItemRemoved(position);
 
                         //Comprobamos si el listado ha quedado vacío
@@ -349,8 +349,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
             if (nuevaTarea != null) {
                 Executor executor = Executors.newSingleThreadExecutor();
                 executor.execute(new InsertarTarea(nuevaTarea));
-                tareas.add(nuevaTarea);
-                adaptador.notifyItemInserted(tareas.size() - 1); // Agregar el elemento nuevo al adaptador.
+                tareasLista.getListaCopia().add(nuevaTarea);
+                adaptador.notifyItemInserted(tareasLista.getListaCopia().size() - 1); // Agregar el elemento nuevo al adaptador.
                 Toast.makeText(ListadoTareasActivity.this.getApplicationContext(), R.string.tarea_add, Toast.LENGTH_SHORT).show();
                 ListadoTareasActivity.this.comprobarListadoVacio();
             }
@@ -384,6 +384,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
             controladorBaseDatos.tareaDAO().delete(tarea);
         }
     }
+
 
     //Contrato para el lanzador hacia la actividad EditarTareaActivity
     ActivityResultContract<Tarea, Tarea> contratoEditar = new ActivityResultContract<Tarea, Tarea>() {
@@ -421,9 +422,13 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 tareaEditada.setId(tareaSeleccionada.getId());
 
                 //Procedemos a la sustitución de la tarea editada por la seleccionada.
-                int posicionEnColeccion = tareas.indexOf(tareaSeleccionada);
-                tareas.remove(tareaSeleccionada);
-                tareas.add(posicionEnColeccion, tareaEditada);
+                int posicionEnColeccion = tareasLista.getListaCopia().indexOf(tareaSeleccionada);
+                Executor executor = Executors.newSingleThreadExecutor();
+                executor.execute(new BorrarTarea(tareaSeleccionada));
+                tareasLista.getListaCopia().remove(tareaSeleccionada);
+                Executor executor2 = Executors.newSingleThreadExecutor();
+                executor2.execute(new InsertarTarea(tareaEditada));
+                tareasLista.getListaCopia().add(posicionEnColeccion, tareaEditada);
 
                 //Notificamos al adaptador y comprobamos si el listado ha quedado vacío
                 adaptador.notifyItemChanged(posicionEnColeccion);

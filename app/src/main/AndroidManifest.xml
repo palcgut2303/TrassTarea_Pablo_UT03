@@ -23,6 +23,7 @@
             android:name=".actividades.EditarTareaActivity"
             android:exported="false" />
         <activity
+            android:windowSoftInputMode="adjustPan"
             android:name=".actividades.CrearTareaActivity"
             android:exported="false" />
         <activity

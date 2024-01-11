@@ -10,18 +10,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStreamWriter;
 
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaViewModel;
@@ -30,6 +26,8 @@ public class FragmentoDos extends Fragment {
 
     private TareaViewModel tareaViewModel;
     private EditText etDescripcion;
+
+    private TextView tvURLVideo,tvURLDOCUMENT,tvURLIMAGE,tvURLAudio;
 
     private String nombreArchivo;
     private String URL_doc = "";
@@ -82,6 +80,15 @@ public class FragmentoDos extends Fragment {
         //Binding y set EditText Descripción
         etDescripcion = view.findViewById(R.id.et_descripcion);
         tareaViewModel.getDescripcion().observe(getViewLifecycleOwner(), s -> etDescripcion.setText(s));
+        tvURLAudio = view.findViewById(R.id.urlAudio);
+        tareaViewModel.getURL_aud().observe(getViewLifecycleOwner(), s -> tvURLAudio.setText(s));
+        tvURLDOCUMENT = view.findViewById(R.id.urlDocument);
+        tareaViewModel.getURL_doc().observe(getViewLifecycleOwner(), s -> tvURLDOCUMENT.setText(s));
+        tvURLIMAGE = view.findViewById(R.id.urlImage);
+        tareaViewModel.getURL_img().observe(getViewLifecycleOwner(), s -> tvURLIMAGE.setText(s));
+        tvURLVideo = view.findViewById(R.id.urlVideo);
+        tareaViewModel.getURL_vid().observe(getViewLifecycleOwner(), s -> tvURLVideo.setText(s));
+
 
         //Binding y config boton Volver
         Button btVolver = view.findViewById(R.id.bt_volver);
@@ -98,10 +105,10 @@ public class FragmentoDos extends Fragment {
         btGuardar.setOnClickListener(v -> {
             //Escribimos en el ViewModel
             tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-                tareaViewModel.setURL_img(URL_img);
-                tareaViewModel.setURL_doc(URL_doc);
-                tareaViewModel.setURL_vid(URL_vid);
-                tareaViewModel.setURL_aud(URL_aud);
+            tareaViewModel.setURL_img(URL_img);
+            tareaViewModel.setURL_doc(URL_doc);
+            tareaViewModel.setURL_vid(URL_vid);
+            tareaViewModel.setURL_aud(URL_aud);
 
 
 
@@ -110,7 +117,7 @@ public class FragmentoDos extends Fragment {
                 comunicadorSegundoFragmento.onBotonGuardarClicked();
         });
 
-        Button btDocumento = view.findViewById(R.id.btDocumento);
+        ImageButton btDocumento = view.findViewById(R.id.btDocumento);
         btDocumento.setOnClickListener(v -> {
 
             seleccionarArchivoDocumentos();
@@ -118,7 +125,7 @@ public class FragmentoDos extends Fragment {
 
         });
 
-        Button btImagen = view.findViewById(R.id.btImagen);
+        ImageButton btImagen = view.findViewById(R.id.btImagen);
         btImagen.setOnClickListener(v -> {
 
             seleccionarArchivoImagen();
@@ -126,7 +133,7 @@ public class FragmentoDos extends Fragment {
 
         });
 
-        Button btAudio = view.findViewById(R.id.btAudio);
+        ImageButton btAudio = view.findViewById(R.id.btAudio);
         btAudio.setOnClickListener(v -> {
 
             seleccionarArchivoAudio();
@@ -134,7 +141,7 @@ public class FragmentoDos extends Fragment {
 
         });
 
-        Button btVideo = view.findViewById(R.id.btVideo);
+        ImageButton btVideo = view.findViewById(R.id.btVideo);
         btVideo.setOnClickListener(v -> {
 
             seleccionarArchivoVideo();
@@ -146,7 +153,7 @@ public class FragmentoDos extends Fragment {
     private void seleccionarArchivoDocumentos() {
         Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
-        intent.setType("document/*");  //  ajustar el tipo de archivo
+        intent.setType("application/*");  //  ajustar el tipo de archivo
 
         // Empieza la actividad para seleccionar un archivo
         startActivityForResult(intent, PICK_FILE_REQUEST_CODE);
@@ -193,12 +200,16 @@ public class FragmentoDos extends Fragment {
                  nombreArchivo = uri.getLastPathSegment();
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
+                     tvURLDOCUMENT.setText(nombreArchivo);
                  }else if(nombreArchivo.startsWith("video:")){
                      URL_vid = uri.getPath();
+                     tvURLVideo.setText(nombreArchivo);
                  } else if (nombreArchivo.startsWith("audio:")) {
                      URL_aud = uri.getPath();
+                     tvURLAudio.setText(nombreArchivo);
                  }else{
                      URL_img = uri.getPath();
+                     tvURLIMAGE.setText(nombreArchivo);
                  }
 
             }
@@ -210,6 +221,10 @@ public class FragmentoDos extends Fragment {
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("descripcion",  etDescripcion.getText().toString());
+        outState.putString("urlVideo",  tvURLVideo.getText().toString());
+        outState.putString("urlImage",  tvURLIMAGE.getText().toString());
+        outState.putString("urlAudio",  tvURLAudio.getText().toString());
+        outState.putString("urlDocument",  tvURLDOCUMENT.getText().toString());
         //Sincronizamos la información salvada también en el ViewModel
         escribirViewModel();
     }
@@ -220,6 +235,10 @@ public class FragmentoDos extends Fragment {
         super.onViewStateRestored(savedInstanceState);
         if(savedInstanceState!=null) {
             etDescripcion.setText(savedInstanceState.getString("descripcion"));
+            tvURLDOCUMENT.setText(savedInstanceState.getString("urlDocument"));
+            tvURLIMAGE.setText(savedInstanceState.getString("urlImage"));
+            tvURLAudio.setText(savedInstanceState.getString("urlAudio"));
+            tvURLVideo.setText(savedInstanceState.getString("urlVideo"));
         }
     }
 

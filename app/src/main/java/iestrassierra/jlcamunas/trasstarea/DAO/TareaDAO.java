@@ -5,6 +5,7 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
@@ -19,6 +20,9 @@ public interface TareaDAO {
     //Anotación que permite realizar el borrado de una tarea
     @Delete
     void delete(Tarea tarea);
+
+    @Update
+    void actualizarTarea(Tarea tarea);
 
     @Query("SELECT * FROM tarea")
         //En este caso haremos que esta consulta se regenere cada vez que se produzcan cambios
