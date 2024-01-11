@@ -331,7 +331,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
             if (resultCode == Activity.RESULT_OK && intent != null) {
                 try {
 
-                    return (Tarea) Objects.requireNonNull(intent.getExtras()).get("NuevaTarea");
+                    return (Tarea) intent.getExtras().get("NuevaTarea");
                 } catch (NullPointerException e) {
                     Log.e("Error en intent devuelto", Objects.requireNonNull(e.getLocalizedMessage()));
                 }

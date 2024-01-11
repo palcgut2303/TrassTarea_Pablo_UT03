@@ -237,6 +237,10 @@ public class Tarea implements Parcelable {
         dest.writeValue(this.progreso);
         dest.writeValue(this.prioritaria);
         dest.writeString(this.descripcion);
+        dest.writeString(this.URL_aud);
+        dest.writeString(this.URL_img);
+        dest.writeString(this.URL_doc);
+        dest.writeString(this.URL_vid);
     }
 
     public void readFromParcel(Parcel source) {
@@ -249,6 +253,10 @@ public class Tarea implements Parcelable {
         this.progreso = (Integer) source.readValue(Integer.class.getClassLoader());
         this.prioritaria = (Boolean) source.readValue(Boolean.class.getClassLoader());
         this.descripcion = source.readString();
+        this.URL_aud = source.readString();
+        this.URL_img = source.readString();
+        this.URL_doc = source.readString();
+        this.URL_vid = source.readString();
     }
 
     protected Tarea(Parcel in) {
@@ -261,6 +269,10 @@ public class Tarea implements Parcelable {
         this.progreso = (Integer) in.readValue(Integer.class.getClassLoader());
         this.prioritaria = (Boolean) in.readValue(Boolean.class.getClassLoader());
         this.descripcion = in.readString();
+        this.URL_aud = in.readString();
+        this.URL_img = in.readString();
+        this.URL_doc = in.readString();
+        this.URL_vid = in.readString();
     }
 
     public static final Creator<Tarea> CREATOR = new Creator<Tarea>() {

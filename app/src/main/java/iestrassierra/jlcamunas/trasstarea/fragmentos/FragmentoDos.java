@@ -30,10 +30,10 @@ public class FragmentoDos extends Fragment {
     private TextView tvURLVideo,tvURLDOCUMENT,tvURLIMAGE,tvURLAudio;
 
     private String nombreArchivo;
-    private String URL_doc = "";
-    private String URL_img = "";
-    private String URL_aud = "";
-    private String URL_vid = "";
+    private String URL_doc;
+    private String URL_img;
+    private String URL_aud;
+    private String URL_vid;
 
     //Interfaces de comunicación con la actividad para el botón Guardar y Volver
     public interface ComunicacionSegundoFragmento {
@@ -201,6 +201,7 @@ public class FragmentoDos extends Fragment {
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
                      tvURLDOCUMENT.setText(nombreArchivo);
+
                  }else if(nombreArchivo.startsWith("video:")){
                      URL_vid = uri.getPath();
                      tvURLVideo.setText(nombreArchivo);
@@ -212,9 +213,14 @@ public class FragmentoDos extends Fragment {
                      tvURLIMAGE.setText(nombreArchivo);
                  }
 
+
             }
         }
     }
+
+
+
+
 
     //Método para guardar el estado del formulario en un Bundle
     @Override
