@@ -77,7 +77,7 @@ public class FragmentoDos extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        //Binding y set EditText Descripción
+        //Binding y set EditText Descripción y URL`s
         etDescripcion = view.findViewById(R.id.et_descripcion);
         tareaViewModel.getDescripcion().observe(getViewLifecycleOwner(), s -> etDescripcion.setText(s));
         tvURLAudio = view.findViewById(R.id.urlAudio);
@@ -198,22 +198,48 @@ public class FragmentoDos extends Fragment {
 
                 //  mostrar el nombre del archivo
                  nombreArchivo = uri.getLastPathSegment();
+
+               // escribirViewModelURL();
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
                      tvURLDOCUMENT.setText(nombreArchivo);
 
+                   /*tareaViewModel.setURL_doc(tvURLDOCUMENT.getText().toString());
+                     tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
+                     tvURLIMAGE.setText(tareaViewModel.getURL_img().getValue());
+                     tvURLVideo.setText(tareaViewModel.getURL_vid().getValue());*/
                  }else if(nombreArchivo.startsWith("video:")){
                      URL_vid = uri.getPath();
                      tvURLVideo.setText(nombreArchivo);
+
+                    /*tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
+                     tvURLIMAGE.setText(tareaViewModel.getURL_img().getValue());*/
+                     tvURLDOCUMENT.setText(tareaViewModel.getURL_doc().getValue());
                  } else if (nombreArchivo.startsWith("audio:")) {
                      URL_aud = uri.getPath();
                      tvURLAudio.setText(nombreArchivo);
-                 }else{
+
+                    /*String URLV = tareaViewModel.getURL_vid().getValue();
+                     tvURLVideo.setText(URLV);
+                     String URLI = tareaViewModel.getURL_img().getValue();
+                     tvURLIMAGE.setText(URLI);
+                     String URLD = tareaViewModel.getURL_doc().getValue();
+                     tvURLDOCUMENT.setText(URLD);*/
+                 }else if(nombreArchivo.startsWith("image:")){
                      URL_img = uri.getPath();
                      tvURLIMAGE.setText(nombreArchivo);
+
+                     /*String URLV = tareaViewModel.getURL_vid().getValue();
+                     tvURLVideo.setText(URLV);
+                     String URLd = tareaViewModel.getURL_doc().getValue();
+                     tvURLDOCUMENT.setText(URLd);
+                     tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());*/
                  }
 
-
+                tareaViewModel.setURL_doc(URL_doc);
+                tareaViewModel.setURL_vid(URL_vid);
+                tareaViewModel.setURL_aud(URL_aud);
+                tareaViewModel.setURL_img(URL_img);
             }
         }
     }
@@ -248,8 +274,29 @@ public class FragmentoDos extends Fragment {
         }
     }
 
+   /* @Override
+    public void onResume() {
+        super.onResume();
+        String URLI = tareaViewModel.getURL_img().getValue();
+        String URLD = tareaViewModel.getURL_doc().getValue();
+        String URLA = tareaViewModel.getURL_aud().getValue();
+        String URLV = tareaViewModel.getURL_vid().getValue();
+        tvURLIMAGE.setText(URLI);
+        tvURLDOCUMENT.setText(URLD);
+        tvURLAudio.setText(URLA);
+        tvURLVideo.setText(URLV);
+    }*/
+
     private void escribirViewModel(){
         tareaViewModel.setDescripcion(etDescripcion.getText().toString());
+        tareaViewModel.setURL_img(URL_img);
+        tareaViewModel.setURL_doc(URL_doc);
+        tareaViewModel.setURL_vid(URL_vid);
+        tareaViewModel.setURL_aud(URL_aud);
+    }
+
+    private void escribirViewModelURL(){
+       // tareaViewModel.setDescripcion(etDescripcion.getText().toString());
         tareaViewModel.setURL_img(URL_img);
         tareaViewModel.setURL_doc(URL_doc);
         tareaViewModel.setURL_vid(URL_vid);

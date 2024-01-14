@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void establecerFuente(){
 
-        String tamanoLetra = sharedPreferences.getString("fuente","Mediana");
+      /*  String tamanoLetra = sharedPreferences.getString("fuente","Mediana");
         Resources resources = getResources();
         Configuration conf = resources.getConfiguration();
         DisplayMetrics display =resources.getDisplayMetrics();
@@ -72,8 +72,35 @@ public class MainActivity extends AppCompatActivity {
                 conf.fontScale = 1.5f;
                 break;
         }
-        resources.updateConfiguration(conf,display);
+        resources.updateConfiguration(conf,display);*/
+        String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
+        // float size = getResources().getConfiguration().fontScale;
+        if(fontSize.equalsIgnoreCase("1")){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),0.8f);
+        }else if (fontSize.equalsIgnoreCase("2") ){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),1.2f);
+        }else if (fontSize.equalsIgnoreCase("3") ){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),1.5f);
+        }
 
+
+    }
+
+    public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {
+        Configuration configuration = resources.getConfiguration();
+
+        // Crear una nueva configuración basada en la configuración actual
+        Configuration newConfig = new Configuration(configuration);
+
+        // Modificar la escala de fuente en la nueva configuración
+        newConfig.fontScale = nuevoTamano;
+
+        // Aplicar la nueva configuración al recurso
+        resources.updateConfiguration(newConfig, null);
+
+        // Actualizar la densidad de píxeles en función de la nueva configuración
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        resources.updateConfiguration(newConfig, metrics);
     }
 
     @Override

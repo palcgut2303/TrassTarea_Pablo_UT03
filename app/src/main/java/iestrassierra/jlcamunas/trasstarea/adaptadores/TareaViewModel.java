@@ -62,7 +62,7 @@ public class TareaViewModel extends AndroidViewModel {
     }
 
     public void setURL_img(String urlImg) {
-        this.URL_doc.setValue(urlImg);
+        this.URL_img.setValue(urlImg);
     }
 
     public MutableLiveData<String> getURL_vid() {
@@ -142,7 +142,7 @@ public class TareaViewModel extends AndroidViewModel {
     }
     List<Tarea> listaCopia;
 
-    //TODO: REALIZAR ORDENACION DE LA LISTA
+
     public LiveData<List<Tarea>> getTareas() {
         Application application = getApplication();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);

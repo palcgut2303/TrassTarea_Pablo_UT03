@@ -14,7 +14,10 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.res.Configuration;
+import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -59,7 +62,7 @@ import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 import iestrassierra.jlcamunas.trasstarea.preferencias.SettingsActivity;
 
 public class ListadoTareasActivity extends AppCompatActivity {
-
+    private SharedPreferences sharedPreferences;
     private RecyclerView rv;
     private TextView listadoVacio;
     private MenuItem menuItemPrior;
@@ -80,8 +83,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_tareas);
-        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
+         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
+        establecerFuente();
         // Obtengo los valores de las preferencias
         //String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
         theme = sharedPreferences.getBoolean("tema",true);
@@ -514,5 +517,53 @@ public class ListadoTareasActivity extends AppCompatActivity {
             )
         );
     }*/
+
+    private void establecerFuente(){
+
+       /* String tamanoLetra = sharedPreferences.getString("fuente","Mediana");
+        Resources resources = getResources();
+        Configuration conf = resources.getConfiguration();
+        DisplayMetrics display =resources.getDisplayMetrics();
+
+        switch (tamanoLetra){
+            case "Pequeña":
+                conf.fontScale = 0.8f;
+                break;
+            case "Mediana":
+                conf.fontScale = 1.2f;
+                break;
+            default:
+                conf.fontScale = 1.5f;
+                break;
+        }
+        resources.updateConfiguration(conf,display);*/
+        String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
+        // float size = getResources().getConfiguration().fontScale;
+        if(fontSize.equalsIgnoreCase("1")){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),0.8f);
+        }else if (fontSize.equalsIgnoreCase("2") ){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),1.2f);
+        }else if (fontSize.equalsIgnoreCase("3") ){
+            ajustarTamanoLetraEnTodaLaApp(getResources(),1.5f);
+        }
+
+    }
+
+    public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {
+        Configuration configuration = resources.getConfiguration();
+
+        // Crear una nueva configuración basada en la configuración actual
+        Configuration newConfig = new Configuration(configuration);
+
+        // Modificar la escala de fuente en la nueva configuración
+        newConfig.fontScale = nuevoTamano;
+
+        // Aplicar la nueva configuración al recurso
+        resources.updateConfiguration(newConfig, null);
+
+        // Actualizar la densidad de píxeles en función de la nueva configuración
+        DisplayMetrics metrics = resources.getDisplayMetrics();
+        resources.updateConfiguration(newConfig, metrics);
+    }
 
 }
