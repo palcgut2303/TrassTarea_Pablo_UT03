@@ -87,12 +87,13 @@ public class EditarTareaActivity extends AppCompatActivity implements
             tareaViewModel.setFechaObjetivo(tareaEditable.getObjetivoFecha());
             tareaViewModel.setProgreso(tareaEditable.getProgreso());
             tareaViewModel.setPrioritaria(tareaEditable.isPrioritaria());
-            tareaViewModel.setDescripcion(tareaEditable.getDescripcion());
-
+            String descripcion = tareaEditable.getDescripcion();
+            tareaViewModel.setDescripcion(descripcion);
             tareaViewModel.setURL_doc(tareaEditable.getURL_doc());
             tareaViewModel.setURL_aud(tareaEditable.getURL_aud());
             tareaViewModel.setURL_vid(tareaEditable.getURL_vid());
-            tareaViewModel.setURL_img(tareaEditable.getURL_img());
+            String URLIm = tareaEditable.getURL_img();
+            tareaViewModel.setURL_img(URLIm);
         }
     }
 
@@ -267,9 +268,10 @@ public class EditarTareaActivity extends AppCompatActivity implements
         descripcion = tareaViewModel.getDescripcion().getValue();
         URL_aud = tareaViewModel.getURL_aud().getValue();
         URL_vid = tareaViewModel.getURL_vid().getValue();
-        URL_img = tareaViewModel.getURL_img().getValue();
-        String url = tareaViewModel.getURL_doc().getValue();
-        URL_doc = url;
+        String url = tareaViewModel.getURL_img().getValue();
+        URL_img = url;
+        String urlI = tareaViewModel.getURL_doc().getValue();
+        URL_doc = urlI;
 
         //Cambiamos el fragmento2 por el 1
         cambiarFragmento(fragmento1);

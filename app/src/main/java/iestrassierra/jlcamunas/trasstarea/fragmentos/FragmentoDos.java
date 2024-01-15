@@ -105,10 +105,10 @@ public class FragmentoDos extends Fragment {
         btGuardar.setOnClickListener(v -> {
             //Escribimos en el ViewModel
             tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-            tareaViewModel.setURL_img(URL_img);
-            tareaViewModel.setURL_doc(URL_doc);
-            tareaViewModel.setURL_vid(URL_vid);
-            tareaViewModel.setURL_aud(URL_aud);
+            tareaViewModel.setURL_img(tvURLIMAGE.getText().toString());
+            tareaViewModel.setURL_doc(tvURLDOCUMENT.getText().toString());
+            tareaViewModel.setURL_vid(tvURLVideo.getText().toString());
+            tareaViewModel.setURL_aud(tvURLAudio.getText().toString());
 
 
 
@@ -202,7 +202,7 @@ public class FragmentoDos extends Fragment {
                // escribirViewModelURL();
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
-                     tvURLDOCUMENT.setText(nombreArchivo);
+                     tvURLDOCUMENT.setText(URL_doc);
 
                    /*tareaViewModel.setURL_doc(tvURLDOCUMENT.getText().toString());
                      tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
@@ -210,14 +210,14 @@ public class FragmentoDos extends Fragment {
                      tvURLVideo.setText(tareaViewModel.getURL_vid().getValue());*/
                  }else if(nombreArchivo.startsWith("video:")){
                      URL_vid = uri.getPath();
-                     tvURLVideo.setText(nombreArchivo);
+                     tvURLVideo.setText(URL_vid);
 
                     /*tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
                      tvURLIMAGE.setText(tareaViewModel.getURL_img().getValue());*/
                      tvURLDOCUMENT.setText(tareaViewModel.getURL_doc().getValue());
                  } else if (nombreArchivo.startsWith("audio:")) {
                      URL_aud = uri.getPath();
-                     tvURLAudio.setText(nombreArchivo);
+                     tvURLAudio.setText(URL_aud);
 
                     /*String URLV = tareaViewModel.getURL_vid().getValue();
                      tvURLVideo.setText(URLV);
@@ -227,7 +227,7 @@ public class FragmentoDos extends Fragment {
                      tvURLDOCUMENT.setText(URLD);*/
                  }else if(nombreArchivo.startsWith("image:")){
                      URL_img = uri.getPath();
-                     tvURLIMAGE.setText(nombreArchivo);
+                     tvURLIMAGE.setText(URL_img);
 
                      /*String URLV = tareaViewModel.getURL_vid().getValue();
                      tvURLVideo.setText(URLV);
@@ -236,10 +236,10 @@ public class FragmentoDos extends Fragment {
                      tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());*/
                  }
 
-                tareaViewModel.setURL_doc(URL_doc);
+               /* tareaViewModel.setURL_doc(URL_doc);
                 tareaViewModel.setURL_vid(URL_vid);
                 tareaViewModel.setURL_aud(URL_aud);
-                tareaViewModel.setURL_img(URL_img);
+                tareaViewModel.setURL_img(URL_img);*/
             }
         }
     }
@@ -254,7 +254,8 @@ public class FragmentoDos extends Fragment {
         super.onSaveInstanceState(outState);
         outState.putString("descripcion",  etDescripcion.getText().toString());
         outState.putString("urlVideo",  tvURLVideo.getText().toString());
-        outState.putString("urlImage",  tvURLIMAGE.getText().toString());
+        String tvImage = tvURLIMAGE.getText().toString();
+        outState.putString("urlImage", tvImage );
         outState.putString("urlAudio",  tvURLAudio.getText().toString());
         outState.putString("urlDocument",  tvURLDOCUMENT.getText().toString());
         //Sincronizamos la información salvada también en el ViewModel
@@ -268,13 +269,14 @@ public class FragmentoDos extends Fragment {
         if(savedInstanceState!=null) {
             etDescripcion.setText(savedInstanceState.getString("descripcion"));
             tvURLDOCUMENT.setText(savedInstanceState.getString("urlDocument"));
-            tvURLIMAGE.setText(savedInstanceState.getString("urlImage"));
+            String urlImage = savedInstanceState.getString("urlImage");
+            tvURLIMAGE.setText(urlImage);
             tvURLAudio.setText(savedInstanceState.getString("urlAudio"));
             tvURLVideo.setText(savedInstanceState.getString("urlVideo"));
         }
     }
 
-   /* @Override
+    /*@Override
     public void onResume() {
         super.onResume();
         String URLI = tareaViewModel.getURL_img().getValue();
@@ -289,18 +291,12 @@ public class FragmentoDos extends Fragment {
 
     private void escribirViewModel(){
         tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-        tareaViewModel.setURL_img(URL_img);
-        tareaViewModel.setURL_doc(URL_doc);
-        tareaViewModel.setURL_vid(URL_vid);
-        tareaViewModel.setURL_aud(URL_aud);
+        tareaViewModel.setURL_img(tvURLIMAGE.getText().toString());
+        tareaViewModel.setURL_doc(tvURLDOCUMENT.getText().toString());
+        tareaViewModel.setURL_vid(tvURLVideo.getText().toString());
+        tareaViewModel.setURL_aud(tvURLAudio.getText().toString());
     }
 
-    private void escribirViewModelURL(){
-       // tareaViewModel.setDescripcion(etDescripcion.getText().toString());
-        tareaViewModel.setURL_img(URL_img);
-        tareaViewModel.setURL_doc(URL_doc);
-        tareaViewModel.setURL_vid(URL_vid);
-        tareaViewModel.setURL_aud(URL_aud);
-    }
+
 
 }

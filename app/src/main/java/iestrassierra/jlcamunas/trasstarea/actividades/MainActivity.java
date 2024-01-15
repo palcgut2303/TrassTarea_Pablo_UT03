@@ -31,11 +31,7 @@ public class MainActivity extends AppCompatActivity {
         btEmpezar.setOnClickListener(this::empezar);
         getTheme();
         establecerFuente();
-       /* if(theme){
-            setDayNight(1);
-        }else{
-            setDayNight(0);
-        }*/
+
 
     }
 
