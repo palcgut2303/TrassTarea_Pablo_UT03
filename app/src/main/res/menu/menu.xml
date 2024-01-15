@@ -22,6 +22,9 @@
         android:layout_height="wrap_content"
         android:title="@string/preferencias" />
     <item
+        android:id="@+id/item_estadisticas"
+        android:title="Estadisticas" />
+    <item
         android:id="@+id/item_about"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

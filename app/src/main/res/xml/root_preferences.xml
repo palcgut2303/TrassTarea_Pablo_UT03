@@ -53,7 +53,6 @@
             android:inputType="number"
             app:defaultValue="0"
             app:key="limpieza"
-            app:summary="Valor entero. Valor por defecto 0."
             app:title="Periodicidad de limpieza (días)" />
 
         <SwitchPreferenceCompat
@@ -98,7 +97,7 @@
 
     </PreferenceCategory>
 
-    <Preference
+    <iestrassierra.jlcamunas.trasstarea.adaptadores.BotonResetPreferencias
         app:key="reset_button"
         app:widgetLayout="@layout/reset_buttom_layout" />
 

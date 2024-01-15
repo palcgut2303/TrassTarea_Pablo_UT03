@@ -13,6 +13,10 @@ import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
 
+import java.io.File;
+import java.util.Calendar;
+import java.util.Date;
+
 import iestrassierra.jlcamunas.trasstarea.R;
 
 public class MainActivity extends AppCompatActivity {
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
         btEmpezar.setOnClickListener(this::empezar);
         //getTheme();
         establecerFuente();
-
+        borrarArchivos();
 
     }
 
@@ -113,6 +117,24 @@ public class MainActivity extends AppCompatActivity {
     private void empezar(View v){
         Intent aEmpezar = new Intent(this, ListadoTareasActivity.class);
         startActivity(aEmpezar);
+    }
+
+    public void borrarArchivos(){
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        int diasParaEliminar = Integer.parseInt(preferencias.getString("limpieza", "30"));
+
+        Calendar cal = Calendar.getInstance();
+        cal.add(Calendar.DAY_OF_YEAR, -diasParaEliminar);
+
+        Date fechaLimite = cal.getTime();
+        File directorio = new File(getFilesDir(), "");
+
+        File[] archivos = directorio.listFiles();
+        for (File archivo : archivos) {
+            if (archivo.lastModified() < fechaLimite.getTime()) {
+                archivo.delete();
+            }
+        }
     }
 
 

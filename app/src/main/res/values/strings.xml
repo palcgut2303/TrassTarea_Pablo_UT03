@@ -90,4 +90,11 @@
     <string name="detalles">Detalles</string>
     <string name="nombre_tarea">Nombre de la Tarea</string>
     <string name="cerrar">Cerrar</string>
+    <string name="estadisticas">ESTADÍSTICAS</string>
+    <string name="nTareas">Número de Tareas:</string>
+    <string name="promedio">Promedio Progreso:</string>
+    <string name="promedioFech">Promedio Fecha Creacion</string>
+    <string name="posterior">Posterior a Fecha Objetivo:</string>
+    <string name="cadenaConsulta">Buscar Tarea Por Nombre:</string>
+    <string name="buscar">Buscar</string>
 </resources>

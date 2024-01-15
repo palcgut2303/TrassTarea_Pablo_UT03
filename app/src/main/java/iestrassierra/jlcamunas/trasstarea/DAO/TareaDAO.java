@@ -14,6 +14,8 @@ import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 @Dao
 public interface TareaDAO {
 
+
+
     @Insert
     void insertAll(Tarea... tarea);
 
@@ -21,14 +23,20 @@ public interface TareaDAO {
     @Delete
     void delete(Tarea tarea);
 
-    @Update
-    void actualizarTarea(Tarea tarea);
-
     @Query("SELECT * FROM tarea")
         //En este caso haremos que esta consulta se regenere cada vez que se produzcan cambios
         //en la base de datos mediante un objeto LiveData.
     LiveData<List<Tarea>> getAll();
 
+    @Query("SELECT COUNT(*) FROM tarea")
+    LiveData<Integer> numeroTareas();
 
+    @Query("SELECT AVG(progreso) FROM tarea")
+    LiveData<Double> calcularPromedioDeProgreso();
+    @Query("SELECT AVG(fecha_creacion) FROM tarea")
+    LiveData<Double> calcularPromedioDeFecha();
+
+    @Query("SELECT * FROM Tarea WHERE titulo LIKE '%' || :cadena || '%'")
+    LiveData<List<Tarea>> buscarTareasPorNombre(String cadena);
 
 }

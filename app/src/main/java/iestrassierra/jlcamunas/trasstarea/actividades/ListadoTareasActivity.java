@@ -191,10 +191,11 @@ public class ListadoTareasActivity extends AppCompatActivity {
             Intent intent = new Intent(this, SettingsActivity.class);
             //lanzador.launch(intent);
             startActivity(intent);
+        } else if (id == R.id.item_estadisticas) {
+            Intent intent = new Intent(this, EstadisticasActivity.class);
+            //lanzador.launch(intent);
+            startActivity(intent);
         }
-
-
-
         //OPCIÓN ACERCA DE...
         else if (id == R.id.item_about) {
 

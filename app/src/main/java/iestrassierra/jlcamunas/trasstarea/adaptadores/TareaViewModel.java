@@ -24,6 +24,7 @@ import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
+import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
@@ -121,7 +122,8 @@ public class TareaViewModel extends AndroidViewModel {
         this.descripcion.setValue(descripcion);
     }
     private final LiveData<List<Tarea>> tareas;
-    //private TareaRepositorio tareaRepositorio;
+
+
     public TareaViewModel(@NonNull Application application) {
         super(application);
         //Inicializamos el contenido de la lista, al de la tabla de la base de datos
@@ -129,8 +131,6 @@ public class TareaViewModel extends AndroidViewModel {
                 .getInstance(application)
                 .tareaDAO().getAll();
 
-        /*tareaRepositorio = new TareaRepositorio(application);
-        tareas = tareaRepositorio.obtenerTodasLasTareas();*/
     }
 
     private String CriterioOrden = "";
@@ -191,4 +191,7 @@ public class TareaViewModel extends AndroidViewModel {
     public List<Tarea> getListaCopia() {
         return listaCopia;
     }
+
+
+
 }

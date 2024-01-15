@@ -4,13 +4,19 @@ import static androidx.core.content.ContentProviderCompat.requireContext;
 
 import static java.security.AccessController.getContext;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.util.AttributeSet;
 import android.util.DisplayMetrics;
+import android.view.LayoutInflater;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +32,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     private boolean theme = true;
     String tamañoLetraIndex = "";
     String tamañoLetra = "";
+
+     Button btnCancelar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,6 +51,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
         theme = sharedPreferences.getBoolean("tema",true);
 
+
+
         /*if(theme){
             setDayNight(1);
         }else{
@@ -50,6 +60,8 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         }*/
 
     }
+
+
 
     @Override
     protected void onResume() {
@@ -129,6 +141,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 tamañoLetra = "Mediana";
             }else{
                 tamañoLetra = "Grande";
+
             }
 
 

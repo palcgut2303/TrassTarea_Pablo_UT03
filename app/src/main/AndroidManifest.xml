@@ -20,6 +20,9 @@
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
+        android:name=".actividades.EstadisticasActivity"
+        android:exported="false" />
+        <activity
             android:name=".actividades.DetallesActividad"
             android:exported="false" />
         <activity
