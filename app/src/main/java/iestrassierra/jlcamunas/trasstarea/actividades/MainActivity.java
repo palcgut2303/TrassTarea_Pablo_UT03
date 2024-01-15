@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean theme = true;
     private boolean esCreate = false;
-
+    private final String rutaSD = "/storage/emulated/0/Android/data/iestrassierra.jlcamunas.trasstarea/files";
     private SharedPreferences sharedPreferences;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +35,8 @@ public class MainActivity extends AppCompatActivity {
         btEmpezar.setOnClickListener(this::empezar);
         //getTheme();
         establecerFuente();
-        borrarArchivos();
-
+        borrarArchivosInterno();
+        borrarArchivosSD(rutaSD);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(aEmpezar);
     }
 
-    public void borrarArchivos(){
+    public void borrarArchivosInterno(){
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         int diasParaEliminar = Integer.parseInt(preferencias.getString("limpieza", "30"));
 
@@ -133,6 +133,33 @@ public class MainActivity extends AppCompatActivity {
         for (File archivo : archivos) {
             if (archivo.lastModified() < fechaLimite.getTime()) {
                 archivo.delete();
+            }
+        }
+    }
+
+    public void borrarArchivosSD(String directorioSD) {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        int diasParaEliminar = Integer.parseInt(preferencias.getString("limpieza", "30"));
+
+
+        File directorio = new File(directorioSD);
+
+        if (directorio.exists() && directorio.isDirectory()) {
+            File[] archivos = directorio.listFiles();
+
+            if (archivos != null) {
+                for (File archivo : archivos) {
+                    long tiempoUltimaModificacion = archivo.lastModified();
+                    long tiempoActual = System.currentTimeMillis();
+                    long diferenciaTiempo = tiempoActual - tiempoUltimaModificacion;
+
+                    // Convertir el límite de tiempo de días a milisegundos
+                    long limiteTiempoMilisegundos = diasParaEliminar * 24 * 60 * 60 * 1000;
+
+                    if (diferenciaTiempo > limiteTiempoMilisegundos) {
+                        archivo.delete();
+                    }
+                }
             }
         }
     }

@@ -70,7 +70,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                 public void onChanged(List<Tarea> tareas) {
                     StringBuilder stringBuilder = new StringBuilder();
                     for (Tarea tarea : tareas) {
-                        stringBuilder.append(tarea.getTitulo()+" "+tarea.getProgreso()).append("\n");  // Suponiendo que tienes un método getTitulo en tu entidad Tarea
+                        stringBuilder.append(tarea.getTitulo()).append("\n");  // Suponiendo que tienes un método getTitulo en tu entidad Tarea
                     }
 
                     buscarTarea.setText(stringBuilder);

@@ -152,28 +152,28 @@ public class CrearTareaActivity extends AppCompatActivity implements
         OutputStreamWriter escritorVID;
 
             try {
-                if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                if(!archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoIMG);
                     escritorIMG = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorIMG.close();
                 }
 
-                if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
+                if(!archivoDOC.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoDOC);
                     escritorDOC = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorDOC.close();
                 }
 
-                if(!archivoAUD.equalsIgnoreCase("") || !archivoAUD.equalsIgnoreCase("SIN URL")){
+                if(!archivoAUD.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoAUD);
                     escritorAUD = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorAUD.close();
                 }
 
-                if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL")){
+                if(!archivoVID.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoVID);
                     escritorVID = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
@@ -249,7 +249,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
             OutputStreamWriter oswVID = null;
 
             try {
-                if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                if(!archivoIMG.equalsIgnoreCase("SIN URL")){
                     String rutaCompleta = fileIMG.getAbsolutePath();
                     oswIMAGE = new OutputStreamWriter(new FileOutputStream(fileIMG));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
@@ -257,21 +257,21 @@ public class CrearTareaActivity extends AppCompatActivity implements
                     oswIMAGE.close();
                 }
 
-                if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
+                if(!archivoDOC.equalsIgnoreCase("SIN URL")){
                     oswDOC = new OutputStreamWriter(new FileOutputStream(fileDOC));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswDOC.flush();
                     oswDOC.close();
                 }
 
-                if(!archivoAUD.equalsIgnoreCase("")|| !archivoAUD.equalsIgnoreCase("SIN URL") ){
+                if(!archivoAUD.equalsIgnoreCase("SIN URL") ){
                     oswAUD = new OutputStreamWriter(new FileOutputStream(fileAUD));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswAUD.flush();
                     oswAUD.close();
                 }
 
-                if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL") ){
+                if(!archivoVID.equalsIgnoreCase("SIN URL") ){
                     oswVID = new OutputStreamWriter(new FileOutputStream(fileVID));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswVID.flush();
