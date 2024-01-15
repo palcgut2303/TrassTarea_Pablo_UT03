@@ -23,6 +23,9 @@ public interface TareaDAO {
     @Delete
     void delete(Tarea tarea);
 
+    @Update
+    void actualizarTarea(Tarea tarea);
+
     @Query("SELECT * FROM tarea")
         //En este caso haremos que esta consulta se regenere cada vez que se produzcan cambios
         //en la base de datos mediante un objeto LiveData.

@@ -359,6 +359,20 @@ public class ListadoTareasActivity extends AppCompatActivity {
         }
     }
 
+    class ActualizarTarea implements Runnable {
+
+        private Tarea tarea;
+
+        public ActualizarTarea(Tarea tarea) {
+            this.tarea = tarea;
+        }
+
+        @Override
+        public void run() {
+            controladorBaseDatos.tareaDAO().actualizarTarea(tarea);
+        }
+    }
+
 
     //Contrato para el lanzador hacia la actividad EditarTareaActivity
     ActivityResultContract<Tarea, Tarea> contratoEditar = new ActivityResultContract<Tarea, Tarea>() {
@@ -399,10 +413,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 int posicionEnColeccion = tareasLista.getListaCopia().indexOf(tareaSeleccionada);
                 Executor executor = Executors.newSingleThreadExecutor();
                 tareasLista.getListaCopia().remove(tareaSeleccionada);
-                executor.execute(new BorrarTarea(tareaSeleccionada));
-                Executor executor2 = Executors.newSingleThreadExecutor();
+                //executor.execute(new BorrarTarea(tareaSeleccionada));
+               // Executor executor2 = Executors.newSingleThreadExecutor();
                 tareasLista.getListaCopia().add(posicionEnColeccion, tareaEditada);
-                executor2.execute(new InsertarTarea(tareaEditada));
+                executor.execute(new ActualizarTarea(tareaEditada));
 
 
                 //Notificamos al adaptador y comprobamos si el listado ha quedado vacío
