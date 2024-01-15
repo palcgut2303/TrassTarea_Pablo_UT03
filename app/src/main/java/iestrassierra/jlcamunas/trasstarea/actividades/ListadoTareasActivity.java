@@ -239,21 +239,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         //OPCION DESCRIPCIÓN
         if (itemId == R.id.item_detalles) {
             // Mostrar un cuadro de diálogo con la descripción de la tarea
-            AlertDialog.Builder builder = new AlertDialog.Builder(ListadoTareasActivity.this);
-            builder.setTitle("Detalles de: " + tareaSeleccionada.getTitulo());
-            builder.setMessage("DESCRIPCION DE LA TAREA: \n"+tareaSeleccionada.getDescripcion()+"\n\n"+
-                    "IMAGEN: "+tareaSeleccionada.getURL_img()+"\n\n"+
-                    "DOCUMENTO: "+tareaSeleccionada.getURL_doc()+"\n\n"+
-                    "AUDIO: "+tareaSeleccionada.getURL_aud()+"\n\n"+
-                    "VIDEO: "+tareaSeleccionada.getURL_vid());
-
-            builder.setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.dismiss();
-                }
-            });
-            builder.show();
+            lanzadorActividadDetalles.launch(tareaSeleccionada);
             return true;
         }
 
@@ -411,11 +397,12 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 //Procedemos a la sustitución de la tarea editada por la seleccionada.
                 int posicionEnColeccion = tareasLista.getListaCopia().indexOf(tareaSeleccionada);
                 Executor executor = Executors.newSingleThreadExecutor();
-                executor.execute(new BorrarTarea(tareaSeleccionada));
                 tareasLista.getListaCopia().remove(tareaSeleccionada);
+                executor.execute(new BorrarTarea(tareaSeleccionada));
                 Executor executor2 = Executors.newSingleThreadExecutor();
-                executor2.execute(new InsertarTarea(tareaEditada));
                 tareasLista.getListaCopia().add(posicionEnColeccion, tareaEditada);
+                executor2.execute(new InsertarTarea(tareaEditada));
+
 
                 //Notificamos al adaptador y comprobamos si el listado ha quedado vacío
                 adaptador.notifyItemChanged(posicionEnColeccion);
@@ -430,6 +417,43 @@ public class ListadoTareasActivity extends AppCompatActivity {
     //Registramos el lanzador hacia la actividad EditarTareaActivity con el contrato y respuesta personalizados
     ActivityResultLauncher<Tarea> lanzadorActividadEditar = registerForActivityResult(contratoEditar, resultadoEditar);
 
+    ActivityResultContract<Tarea, Tarea> contratoDetalle = new ActivityResultContract<Tarea, Tarea>() {
+        @NonNull
+        @Override
+        public Intent createIntent(@NonNull Context context, Tarea tarea) {
+            Intent intent = new Intent(context, DetallesActividad.class);
+            Bundle bundle = new Bundle();
+            bundle.putParcelable("TareaDetallada", tarea);
+            intent.putExtras(bundle);
+            return intent;
+        }
+
+        @Override
+        public Tarea parseResult(int i, @Nullable Intent intent) {
+            if (i == Activity.RESULT_OK && intent != null) {
+                try {
+                    return (Tarea) Objects.requireNonNull(intent.getExtras()).get("TareaDetallada");
+                } catch (NullPointerException e) {
+                    Log.e("Error en intent devuelto", Objects.requireNonNull(e.getLocalizedMessage()));
+                }
+            }else if(i == Activity.RESULT_CANCELED){
+                Toast.makeText(getApplicationContext(),"Volviendo de los detalles", Toast.LENGTH_SHORT).show();
+            }
+            return null; // Devuelve null si no se pudo obtener una Tarea válida.
+        }
+    };
+
+    //Respuesta para el lanzador hacia la actividad EditarTareaActivity
+    ActivityResultCallback<Tarea> resultadoDetallada = new ActivityResultCallback<Tarea>() {
+        @Override
+        public void onActivityResult(Tarea tareaDetallada) {
+            if (tareaDetallada != null) {
+                Toast.makeText(getApplicationContext(),"Volviendo de los detalles", Toast.LENGTH_SHORT).show();
+            }
+        }
+    };
+
+    ActivityResultLauncher<Tarea> lanzadorActividadDetalles = registerForActivityResult(contratoDetalle, resultadoDetallada);
 
     //////////////////////////////////////// OTROS MÉTODOS /////////////////////////////////////////
 

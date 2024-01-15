@@ -88,4 +88,6 @@
     <string name="urlAudio">SIN URL</string>
     <string name="urlVideo">SIN URL</string>
     <string name="detalles">Detalles</string>
+    <string name="nombre_tarea">Nombre de la Tarea</string>
+    <string name="cerrar">Cerrar</string>
 </resources>

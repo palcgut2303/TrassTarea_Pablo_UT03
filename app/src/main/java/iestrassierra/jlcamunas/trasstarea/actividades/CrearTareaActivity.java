@@ -159,21 +159,21 @@ public class CrearTareaActivity extends AppCompatActivity implements
                     escritorIMG.close();
                 }
 
-                if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoDOC);
                     escritorDOC = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorDOC.close();
                 }
 
-                if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                if(!archivoAUD.equalsIgnoreCase("") || !archivoAUD.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoAUD);
                     escritorAUD = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorAUD.close();
                 }
 
-                if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoVID);
                     escritorVID = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
@@ -234,32 +234,6 @@ public class CrearTareaActivity extends AppCompatActivity implements
 
     public void escribirSD(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID){
 
-
-
-
-
-           /* try {
-                File directorioSD = new File(Environment.getExternalStorageDirectory(), tituloTarea);
-                if (!directorioSD.exists()) {
-                    if (!directorioSD.mkdirs()) {
-                        // No se pudo crear el directorio, manejar el error según sea necesario
-                        Toast.makeText(this, "Error al crear el directorio", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-                File archivoSD = new File(directorioSD, nombreArchivo);
-
-                FileOutputStream outputStream = new FileOutputStream(archivoSD);
-                OutputStreamWriter writer = new OutputStreamWriter(outputStream);
-                writer.write("Archivo de la tarea: " + tituloTarea);
-                writer.close();
-                Toast.makeText(this, "OK SD", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Error al escribir en la tarjeta SD", Toast.LENGTH_LONG).show();
-            }
-
-            */
             String archIMG = obtenerSubcadena(archivoIMG);
             String archDOC = obtenerSubcadena(archivoDOC);
             String archAUD =obtenerSubcadena(archivoAUD);
@@ -275,29 +249,29 @@ public class CrearTareaActivity extends AppCompatActivity implements
             OutputStreamWriter oswVID = null;
 
             try {
-                if(!archivoIMG.equalsIgnoreCase("")){
-
+                if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                    String rutaCompleta = fileIMG.getAbsolutePath();
                     oswIMAGE = new OutputStreamWriter(new FileOutputStream(fileIMG));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswIMAGE.flush();
                     oswIMAGE.close();
                 }
 
-                if(!archivoDOC.equalsIgnoreCase("")){
+                if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
                     oswDOC = new OutputStreamWriter(new FileOutputStream(fileDOC));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswDOC.flush();
                     oswDOC.close();
                 }
 
-                if(!archivoAUD.equalsIgnoreCase("")){
+                if(!archivoAUD.equalsIgnoreCase("")|| !archivoAUD.equalsIgnoreCase("SIN URL") ){
                     oswAUD = new OutputStreamWriter(new FileOutputStream(fileAUD));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswAUD.flush();
                     oswAUD.close();
                 }
 
-                if(!archivoVID.equalsIgnoreCase("")){
+                if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL") ){
                     oswVID = new OutputStreamWriter(new FileOutputStream(fileVID));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswVID.flush();

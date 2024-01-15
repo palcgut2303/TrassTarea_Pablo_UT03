@@ -202,44 +202,27 @@ public class FragmentoDos extends Fragment {
                // escribirViewModelURL();
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
-                     tvURLDOCUMENT.setText(URL_doc);
+                     tvURLDOCUMENT.setText(nombreArchivo);
 
-                   /*tareaViewModel.setURL_doc(tvURLDOCUMENT.getText().toString());
-                     tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
-                     tvURLIMAGE.setText(tareaViewModel.getURL_img().getValue());
-                     tvURLVideo.setText(tareaViewModel.getURL_vid().getValue());*/
+
                  }else if(nombreArchivo.startsWith("video:")){
                      URL_vid = uri.getPath();
-                     tvURLVideo.setText(URL_vid);
+                     tvURLVideo.setText(nombreArchivo);
 
-                    /*tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());
-                     tvURLIMAGE.setText(tareaViewModel.getURL_img().getValue());*/
-                     tvURLDOCUMENT.setText(tareaViewModel.getURL_doc().getValue());
+
                  } else if (nombreArchivo.startsWith("audio:")) {
                      URL_aud = uri.getPath();
-                     tvURLAudio.setText(URL_aud);
+                     tvURLAudio.setText(nombreArchivo);
 
-                    /*String URLV = tareaViewModel.getURL_vid().getValue();
-                     tvURLVideo.setText(URLV);
-                     String URLI = tareaViewModel.getURL_img().getValue();
-                     tvURLIMAGE.setText(URLI);
-                     String URLD = tareaViewModel.getURL_doc().getValue();
-                     tvURLDOCUMENT.setText(URLD);*/
+
                  }else if(nombreArchivo.startsWith("image:")){
                      URL_img = uri.getPath();
-                     tvURLIMAGE.setText(URL_img);
+                     tvURLIMAGE.setText(nombreArchivo);
 
-                     /*String URLV = tareaViewModel.getURL_vid().getValue();
-                     tvURLVideo.setText(URLV);
-                     String URLd = tareaViewModel.getURL_doc().getValue();
-                     tvURLDOCUMENT.setText(URLd);
-                     tvURLAudio.setText(tareaViewModel.getURL_aud().getValue());*/
+
                  }
 
-               /* tareaViewModel.setURL_doc(URL_doc);
-                tareaViewModel.setURL_vid(URL_vid);
-                tareaViewModel.setURL_aud(URL_aud);
-                tareaViewModel.setURL_img(URL_img);*/
+
             }
         }
     }

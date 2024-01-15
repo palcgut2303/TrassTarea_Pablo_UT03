@@ -178,21 +178,21 @@ public class EditarTareaActivity extends AppCompatActivity implements
                 escritorIMG.close();
             }
 
-            if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
                 String archivo = obtenerSubcadena(archivoDOC);
                 escritorDOC = new OutputStreamWriter(openFileOutput(archivo,
                         Context.MODE_PRIVATE));
                 escritorDOC.close();
             }
 
-            if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoAUD.equalsIgnoreCase("") || !archivoAUD.equalsIgnoreCase("SIN URL")){
                 String archivo = obtenerSubcadena(archivoAUD);
                 escritorAUD = new OutputStreamWriter(openFileOutput(archivo,
                         Context.MODE_PRIVATE));
                 escritorAUD.close();
             }
 
-            if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL")){
                 String archivo = obtenerSubcadena(archivoVID);
                 escritorVID = new OutputStreamWriter(openFileOutput(archivo,
                         Context.MODE_PRIVATE));
@@ -287,21 +287,21 @@ public class EditarTareaActivity extends AppCompatActivity implements
                 oswIMAGE.close();
             }
 
-            if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoDOC.equalsIgnoreCase("") || !archivoDOC.equalsIgnoreCase("SIN URL")){
                 oswDOC = new OutputStreamWriter(new FileOutputStream(fileDOC));
                 //osw.write("Archivo de la tarea: " + tituloTarea);
                 oswDOC.flush();
                 oswDOC.close();
             }
 
-            if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoAUD.equalsIgnoreCase("") || !archivoAUD.equalsIgnoreCase("SIN URL")){
                 oswAUD = new OutputStreamWriter(new FileOutputStream(fileAUD));
                 //osw.write("Archivo de la tarea: " + tituloTarea);
                 oswAUD.flush();
                 oswAUD.close();
             }
 
-            if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+            if(!archivoVID.equalsIgnoreCase("") || !archivoVID.equalsIgnoreCase("SIN URL")){
                 oswVID = new OutputStreamWriter(new FileOutputStream(fileVID));
                 //osw.write("Archivo de la tarea: " + tituloTarea);
                 oswVID.flush();

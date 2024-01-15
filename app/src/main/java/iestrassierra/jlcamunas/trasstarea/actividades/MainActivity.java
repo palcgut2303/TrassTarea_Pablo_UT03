@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         theme = sharedPreferences.getBoolean("tema",true);
         Button btEmpezar = findViewById(R.id.main_bt_empezar);
         btEmpezar.setOnClickListener(this::empezar);
-        getTheme();
+        //getTheme();
         establecerFuente();
 
 
@@ -103,9 +103,11 @@ public class MainActivity extends AppCompatActivity {
     public Resources.Theme getTheme() {
         Resources.Theme theme = super.getTheme();
         if(PreferenceManager.getDefaultSharedPreferences(this).getBoolean("tema",false)){
-            theme.applyStyle(R.style.Theme_TrassTarea,true);
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }else{
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
         }
-        return theme;
+        return super.getTheme();
     }
 
     private void empezar(View v){
