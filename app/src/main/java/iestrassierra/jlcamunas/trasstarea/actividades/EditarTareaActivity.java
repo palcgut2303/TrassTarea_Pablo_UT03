@@ -154,30 +154,56 @@ public class EditarTareaActivity extends AppCompatActivity implements
 
         boolean valorSD = sharedPreferences.getBoolean("sd", false);
 
-        /*if(valorSD){
-            escribirSD(rutaArchivo, tareaEditada.getTitulo());
+        if(valorSD){
+            escribirSD(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
         }else{
-            escribirInterno(rutaArchivo);
-        }*/
+            escribirInterno(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
+        }
         //Volvemos a la actividad Listado
         finish();
     }
 
 
-    private void escribirInterno(String nombreArchivo) {
-        OutputStreamWriter escritor;
-        if(nombreArchivo.length() <= 0){
-            Toast.makeText(this, "No se ha encontrado el archivo", Toast.LENGTH_SHORT).show();
-        }else{
-            try {
-                escritor = new OutputStreamWriter(openFileOutput(nombreArchivo,
+    private void escribirInterno(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID) {
+        OutputStreamWriter escritorIMG;
+        OutputStreamWriter escritorDOC;
+        OutputStreamWriter escritorAUD;
+        OutputStreamWriter escritorVID;
+
+        try {
+            if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                String archivo = obtenerSubcadena(archivoIMG);
+                escritorIMG = new OutputStreamWriter(openFileOutput(archivo,
                         Context.MODE_PRIVATE));
-                escritor.close();
-                Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
-            } catch (IOException e) {
-                Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
+                escritorIMG.close();
             }
+
+            if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                String archivo = obtenerSubcadena(archivoDOC);
+                escritorDOC = new OutputStreamWriter(openFileOutput(archivo,
+                        Context.MODE_PRIVATE));
+                escritorDOC.close();
+            }
+
+            if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                String archivo = obtenerSubcadena(archivoAUD);
+                escritorAUD = new OutputStreamWriter(openFileOutput(archivo,
+                        Context.MODE_PRIVATE));
+                escritorAUD.close();
+            }
+
+            if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                String archivo = obtenerSubcadena(archivoVID);
+                escritorVID = new OutputStreamWriter(openFileOutput(archivo,
+                        Context.MODE_PRIVATE));
+                escritorVID.close();
+            }
+
+            Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+        } catch (IOException e) {
+            Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
         }
+
 
     }
 
@@ -211,13 +237,11 @@ public class EditarTareaActivity extends AppCompatActivity implements
         return contenido.toString();
     }*/
 
-    public void escribirSD(String nombreArchivo,String tituloTarea){
+    public void escribirSD(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID){
 
 
 
-        if(nombreArchivo.length() <= 0){
-            Toast.makeText(this, "No se ha encontrado el archivo", Toast.LENGTH_SHORT).show();
-        }else{
+
 
            /* try {
                 File directorioSD = new File(Environment.getExternalStorageDirectory(), tituloTarea);
@@ -241,26 +265,59 @@ public class EditarTareaActivity extends AppCompatActivity implements
             }
 
             */
-            File file = new File(this.getExternalFilesDir(null), nombreArchivo);
+        String archIMG = obtenerSubcadena(archivoIMG);
+        String archDOC = obtenerSubcadena(archivoDOC);
+        String archAUD =obtenerSubcadena(archivoAUD);
+        String archVID = obtenerSubcadena(archivoVID);
+        File fileIMG = new File(this.getExternalFilesDir(null), archIMG);
+        File fileDOC = new File(this.getExternalFilesDir(null), archDOC);
+        File fileAUD = new File(this.getExternalFilesDir(null), archAUD);
+        File fileVID = new File(this.getExternalFilesDir(null), archVID);
 
+        OutputStreamWriter oswIMAGE = null;
+        OutputStreamWriter oswDOC = null;
+        OutputStreamWriter oswAUD = null;
+        OutputStreamWriter oswVID = null;
 
-            OutputStreamWriter osw = null;
-            try {
-                osw = new OutputStreamWriter(new FileOutputStream(file));
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
+        try {
+            if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                oswIMAGE = new OutputStreamWriter(new FileOutputStream(fileIMG));
+                //osw.write("Archivo de la tarea: " + tituloTarea);
+                oswIMAGE.flush();
+                oswIMAGE.close();
             }
-            try {
-                osw.write("Archivo de la tarea: " + tituloTarea);
-                osw.flush();
-                osw.close();
-            } catch (IOException | NullPointerException e) {
-                Toast.makeText(this, "ERROR", Toast.LENGTH_SHORT).show();
+
+            if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                oswDOC = new OutputStreamWriter(new FileOutputStream(fileDOC));
+                //osw.write("Archivo de la tarea: " + tituloTarea);
+                oswDOC.flush();
+                oswDOC.close();
             }
-            Toast.makeText(this, "OK SD", Toast.LENGTH_SHORT).show();
+
+            if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                oswAUD = new OutputStreamWriter(new FileOutputStream(fileAUD));
+                //osw.write("Archivo de la tarea: " + tituloTarea);
+                oswAUD.flush();
+                oswAUD.close();
+            }
+
+            if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
+                oswVID = new OutputStreamWriter(new FileOutputStream(fileVID));
+                //osw.write("Archivo de la tarea: " + tituloTarea);
+                oswVID.flush();
+                oswVID.close();
+            }
+
+        } catch (IOException | NullPointerException  e) {
+            Toast.makeText(this, "ERROR" + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
 
+        Toast.makeText(this, "OK SD", Toast.LENGTH_SHORT).show();
+
+
     }
+
+
 
     @Override
     public void onBotonVolverClicked() {
@@ -282,6 +339,20 @@ public class EditarTareaActivity extends AppCompatActivity implements
             fragmentManager.beginTransaction()
                     .replace(R.id.contenedor_frag, fragment)
                     .commit();
+        }
+    }
+
+    private static String obtenerSubcadena(String cadenaOriginal) {
+        // Encuentra la posición del último '/'
+        int indiceUltimaBarra = cadenaOriginal.lastIndexOf('/');
+
+        // Verifica si se encontró la barra
+        if (indiceUltimaBarra != -1) {
+            // Usa substring para obtener la subcadena después de la última barra
+            return cadenaOriginal.substring(indiceUltimaBarra + 1);
+        } else {
+            // Devuelve la cadena original si no se encontró '/'
+            return cadenaOriginal;
         }
     }
 }

@@ -42,7 +42,7 @@
     <string name="dialog_msg">¿Confirmas que quieres borrar la tarea:</string>
     <string name="dialog_erased">Tarea borrada</string>
     <string name="dialog_not_found">Tarea no encontrada</string>
-    <string name="dialog_description">Descripción</string>
+    <string name="dialog_detalles">Detalles de: </string>
     <string name="dialog_close">Cerrar</string>
     <string name="tarea_edit">Tarea editada</string>
     <string name="action_canceled">Acción cancelada</string>
@@ -87,4 +87,5 @@
     <string name="urlIMG">SIN URL</string>
     <string name="urlAudio">SIN URL</string>
     <string name="urlVideo">SIN URL</string>
+    <string name="detalles">Detalles</string>
 </resources>

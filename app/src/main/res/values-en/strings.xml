@@ -43,7 +43,7 @@
     <string name="dialog_msg">Are you sure you want to delete the task:</string>
     <string name="dialog_erased">Task deleted</string>
     <string name="dialog_not_found">Task not found</string>
-    <string name="dialog_description">Description</string>
+    <string name="dialog_detalles">Task Details</string>
     <string name="dialog_close">Close</string>
     <string name="tarea_edit">Task edited</string>
     <string name="action_canceled">Action canceled</string>

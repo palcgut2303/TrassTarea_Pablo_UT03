@@ -152,28 +152,28 @@ public class CrearTareaActivity extends AppCompatActivity implements
         OutputStreamWriter escritorVID;
 
             try {
-                if(!archivoIMG.equalsIgnoreCase("")){
+                if(!archivoIMG.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoIMG);
                     escritorIMG = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorIMG.close();
                 }
 
-                if(!archivoDOC.equalsIgnoreCase("")){
+                if(!archivoDOC.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoDOC);
                     escritorDOC = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorDOC.close();
                 }
 
-                if(!archivoAUD.equalsIgnoreCase("")){
+                if(!archivoAUD.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoAUD);
                     escritorAUD = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
                     escritorAUD.close();
                 }
 
-                if(!archivoVID.equalsIgnoreCase("")){
+                if(!archivoVID.equalsIgnoreCase("") || !archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoVID);
                     escritorVID = new OutputStreamWriter(openFileOutput(archivo,
                             Context.MODE_PRIVATE));
@@ -276,6 +276,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
 
             try {
                 if(!archivoIMG.equalsIgnoreCase("")){
+
                     oswIMAGE = new OutputStreamWriter(new FileOutputStream(fileIMG));
                     //osw.write("Archivo de la tarea: " + tituloTarea);
                     oswIMAGE.flush();

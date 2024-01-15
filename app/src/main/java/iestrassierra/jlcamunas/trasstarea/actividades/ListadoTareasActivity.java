@@ -1,14 +1,5 @@
 package iestrassierra.jlcamunas.trasstarea.actividades;
 
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorAlfabeticoAscendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorAlfabeticoDescendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorDiasRestantesAscendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorDiasRestantesDescendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorFechaCreacionAscendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorFechaCreacionDescendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorProgresoAscendente;
-import static iestrassierra.jlcamunas.trasstarea.modelo.Tarea.comparadorProgresoDescendente;
-
 import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -27,33 +18,26 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContract;
 import android.annotation.SuppressLint;
 
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.Executor;
 import java.util.concurrent.Executors;
 
-import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaAdapter;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaViewModel;
@@ -168,11 +152,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-       // cambiarTamanoLetra();
-
-        //ordenTareas();
-
-
        if(esCreate){
             recreate();
         }
@@ -258,11 +237,16 @@ public class ListadoTareasActivity extends AppCompatActivity {
         int itemId = item.getItemId();
 
         //OPCION DESCRIPCIÓN
-        if (itemId == R.id.item_descripcion) {
+        if (itemId == R.id.item_detalles) {
             // Mostrar un cuadro de diálogo con la descripción de la tarea
             AlertDialog.Builder builder = new AlertDialog.Builder(ListadoTareasActivity.this);
-            builder.setTitle(R.string.dialog_description);
-            builder.setMessage(tareaSeleccionada.getDescripcion());
+            builder.setTitle("Detalles de: " + tareaSeleccionada.getTitulo());
+            builder.setMessage("DESCRIPCION DE LA TAREA: \n"+tareaSeleccionada.getDescripcion()+"\n\n"+
+                    "IMAGEN: "+tareaSeleccionada.getURL_img()+"\n\n"+
+                    "DOCUMENTO: "+tareaSeleccionada.getURL_doc()+"\n\n"+
+                    "AUDIO: "+tareaSeleccionada.getURL_aud()+"\n\n"+
+                    "VIDEO: "+tareaSeleccionada.getURL_vid());
+
             builder.setPositiveButton(R.string.dialog_close, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
@@ -492,31 +476,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     }
 
-    // Método de inicialización de la colección. Tareas de ejemplo.
-   /* private void inicializarListaTareas(){
-        tareas.add(new Tarea("Hacer el cuestionario inicial", "10/09/2023", "17/09/2023", 100, true, "","","","",""));
-        tareas.add(new Tarea("Hacer la tarea UT01", "18/09/2023", "03/10/2023", 100, true, "","","","",""));
-        tareas.add(new Tarea("Hacer cuestionarios UT01", "18/09/2023", "01/10/2023", 100, false, "","","","",""));
-        tareas.add(new Tarea("Hacer la tarea UT02", "02/10/2023", "23/11/2023", 100, true, "","","","",""));
-        tareas.add(new Tarea("Hacer cuestionarios UT02", "02/10/2023", "22/11/2023", 50, false, "","","","",""));
 
-        //En cada tarea de ejemplo incluímos una descripción larga generada con Lorem Ipsum
-        tareas.forEach(tarea -> tarea.setDescripcion(
-                    "In volutpat fringilla finibus. Proin fermentum, nulla sit amet congue tincidunt, libero ante facilisis nisl, non tempor enim ligula ut ipsum. Cras a turpis blandit, molestie elit vulputate, porttitor massa. Nulla facilisi. In quis vehicula velit. Cras eget dui dui. Sed sit amet placerat orci. Aliquam nec orci sit amet lectus bibendum faucibus bibendum quis dolor. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Sed non neque et dui ultrices sodales. Cras vitae velit in dolor luctus aliquet. Sed vel elit et nunc dignissim varius vel ac leo.\n\n" +
-                    "Maecenas porta feugiat auctor. Aliquam nec justo nec arcu venenatis vehicula.\n\nNunc metus libero, pellentesque a feugiat nec, fringilla a arcu. Donec nisi lorem, ullamcorper id augue vel, ultricies bibendum nulla. Sed tincidunt vitae erat in pellentesque. Sed accumsan est non ligula interdum, nec molestie magna sagittis. Praesent nibh neque, feugiat sagittis tempor hendrerit, suscipit vitae elit. Sed tempus, turpis at porta lobortis, dui arcu posuere leo, a auctor sapien est sit amet sapien. Nunc et purus ac sem pharetra aliquet. Cras magna magna, condimentum id nulla in, ultrices ultricies lacus. Nam finibus magna et augue egestas, sit amet malesuada felis porttitor. In sed tortor elementum, tempus eros nec, iaculis diam.\n\n" +
-                    "Etiam id feugiat nisl, a ultricies augue.\nDonec dui metus, congue in ligula eu, pulvinar eleifend nisi. Vestibulum porttitor ut mauris eget maximus. Nunc sit amet ex faucibus, maximus magna at, placerat libero. Curabitur sodales ut ante tempor auctor. Vestibulum quis ornare tortor. Proin convallis felis vel tempus condimentum. Duis vestibulum porttitor hendrerit. Integer eget lacus finibus, maximus lacus a, finibus nibh. Proin eget placerat libero. Ut eget nisi nec orci convallis mattis in vel purus. Cras dapibus, ante id varius lobortis, lorem elit sagittis ex, mollis egestas urna arcu nec quam. Aenean lacinia, dui at dictum lacinia, leo nulla tristique odio, in laoreet massa enim at arcu.\n\n" +
-                    "Pellentesque commodo nisi ut pellentesque condimentum.\n\nSed ultricies efficitur ipsum eget scelerisque. Nunc ultrices et quam at sagittis. Quisque ut tortor tempor, finibus elit quis, commodo sapien. Phasellus a purus enim. Integer semper pretium tempus. Morbi congue metus dictum molestie luctus. Sed sit amet euismod lectus, sit amet ultricies magna.\n\n" +
-                    "Cras imperdiet, ligula quis semper ultrices, lectus dolor bibendum nisl, vitae gravida orci purus nec nisi.\n\nNulla pharetra tempus risus at convallis. Vivamus in orci maximus, faucibus nisl at, dignissim eros. Duis viverra leo ut lorem dapibus elementum. Pellentesque congue ut arcu nec vulputate. Sed pretium libero nibh, sit amet volutpat turpis maximus in. Suspendisse nec quam sit amet diam dictum auctor. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae;\n\n" +
-                    "Nam eget ante eget mauris pulvinar tempus id in lacus.\n\nPellentesque ut accumsan arcu. Etiam ultrices metus nec leo lobortis, id vehicula tortor eleifend. In mattis nisl eget mauris ultrices lacinia at quis lorem. Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Praesent enim tellus, dignissim sed velit eu, lobortis bibendum lacus. Duis ultricies faucibus tellus, nec tempus elit blandit et. Cras tristique nunc velit, a efficitur ante imperdiet sit amet. Nulla sit amet interdum purus, in mollis sem. Nulla pharetra id sem et dignissim.\n\n" +
-                    "Morbi a lobortis nibh, sagittis venenatis elit. Pellentesque lacus nulla, sollicitudin ac posuere non, iaculis nec mauris.\n\nEtiam cursus tincidunt congue. Duis vitae posuere odio. Maecenas id magna mauris. Cras a nulla tempor, ultricies nisi non, vestibulum orci. Maecenas at risus non ipsum luctus ultrices eu ac elit. Donec sed urna a leo aliquam viverra id sed magna. Duis fermentum imperdiet massa, vel iaculis nulla dictum ac. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nunc placerat sapien magna, nec tristique odio euismod eu. Nunc non pretium nibh. Donec nec nulla sed dui bibendum placerat. Morbi venenatis ex vitae ex maximus dignissim sit amet sed risus. Etiam viverra ipsum purus, ut consectetur risus faucibus nec.\n\n" +
-                    "Mauris pellentesque dictum dolor ac imperdiet. Etiam a iaculis justo, sit amet dignissim lectus.\n\nMauris iaculis mauris maximus, imperdiet ipsum sit amet, sodales urna. Ut non tempor sapien, eget ullamcorper odio. Pellentesque facilisis neque id nulla congue maximus. Donec aliquet mauris in turpis maximus, ut fringilla tellus iaculis. In euismod volutpat nulla, non hendrerit magna ullamcorper in. Pellentesque eu vestibulum leo, in dapibus orci. Praesent elementum convallis arcu quis iaculis. Aliquam ornare tortor in arcu dignissim, at efficitur turpis dignissim. Vestibulum eleifend felis nec nulla fringilla, vel bibendum lacus ultricies. Cras ultricies tincidunt lacus, quis interdum mi. Pellentesque eu venenatis ex. Morbi dapibus pretium justo vel vehicula.\n\n" +
-                    "Nunc tristique odio eget pellentesque viverra.\n\nPellentesque sed turpis auctor, suscipit purus eget, varius lacus. Vivamus at aliquam lectus. Maecenas egestas mollis augue id finibus. Donec rutrum sem ut eros lacinia hendrerit. Vestibulum egestas et turpis vitae posuere. Pellentesque rhoncus orci ut tellus sodales, in condimentum nulla sagittis. Nulla sem ligula, maximus vitae ex vel, semper sodales sem. Sed non libero ac ipsum auctor consectetur id non urna. Pellentesque neque erat, maximus molestie tellus non, vulputate sagittis urna. Integer lectus purus, dignissim et accumsan sit amet, luctus sed tellus.\n\n" +
-                    "Sed tempus eu orci et lacinia. Donec posuere a velit ut vehicula.\n\nNam a mollis purus. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Quisque eu interdum nisl. Ut eu est et est tristique luctus a eu eros. Morbi ac ullamcorper diam. In libero turpis, pharetra sed lacinia vitae, euismod sed neque. Sed tincidunt ultrices lectus a auctor.\n\n" +
-                    "Nam eleifend, nisl in semper accumsan, massa sapien convallis sapien, sed mattis magna eros eget enim.\n\nNullam commodo hendrerit felis, sed fermentum velit varius eget. Curabitur interdum porta tempus. Donec diam ligula, sodales at lectus vitae, porttitor vehicula velit. Pellentesque convallis nibh elit, aliquet placerat sem rhoncus id. Nullam dapibus maximus nisi vel suscipit. Vivamus sagittis mi vel risus efficitur tincidunt.\n\n" +
-                    "Vestibulum tincidunt maximus turpis, eget fermentum lectus iaculis non. Proin vulputate metus sed metus laoreet ultricies. Maecenas pulvinar lectus quis pretium rhoncus. Suspendisse eget dolor vel nisi aliquet condimentum id a erat. Donec rutrum sem."
-            )
-        );
-    }*/
 
     private void establecerFuente(){
 
