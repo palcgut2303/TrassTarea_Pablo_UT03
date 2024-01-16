@@ -11,13 +11,13 @@ import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
-public class TareaDAOViewModel extends ViewModel {
+public class TareaDAORepositorio extends ViewModel {
 
     private TareaDAO tareaDao;
 
 
 
-    public TareaDAOViewModel() {
+    public TareaDAORepositorio() {
         this.tareaDao = ControladorBaseDatos
                 .getInstance(new Application())
                 .tareaDAO();

@@ -18,7 +18,7 @@ import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 public class DetallesActividad extends AppCompatActivity {
     private Tarea tareaDetallada;
 
-    private TextView tvNombreTarea,tvDescripcion;
+    private TextView tvNombreTarea,tvDescripcion,txtFecha;
     private ImageButton btnIm, btnDoc,btnAud,btnVid;
 
     private Button btnCerrar;
@@ -29,6 +29,7 @@ public class DetallesActividad extends AppCompatActivity {
 
         tvNombreTarea = findViewById(R.id.tvNombre);
         tvDescripcion = findViewById(R.id.tvDescripcion);
+        txtFecha = findViewById(R.id.txtFecha);
 
         btnIm = findViewById(R.id.btnIm);
         btnDoc = findViewById(R.id.btDoc);
@@ -48,6 +49,8 @@ public class DetallesActividad extends AppCompatActivity {
 
         tvNombreTarea.setText(tareaDetallada.getTitulo().toString());
         tvDescripcion.setText(tareaDetallada.getDescripcion().toString());
+        txtFecha.setText(tareaDetallada.getObjetivoFecha().toString());
+
 
         btnIm.setOnClickListener(v ->{
 
