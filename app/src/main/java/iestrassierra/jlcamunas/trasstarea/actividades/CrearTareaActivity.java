@@ -143,6 +143,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
                 Toast.makeText(this, "GUARDADO EN ALM.INTERNO, NO TIENE TARJETA SD", Toast.LENGTH_SHORT).show();
             }
         }else{
+            //Escribimos en memoria interna
             escribirInterno(nuevaTarea.getURL_img(),nuevaTarea.getURL_doc(), nuevaTarea.getURL_aud(), nuevaTarea.getURL_vid());
         }
 
@@ -150,12 +151,14 @@ public class CrearTareaActivity extends AppCompatActivity implements
         finish();
     }
 
+    //Metodo para comprobar si la tarjeta esta montada
     public static boolean tarjetaSDMontada() {
         // Comprueba si el dispositivo tiene montada una tarjeta SD
         String estado = Environment.getExternalStorageState();
         return estado.equals(Environment.MEDIA_MOUNTED);
     }
 
+    //Metodo para escribir en el almacenamiento
     private void escribirInterno(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID) {
         OutputStreamWriter escritorIMG;
         OutputStreamWriter escritorDOC;
@@ -163,11 +166,14 @@ public class CrearTareaActivity extends AppCompatActivity implements
         OutputStreamWriter escritorVID;
 
             try {
+                //En mi caso utilizo las URL del objeto que quiera guardar,
+                // solo crea archivos cuando en la URL no ponga "SIN URL", ya que hace referencia a que no ha seleccionado un archivo por ejemplo de IMAGEN
+                //Asi con todos
                 if(!archivoIMG.equalsIgnoreCase("SIN URL")){
                     String archivo = obtenerSubcadena(archivoIMG);
-                    escritorIMG = new OutputStreamWriter(openFileOutput(archivo,
+                    escritorIMG = new OutputStreamWriter(openFileOutput(archivo,//Crea nuevo archivo con su nombre, y se escribe
                             Context.MODE_PRIVATE));
-                    escritorIMG.close();
+                    escritorIMG.close();//Cerramos el OutputStreamWriter
                 }
 
                 if(!archivoDOC.equalsIgnoreCase("SIN URL")){
@@ -191,7 +197,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
                     escritorVID.close();
                 }
 
-                Toast.makeText(this, "OK", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, "GUARDADO EN ALM.INTERNO", Toast.LENGTH_LONG).show();
             } catch (IOException e) {
                 Toast.makeText(this, "ERROR", Toast.LENGTH_LONG).show();
             }
@@ -199,6 +205,8 @@ public class CrearTareaActivity extends AppCompatActivity implements
 
     }
 
+    //Metodo para sacar de la ruta completa solo el nombre del archivo,
+    // para poder guardar el archivo en el almacenamiento con ese nombre.
     private static String obtenerSubcadena(String cadenaOriginal) {
         // Encuentra la posición del último '/'
         int indiceUltimaBarra = cadenaOriginal.lastIndexOf('/');
@@ -213,12 +221,15 @@ public class CrearTareaActivity extends AppCompatActivity implements
         }
     }
 
+    //Metodo para escribir en la tarjeta SD
     public void escribirSD(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID){
 
+            //Hacemos lo mimso para crear el archivo, solo con el nombre del archivo, no con la ruta del archivo
             String archIMG = obtenerSubcadena(archivoIMG);
             String archDOC = obtenerSubcadena(archivoDOC);
             String archAUD =obtenerSubcadena(archivoAUD);
             String archVID = obtenerSubcadena(archivoVID);
+            //Creamos todos los ficheros
             File fileIMG = new File(this.getExternalFilesDir(null), archIMG);
             File fileDOC = new File(this.getExternalFilesDir(null), archDOC);
             File fileAUD = new File(this.getExternalFilesDir(null), archAUD);
@@ -230,6 +241,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
             OutputStreamWriter oswVID = null;
 
             try {
+                //Y lo mi mismo que el metodo anterior
                 if(!archivoIMG.equalsIgnoreCase("SIN URL")){
                     String rutaCompleta = fileIMG.getAbsolutePath();
                     oswIMAGE = new OutputStreamWriter(new FileOutputStream(fileIMG));

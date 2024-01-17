@@ -11,11 +11,9 @@ import java.util.List;
 
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
+//Clase donde tengo los métodos CRUD y los de estadisticas.
 @Dao
 public interface TareaDAO {
-
-
-
     @Insert
     void insertAll(Tarea... tarea);
 

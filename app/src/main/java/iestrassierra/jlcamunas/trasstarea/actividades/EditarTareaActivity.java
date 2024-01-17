@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -154,15 +155,28 @@ public class EditarTareaActivity extends AppCompatActivity implements
 
         boolean valorSD = sharedPreferences.getBoolean("sd", false);
 
+        //Si la preferencia es guardar documentos en tarjeta SD, se guarda en la SD, si no interno
         if(valorSD){
-            escribirSD(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
+            //Comprueba que tiene una tarjeta SD Montada
+            if(tarjetaSDMontada()){
+                escribirSD(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
+            }else{
+                escribirInterno(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
+                Toast.makeText(this, "GUARDADO EN ALM.INTERNO, NO TIENE TARJETA SD", Toast.LENGTH_SHORT).show();
+            }
         }else{
+            //Escribimos en memoria interna
             escribirInterno(tareaEditada.getURL_img(),tareaEditada.getURL_doc(), tareaEditada.getURL_aud(), tareaEditada.getURL_vid());
         }
         //Volvemos a la actividad Listado
         finish();
     }
-
+    //Metodo para comprobar si la tarjeta esta montada
+    public static boolean tarjetaSDMontada() {
+        // Comprueba si el dispositivo tiene montada una tarjeta SD
+        String estado = Environment.getExternalStorageState();
+        return estado.equals(Environment.MEDIA_MOUNTED);
+    }
 
     private void escribirInterno(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID) {
         OutputStreamWriter escritorIMG;
@@ -207,64 +221,10 @@ public class EditarTareaActivity extends AppCompatActivity implements
 
     }
 
-    /*private String leerInterno(String tituloTarea, String nombreArchivo) {
-        InputStreamReader lector;
-        StringBuilder contenido = new StringBuilder();
-
-        try {
-            // Obtén el directorio de almacenamiento interno específico para tu aplicación
-            File directorioCarpeta = new File(getFilesDir(), nombreCarpeta);
-
-            // Concatena el nombre del archivo a la ruta de la carpeta
-            File archivo = new File(directorioCarpeta, nombreArchivo);
-
-            // Abre el archivo para lectura
-            lector = new InputStreamReader(new FileInputStream(archivo));
-
-            // Lee el contenido del archivo
-            char[] buffer = new char[1024];
-            int bytesRead;
-            while ((bytesRead = lector.read(buffer)) != -1) {
-                contenido.append(buffer, 0, bytesRead);
-            }
-
-            // Cierra el lector
-            lector.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return contenido.toString();
-    }*/
 
     public void escribirSD(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID){
 
 
-
-
-
-           /* try {
-                File directorioSD = new File(Environment.getExternalStorageDirectory(), tituloTarea);
-                if (!directorioSD.exists()) {
-                    if (!directorioSD.mkdirs()) {
-                        // No se pudo crear el directorio, manejar el error según sea necesario
-                        Toast.makeText(this, "Error al crear el directorio", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-                File archivoSD = new File(directorioSD, nombreArchivo);
-
-                FileOutputStream outputStream = new FileOutputStream(archivoSD);
-                OutputStreamWriter writer = new OutputStreamWriter(outputStream);
-                writer.write("Archivo de la tarea: " + tituloTarea);
-                writer.close();
-                Toast.makeText(this, "OK SD", Toast.LENGTH_SHORT).show();
-            } catch (IOException e) {
-                e.printStackTrace();
-                Toast.makeText(this, "Error al escribir en la tarjeta SD", Toast.LENGTH_LONG).show();
-            }
-
-            */
         String archIMG = obtenerSubcadena(archivoIMG);
         String archDOC = obtenerSubcadena(archivoDOC);
         String archAUD =obtenerSubcadena(archivoAUD);

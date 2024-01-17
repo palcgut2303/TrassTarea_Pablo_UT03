@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.os.Environment;
 import android.util.DisplayMetrics;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean theme = true;
     private boolean esCreate = false;
+    //Ruta donde tenemos los archivos SD
     private final String rutaSD = "/storage/emulated/0/Android/data/iestrassierra.jlcamunas.trasstarea/files";
     private SharedPreferences sharedPreferences;
     @Override
@@ -36,7 +38,10 @@ public class MainActivity extends AppCompatActivity {
         //getTheme();
         establecerFuente();
         borrarArchivosInterno();
-        borrarArchivosSD(rutaSD);
+        if(tarjetaSDMontada()){
+            borrarArchivosSD(rutaSD);
+        }
+
     }
 
     @Override
@@ -55,24 +60,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void establecerFuente(){
-
-      /*  String tamanoLetra = sharedPreferences.getString("fuente","Mediana");
-        Resources resources = getResources();
-        Configuration conf = resources.getConfiguration();
-        DisplayMetrics display =resources.getDisplayMetrics();
-
-        switch (tamanoLetra){
-            case "Pequeña":
-                conf.fontScale = 0.8f;
-                break;
-            case "Mediana":
-                conf.fontScale = 1.2f;
-                break;
-            default:
-                conf.fontScale = 1.5f;
-                break;
-        }
-        resources.updateConfiguration(conf,display);*/
         String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
         // float size = getResources().getConfiguration().fontScale;
         if(fontSize.equalsIgnoreCase("1")){
@@ -103,6 +90,7 @@ public class MainActivity extends AppCompatActivity {
         resources.updateConfiguration(newConfig, metrics);
     }
 
+    //Metodo que aplica el tema oscuro una vez reiniciado la aplicacio, eso si, si esta habilitado en las preferencias si no tema claro.
     @Override
     public Resources.Theme getTheme() {
         Resources.Theme theme = super.getTheme();
@@ -119,6 +107,10 @@ public class MainActivity extends AppCompatActivity {
         startActivity(aEmpezar);
     }
 
+    //Metodo de limpieza de archivos internos.
+    //La diferencia que tengo yo esque la URL de las tareas,
+    // no las necesito ya que lo que hago es obtener el directorio donde tengo todos los ficheros y comprobar ese tiempo,
+    // si se cumple se borra
     public void borrarArchivosInterno(){
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         int diasParaEliminar = Integer.parseInt(preferencias.getString("limpieza", "30"));
@@ -137,6 +129,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Metodo de limpieza de archivosSD
+    //Mismo funcionamiento pero coge el directorio de los archivos donde esten en la SD
     public void borrarArchivosSD(String directorioSD) {
         SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
         int diasParaEliminar = Integer.parseInt(preferencias.getString("limpieza", "30"));
@@ -162,6 +156,13 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
+    }
+
+    //Metodo para comprobar si la tarjeta esta montada
+    public static boolean tarjetaSDMontada() {
+        // Comprueba si el dispositivo tiene montada una tarjeta SD
+        String estado = Environment.getExternalStorageState();
+        return estado.equals(Environment.MEDIA_MOUNTED);
     }
 
 

@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
+//Clase Detalles donde tenemos la opcion del menu contextual
 public class DetallesActividad extends AppCompatActivity {
     private Tarea tareaDetallada;
 
@@ -50,11 +51,13 @@ public class DetallesActividad extends AppCompatActivity {
             Log.e("Bundle recibido nulo", e.toString());
         }
 
+        //Obtenemos del intent enviado, la tarea seleccionado y hacemos un set de sus propiedad a los textView.
         tvNombreTarea.setText(tareaDetallada.getTitulo().toString());
         tvDescripcion.setText(tareaDetallada.getDescripcion().toString());
         txtFecha.setText(tareaDetallada.getObjetivoFecha().toString());
         tvProgreso.setText(tareaDetallada.getProgreso().toString()+"%");
 
+        //Metodos escuchadores de los botones para cuando se pulse aparezca el archivo de la tarea.
         btnIm.setOnClickListener(v ->{
 
             mostrarURL("IMAGEN",tareaDetallada.getURL_img());
@@ -94,6 +97,7 @@ public class DetallesActividad extends AppCompatActivity {
 
     }
 
+    //Metodo para mostrar en una ventana el nombre del archivo de la tarea
     public void mostrarURL(String titulo,String url){
         AlertDialog.Builder builder = new AlertDialog.Builder(DetallesActividad.this);
         builder.setTitle(titulo);

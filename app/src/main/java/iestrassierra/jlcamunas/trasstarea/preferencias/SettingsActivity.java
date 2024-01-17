@@ -28,12 +28,12 @@ import androidx.preference.PreferenceManager;
 
 import iestrassierra.jlcamunas.trasstarea.R;
 
+//Clase donde tenemos las preferncias
 public class SettingsActivity extends AppCompatActivity implements SharedPreferences.OnSharedPreferenceChangeListener {
     private boolean theme = true;
     String tamañoLetraIndex = "";
     String tamañoLetra = "";
 
-     Button btnCancelar;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,12 +53,6 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
 
 
-        /*if(theme){
-            setDayNight(1);
-        }else{
-            setDayNight(0);
-        }*/
-
     }
 
 
@@ -70,6 +64,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
                 .registerOnSharedPreferenceChangeListener(this);
     }
 
+    //Metodo que cada vez que se cambia una preferencia se ejecuta y cambia el tema y el tamaño de la letra
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, @Nullable String key) {
 
@@ -77,7 +72,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
 
            boolean switchTema = sharedPreferences.getBoolean("tema", false);
 
-
+            //Cambiamos a tema oscuro dependiendo del switch
            if (switchTema) {
                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
            } else {
@@ -103,6 +98,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
         recreate();
     }
 
+    //Mismo metodo para cambiar el tamaño de la letra que en el MAIN.
     public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {
         Configuration configuration = resources.getConfiguration();
 
@@ -132,23 +128,7 @@ public class SettingsActivity extends AppCompatActivity implements SharedPrefere
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item){
         if (item.getItemId() == android.R.id.home){
-            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-            tamañoLetraIndex = sharedPreferences.getString("tamañoLetra","Mediana");
 
-            if(tamañoLetraIndex.equalsIgnoreCase("1")){
-                    tamañoLetra = "Pequeña";
-            }else if (tamañoLetraIndex.equalsIgnoreCase("2")){
-                tamañoLetra = "Mediana";
-            }else{
-                tamañoLetra = "Grande";
-
-            }
-
-
-
-            Intent intentVolver = new Intent();
-            intentVolver.putExtra("tamañoLetra",tamañoLetra);
-            setResult(RESULT_OK, intentVolver);
             finish();
             return true;
         }

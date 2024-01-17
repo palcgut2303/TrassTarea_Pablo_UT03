@@ -55,10 +55,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
     private boolean boolPrior = false;
     private Tarea tareaSeleccionada;
     private boolean esCreate = false;
-    private boolean theme = true;
-    private int tamanoLetraApp = 0;
-    private String CriterioOrden = "";
-    private boolean orden;
 
     private TareaViewModel tareasLista;
 
@@ -68,12 +64,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listado_tareas);
          sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-        establecerFuente();
-        // Obtengo los valores de las preferencias
-        //String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
-        theme = sharedPreferences.getBoolean("tema",true);
-        CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");
-        orden = sharedPreferences.getBoolean("orden",true);
+
+         establecerFuente();
+
+         //Controlador de la base de datos donde lo iniciamos con la INSTANCIA.
         controladorBaseDatos = ControladorBaseDatos.getInstance(getApplicationContext());
 
         //Binding del TextView
@@ -94,10 +88,6 @@ public class ListadoTareasActivity extends AppCompatActivity {
            // inicializarListaTareas();
             boolPrior = false;
         }
-
-
-
-
 
         //Creamos el adaptador y lo vinculamos con el RecycleView
         adaptador = new TareaAdapter(this,new ArrayList<>(),boolPrior);
@@ -152,6 +142,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
+
        if(esCreate){
             recreate();
         }
@@ -186,14 +177,14 @@ public class ListadoTareasActivity extends AppCompatActivity {
             //Comprobamos que hay algún elemento que mostrar
             comprobarListadoVacio();
         }
-
+        //En el fragmento de preferencias hacemos un intent solo de ida, ya que no queremos que nos devuelva nada,
+        //se ejecutara dentro de el fragmento setting.
         else if(id == R.id.item_preferencias){
             Intent intent = new Intent(this, SettingsActivity.class);
-            //lanzador.launch(intent);
+
             startActivity(intent);
         } else if (id == R.id.item_estadisticas) {
             Intent intent = new Intent(this, EstadisticasActivity.class);
-            //lanzador.launch(intent);
             startActivity(intent);
         }
         //OPCIÓN ACERCA DE...
@@ -331,6 +322,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
         }
     });
 
+    /////////////////////////////////////Hilos que ejecutan los metodos DAO, SAVE,DELETE,UPDATE (CRUD)/////////////////////////////////////
+
     class InsertarTarea implements Runnable {
 
         private Tarea tarea;
@@ -342,7 +335,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         @Override
         public void run() {
             controladorBaseDatos.tareaDAO().insertAll(tarea);
-        }
+        } //Metodo del repositorio
     }
 
     class BorrarTarea implements Runnable {
@@ -356,7 +349,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
         @Override
         public void run() {
             controladorBaseDatos.tareaDAO().delete(tarea);
-        }
+        }//Metodo del repositorio
     }
 
     class ActualizarTarea implements Runnable {
@@ -370,10 +363,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
         @Override
         public void run() {
             controladorBaseDatos.tareaDAO().actualizarTarea(tarea);
-        }
+        }//Metodo del repositorio
     }
 
-
+    /////////////////////////////////////CONTRATO EDITAR/////////////////////////////////////
     //Contrato para el lanzador hacia la actividad EditarTareaActivity
     ActivityResultContract<Tarea, Tarea> contratoEditar = new ActivityResultContract<Tarea, Tarea>() {
         @NonNull
@@ -413,8 +406,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
                 int posicionEnColeccion = tareasLista.getListaCopia().indexOf(tareaSeleccionada);
                 Executor executor = Executors.newSingleThreadExecutor();
                 tareasLista.getListaCopia().remove(tareaSeleccionada);
-                //executor.execute(new BorrarTarea(tareaSeleccionada));
-               // Executor executor2 = Executors.newSingleThreadExecutor();
+
                 tareasLista.getListaCopia().add(posicionEnColeccion, tareaEditada);
                 executor.execute(new ActualizarTarea(tareaEditada));
 
@@ -431,6 +423,10 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     //Registramos el lanzador hacia la actividad EditarTareaActivity con el contrato y respuesta personalizados
     ActivityResultLauncher<Tarea> lanzadorActividadEditar = registerForActivityResult(contratoEditar, resultadoEditar);
+
+
+    /////////////////////////////////////LANZADOR PARA ENVIAR LA TAREA SELECCIONADA A LA ACTIVIDAD DETALLES/////////////////////////////////////
+
 
     ActivityResultContract<Tarea, Tarea> contratoDetalle = new ActivityResultContract<Tarea, Tarea>() {
         @NonNull
@@ -516,26 +512,8 @@ public class ListadoTareasActivity extends AppCompatActivity {
     }
 
 
-
+    //Metodo que establece la fuente segun las preferencias elegidas
     private void establecerFuente(){
-
-       /* String tamanoLetra = sharedPreferences.getString("fuente","Mediana");
-        Resources resources = getResources();
-        Configuration conf = resources.getConfiguration();
-        DisplayMetrics display =resources.getDisplayMetrics();
-
-        switch (tamanoLetra){
-            case "Pequeña":
-                conf.fontScale = 0.8f;
-                break;
-            case "Mediana":
-                conf.fontScale = 1.2f;
-                break;
-            default:
-                conf.fontScale = 1.5f;
-                break;
-        }
-        resources.updateConfiguration(conf,display);*/
         String fontSize = sharedPreferences.getString("tamañoLetra", "Mediana");
         // float size = getResources().getConfiguration().fontScale;
         if(fontSize.equalsIgnoreCase("1")){
@@ -548,6 +526,7 @@ public class ListadoTareasActivity extends AppCompatActivity {
 
     }
 
+    //Metodo para cambiar en toda la actividad la fuente
     public static void ajustarTamanoLetraEnTodaLaApp(Resources resources, float nuevoTamano) {
         Configuration configuration = resources.getConfiguration();
 

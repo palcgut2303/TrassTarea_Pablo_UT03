@@ -11,19 +11,16 @@ import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.basededatos.ControladorBaseDatos;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
+//Repositorio donde tengo los metodos de las estadisticas que cogó del DAO
 public class TareaDAORepositorio extends ViewModel {
 
     private TareaDAO tareaDao;
-
-
 
     public TareaDAORepositorio() {
         this.tareaDao = ControladorBaseDatos
                 .getInstance(new Application())
                 .tareaDAO();
     }
-
-    public LiveData<List<Tarea>> getAll(){return tareaDao.getAll();}
 
     public LiveData<Integer> obtenerNumeroTotalDeTareas() {
         return tareaDao.numeroTareas();

@@ -15,6 +15,7 @@ import iestrassierra.jlcamunas.trasstarea.DAO.TareaDAO;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.Convertidores;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
+//Clase Controlador de la base de datos donde defino la base de datos, sus clases, la instancia.
 @Database(entities = {Tarea.class}, version = 1, exportSchema = false)
 @TypeConverters(Convertidores.class)
 public abstract class ControladorBaseDatos  extends RoomDatabase {

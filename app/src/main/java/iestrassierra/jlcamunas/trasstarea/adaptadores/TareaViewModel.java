@@ -142,7 +142,7 @@ public class TareaViewModel extends AndroidViewModel {
     }
     List<Tarea> listaCopia;
 
-
+    //Metodo donde obtengo las tareas para mostrarlas en el recyclerView
     public LiveData<List<Tarea>> getTareas() {
 
         Application application = getApplication();

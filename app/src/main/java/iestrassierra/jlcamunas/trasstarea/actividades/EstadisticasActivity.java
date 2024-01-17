@@ -19,6 +19,7 @@ import iestrassierra.jlcamunas.trasstarea.R;
 import iestrassierra.jlcamunas.trasstarea.adaptadores.TareaDAORepositorio;
 import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 
+//Clase que muestra a través de varios metodos las estadisticas de las tareas.
 public class EstadisticasActivity extends AppCompatActivity {
 
     private TareaDAORepositorio tareaDAORepositorio;
@@ -41,10 +42,11 @@ public class EstadisticasActivity extends AppCompatActivity {
         btnCerrar = findViewById(R.id.btnCerraar);
         buscarTarea = findViewById(R.id.etxtTareaNombre);
 
-        //TareaDAO tareaDAO = new TareaDAO();
+        //Iniciamos el objeto repositorio, como viewModelProvider.
         tareaDAORepositorio = new ViewModelProvider(this).get(TareaDAORepositorio.class);
 
-
+            //Utilizo el metodo que he creado en el repositorio,
+            // con un observer para cada vez que se ejecuten cambios, este metodo se ejecutara. Los mismo con los demas metodos
 
 
             // Observar los cambios en el número total de tareas
@@ -56,6 +58,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                 }
             });
 
+            //Set del textView del promedio de Progreso de todas las tareas
             tareaDAORepositorio.calcularPromedioDeProgreso().observe(this, new Observer<Double>() {
                 @Override
                 public void onChanged(Double aDouble) {
@@ -63,6 +66,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                 }
             });
 
+            //Set del textView donde tengo el metodo para calcular el promedio de las fecha de creacion
             tareaDAORepositorio.calcularPromedioDeFecha().observe(this, new Observer<Double>() {
                 @Override
                 public void onChanged(Double aDouble) {
@@ -70,6 +74,7 @@ public class EstadisticasActivity extends AppCompatActivity {
                 }
             });
 
+            //Boton, donde buscaremos una tarea que contenga la cadena que introduciremos por el textView
             btnBuscar.setOnClickListener(v-> {
                 String nombre = getNombreTarea.getText().toString();
                 tareaDAORepositorio.buscarTareasPorNombre(nombre).observe(this, new Observer<List<Tarea>>() {

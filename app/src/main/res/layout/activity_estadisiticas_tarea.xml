@@ -7,8 +7,8 @@
 
     <TextView
         android:id="@+id/textView"
-        android:layout_width="295dp"
-        android:layout_height="55dp"
+        android:layout_width="337dp"
+        android:layout_height="53dp"
         android:layout_marginTop="16dp"
         android:gravity="center"
         android:text="@string/estadisticas"
@@ -16,15 +16,15 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.27"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0" />
 
     <TextView
         android:id="@+id/textView2"
-        android:layout_width="159dp"
-        android:layout_height="25dp"
+        android:layout_width="190dp"
+        android:layout_height="21dp"
         android:text="@string/nTareas"
         android:textSize="18sp"
         android:textStyle="bold"

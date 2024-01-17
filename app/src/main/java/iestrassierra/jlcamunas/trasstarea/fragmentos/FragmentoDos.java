@@ -116,7 +116,7 @@ public class FragmentoDos extends Fragment {
             if(comunicadorSegundoFragmento != null)
                 comunicadorSegundoFragmento.onBotonGuardarClicked();
         });
-
+        //Metodos que abren el seleccionado de archivos.
         ImageButton btDocumento = view.findViewById(R.id.btDocumento);
         btDocumento.setOnClickListener(v -> {
 
@@ -199,7 +199,7 @@ public class FragmentoDos extends Fragment {
                 //  mostrar el nombre del archivo
                  nombreArchivo = uri.getLastPathSegment();
 
-
+            //Guardamos la ruta de los archivos y su nombre.
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
                      tvURLDOCUMENT.setText(nombreArchivo);
@@ -255,18 +255,7 @@ public class FragmentoDos extends Fragment {
         }
     }
 
-    /*@Override
-    public void onResume() {
-        super.onResume();
-        String URLI = tareaViewModel.getURL_img().getValue();
-        String URLD = tareaViewModel.getURL_doc().getValue();
-        String URLA = tareaViewModel.getURL_aud().getValue();
-        String URLV = tareaViewModel.getURL_vid().getValue();
-        tvURLIMAGE.setText(URLI);
-        tvURLDOCUMENT.setText(URLD);
-        tvURLAudio.setText(URLA);
-        tvURLVideo.setText(URLV);
-    }*/
+
 
     private void escribirViewModel(){
         tareaViewModel.setDescripcion(etDescripcion.getText().toString());
