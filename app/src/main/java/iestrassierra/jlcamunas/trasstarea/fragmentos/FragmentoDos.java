@@ -199,7 +199,7 @@ public class FragmentoDos extends Fragment {
                 //  mostrar el nombre del archivo
                  nombreArchivo = uri.getLastPathSegment();
 
-               // escribirViewModelURL();
+
                  if(nombreArchivo.startsWith("document:")){
                      URL_doc = uri.getPath();
                      tvURLDOCUMENT.setText(nombreArchivo);

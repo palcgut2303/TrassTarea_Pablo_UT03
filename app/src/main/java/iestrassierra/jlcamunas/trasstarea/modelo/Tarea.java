@@ -190,7 +190,7 @@ public class Tarea implements Parcelable {
 
     public int quedanDias() {
         Date hoy = new Date(); // Obtener la fecha actual
-        long diferenciaMillis = fechaObjetivo.getTime() - hoy.getTime();
+        long diferenciaMillis = fechaObjetivo.getTime() - fechaCreacion.getTime();
         long diasDiferencia = TimeUnit.DAYS.convert(diferenciaMillis, TimeUnit.MILLISECONDS);
         return (int) diasDiferencia;
     }

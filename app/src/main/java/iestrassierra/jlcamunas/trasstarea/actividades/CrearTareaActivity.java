@@ -17,7 +17,6 @@ import android.os.Environment;
 import android.widget.Toast;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
@@ -128,21 +127,33 @@ public class CrearTareaActivity extends AppCompatActivity implements
 
         //Indicamos que el resultado ha sido OK
         setResult(RESULT_OK, aListado);
+
+        //Obtenemos el valor de la preferencia SD, para saber si debemos escribir en la SD o en la interna.
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
-
-
         boolean valorSD = sharedPreferences.getBoolean("sd", false);
 
 
-
+        //Si la preferencia es guardar documentos en tarjeta SD, se guarda en la SD, si no interno
         if(valorSD){
-            escribirSD(nuevaTarea.getURL_img(),nuevaTarea.getURL_doc(), nuevaTarea.getURL_aud(), nuevaTarea.getURL_vid());
+            //Comprueba que tiene una tarjeta SD Montada
+            if(tarjetaSDMontada()){
+                escribirSD(nuevaTarea.getURL_img(),nuevaTarea.getURL_doc(), nuevaTarea.getURL_aud(), nuevaTarea.getURL_vid());
+            }else{
+                escribirInterno(nuevaTarea.getURL_img(),nuevaTarea.getURL_doc(), nuevaTarea.getURL_aud(), nuevaTarea.getURL_vid());
+                Toast.makeText(this, "GUARDADO EN ALM.INTERNO, NO TIENE TARJETA SD", Toast.LENGTH_SHORT).show();
+            }
         }else{
             escribirInterno(nuevaTarea.getURL_img(),nuevaTarea.getURL_doc(), nuevaTarea.getURL_aud(), nuevaTarea.getURL_vid());
         }
 
         //Volvemos a la actividad Listado
         finish();
+    }
+
+    public static boolean tarjetaSDMontada() {
+        // Comprueba si el dispositivo tiene montada una tarjeta SD
+        String estado = Environment.getExternalStorageState();
+        return estado.equals(Environment.MEDIA_MOUNTED);
     }
 
     private void escribirInterno(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID) {
@@ -202,36 +213,6 @@ public class CrearTareaActivity extends AppCompatActivity implements
         }
     }
 
-   /*private String leerInterno(String tituloTarea, String nombreArchivo) {
-        InputStreamReader lector;
-        StringBuilder contenido = new StringBuilder();
-
-        try {
-            // Obtén el directorio de almacenamiento interno específico para tu aplicación
-            File directorioCarpeta = new File(getFilesDir(), nombreCarpeta);
-
-            // Concatena el nombre del archivo a la ruta de la carpeta
-            File archivo = new File(directorioCarpeta, nombreArchivo);
-
-            // Abre el archivo para lectura
-            lector = new InputStreamReader(new FileInputStream(archivo));
-
-            // Lee el contenido del archivo
-            char[] buffer = new char[1024];
-            int bytesRead;
-            while ((bytesRead = lector.read(buffer)) != -1) {
-                contenido.append(buffer, 0, bytesRead);
-            }
-
-            // Cierra el lector
-            lector.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return contenido.toString();
-    }*/
-
     public void escribirSD(String archivoIMG,String archivoDOC,String archivoAUD,String archivoVID){
 
             String archIMG = obtenerSubcadena(archivoIMG);
@@ -282,7 +263,7 @@ public class CrearTareaActivity extends AppCompatActivity implements
                 Toast.makeText(this, "ERROR" + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
 
-        Toast.makeText(this, "OK SD", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "GUARDADO EN SD", Toast.LENGTH_SHORT).show();
 
 
     }
