@@ -18,7 +18,7 @@ import iestrassierra.jlcamunas.trasstarea.modelo.Tarea;
 public class DetallesActividad extends AppCompatActivity {
     private Tarea tareaDetallada;
 
-    private TextView tvNombreTarea,tvDescripcion,txtFecha;
+    private TextView tvNombreTarea,tvDescripcion,txtFecha,tvProgreso;
     private ImageButton btnIm, btnDoc,btnAud,btnVid;
 
     private Button btnCerrar;
@@ -30,12 +30,15 @@ public class DetallesActividad extends AppCompatActivity {
         tvNombreTarea = findViewById(R.id.tvNombre);
         tvDescripcion = findViewById(R.id.tvDescripcion);
         txtFecha = findViewById(R.id.txtFecha);
+        tvProgreso = findViewById(R.id.tvProgreso);
 
         btnIm = findViewById(R.id.btnIm);
         btnDoc = findViewById(R.id.btDoc);
         btnAud = findViewById(R.id.btnAud);
         btnVid = findViewById(R.id.btnVid);
         btnCerrar = findViewById(R.id.btnCerrar2);
+
+
 
         //Recibimos la tarea que va a ser detallada
         Bundle bundle = getIntent().getExtras();
@@ -50,7 +53,7 @@ public class DetallesActividad extends AppCompatActivity {
         tvNombreTarea.setText(tareaDetallada.getTitulo().toString());
         tvDescripcion.setText(tareaDetallada.getDescripcion().toString());
         txtFecha.setText(tareaDetallada.getObjetivoFecha().toString());
-
+        tvProgreso.setText(tareaDetallada.getProgreso().toString()+"%");
 
         btnIm.setOnClickListener(v ->{
 

@@ -227,10 +227,6 @@ public class FragmentoDos extends Fragment {
         }
     }
 
-
-
-
-
     //Método para guardar el estado del formulario en un Bundle
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {

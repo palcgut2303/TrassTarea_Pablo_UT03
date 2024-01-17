@@ -144,6 +144,7 @@ public class TareaViewModel extends AndroidViewModel {
 
 
     public LiveData<List<Tarea>> getTareas() {
+
         Application application = getApplication();
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(application);
         CriterioOrden = sharedPreferences.getString("criterio","Fecha de Creación");

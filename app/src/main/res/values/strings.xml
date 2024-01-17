@@ -98,4 +98,5 @@
     <string name="cadenaConsulta">Buscar Tarea Por Nombre:</string>
     <string name="buscar">Buscar</string>
     <string name="fechaObjet">"Fecha Objetivo: "</string>
+    <string name="progreso">Progreso:</string>
 </resources>

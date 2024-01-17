@@ -3,9 +3,11 @@ package iestrassierra.jlcamunas.trasstarea.actividades;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
@@ -42,48 +44,53 @@ public class EstadisticasActivity extends AppCompatActivity {
         //TareaDAO tareaDAO = new TareaDAO();
         tareaDAORepositorio = new ViewModelProvider(this).get(TareaDAORepositorio.class);
 
-        // Observar los cambios en el número total de tareas
-        tareaDAORepositorio.obtenerNumeroTotalDeTareas().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(Integer totalTareas) {
-                // Actualizar el TextView con el número total de tareas
-                numTareas.setText("Total de tareas: " + totalTareas);
-            }
-        });
 
-        tareaDAORepositorio.calcularPromedioDeProgreso().observe(this, new Observer<Double>() {
-            @Override
-            public void onChanged(Double aDouble) {
-                promedioProgeso.setText(aDouble.toString());
-            }
-        });
 
-        tareaDAORepositorio.calcularPromedioDeFecha().observe(this, new Observer<Double>() {
-            @Override
-            public void onChanged(Double aDouble) {
-                promedioFechaCreacion.setText(aDouble.toString());
-            }
-        });
 
-        btnBuscar.setOnClickListener(v-> {
-            String nombre = getNombreTarea.getText().toString();
-            tareaDAORepositorio.buscarTareasPorNombre(nombre).observe(this, new Observer<List<Tarea>>() {
+            // Observar los cambios en el número total de tareas
+            tareaDAORepositorio.obtenerNumeroTotalDeTareas().observe(this, new Observer<Integer>() {
                 @Override
-                public void onChanged(List<Tarea> tareas) {
-                    StringBuilder stringBuilder = new StringBuilder();
-                    for (Tarea tarea : tareas) {
-                        String fechaObjetivo = obtenerFormatoFecha(tarea.getFechaObjetivo());
-                        stringBuilder.append("-Nombre: "+tarea.getTitulo()+ ", Progreso: " + tarea.getProgreso()+"%, Fecha Objetivo: " + fechaObjetivo+".").append("\n");  // Suponiendo que tienes un método getTitulo en tu entidad Tarea
-                    }
-
-                    buscarTarea.setText(stringBuilder);
+                public void onChanged(Integer totalTareas) {
+                    // Actualizar el TextView con el número total de tareas
+                    numTareas.setText("Total de tareas: " + totalTareas);
                 }
             });
-      });
 
-        btnCerrar.setOnClickListener(V->{
-            finish();
-        });
+            tareaDAORepositorio.calcularPromedioDeProgreso().observe(this, new Observer<Double>() {
+                @Override
+                public void onChanged(Double aDouble) {
+                    promedioProgeso.setText(aDouble.toString());
+                }
+            });
+
+            tareaDAORepositorio.calcularPromedioDeFecha().observe(this, new Observer<Double>() {
+                @Override
+                public void onChanged(Double aDouble) {
+                    promedioFechaCreacion.setText(aDouble.toString());
+                }
+            });
+
+            btnBuscar.setOnClickListener(v-> {
+                String nombre = getNombreTarea.getText().toString();
+                tareaDAORepositorio.buscarTareasPorNombre(nombre).observe(this, new Observer<List<Tarea>>() {
+                    @Override
+                    public void onChanged(List<Tarea> tareas) {
+                        StringBuilder stringBuilder = new StringBuilder();
+                        for (Tarea tarea : tareas) {
+                            String fechaObjetivo = obtenerFormatoFecha(tarea.getFechaObjetivo());
+                            stringBuilder.append("-Nombre: "+tarea.getTitulo()+ ", Progreso: " + tarea.getProgreso()+"%, Fecha Objetivo: " + fechaObjetivo+".").append("\n");  // Suponiendo que tienes un método getTitulo en tu entidad Tarea
+                        }
+
+                        buscarTarea.setText(stringBuilder);
+                    }
+                });
+            });
+
+            btnCerrar.setOnClickListener(V->{
+                finish();
+            });
+
+
 
     }
 

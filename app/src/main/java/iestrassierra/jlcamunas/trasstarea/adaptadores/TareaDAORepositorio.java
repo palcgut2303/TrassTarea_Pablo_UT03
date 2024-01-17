@@ -23,6 +23,7 @@ public class TareaDAORepositorio extends ViewModel {
                 .tareaDAO();
     }
 
+    public LiveData<List<Tarea>> getAll(){return tareaDao.getAll();}
 
     public LiveData<Integer> obtenerNumeroTotalDeTareas() {
         return tareaDao.numeroTareas();
